@@ -1,0 +1,5 @@
+*.sqlite3
+log/*.log
+doc/api
+doc/app
+.DS_Store
