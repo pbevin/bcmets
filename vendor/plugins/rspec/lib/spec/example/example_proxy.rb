@@ -1,7 +1,8 @@
 module Spec
   module Example
-    # Lightweight proxy for an example. This is the object that is passed to
-    # example-related methods in Spec::Runner::Formatter::BaseFormatter
+    # Lightweight representation of an example. This is the object
+    # that is passed to example-related methods in
+    # Spec::Runner::Formatter::BaseFormatter
     class ExampleProxy
 
       def initialize(description=nil, options={}, location=nil) # :nodoc:
@@ -23,7 +24,6 @@ module Spec
       
       # Deprecated - use location()
       def backtrace
-        Spec.deprecate("ExampleProxy#backtrace","ExampleProxy#location")
         location
       end
       
@@ -35,7 +35,7 @@ module Spec
       end
       
       def ==(other) # :nodoc:
-        (other.description == description) & (other.location == location)
+        (other.description == description) & (other.backtrace == backtrace)
       end
     end
   end

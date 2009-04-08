@@ -1,5 +1,3 @@
-require 'ostruct'
-
 module Spec
   module Runner
     class Options
@@ -8,8 +6,8 @@ module Spec
       }
 
       EXAMPLE_FORMATTERS = { # Load these lazily for better speed
-                'silent' => ['spec/runner/formatter/silent_formatter',                 'Formatter::SilentFormatter'],
-                     'l' => ['spec/runner/formatter/silent_formatter',                 'Formatter::SilentFormatter'],
+                'silent' => ['spec/runner/formatter/base_formatter',                   'Formatter::BaseFormatter'],
+                     'l' => ['spec/runner/formatter/base_formatter',                   'Formatter::BaseFormatter'],
                'specdoc' => ['spec/runner/formatter/specdoc_formatter',                'Formatter::SpecdocFormatter'],
                      's' => ['spec/runner/formatter/specdoc_formatter',                'Formatter::SpecdocFormatter'],
                 'nested' => ['spec/runner/formatter/nested_text_formatter',            'Formatter::NestedTextFormatter'],
@@ -210,16 +208,8 @@ module Spec
           else
             load_class(format, 'formatter', '--format')
           end
-          formatter_type.new(formatter_options, where)
+          formatter_type.new(self, where)
         end
-      end
-      
-      def formatter_options
-        @formatter_options ||= OpenStruct.new(
-          :colour   => colour,
-          :autospec => autospec,
-          :dry_run  => dry_run
-        )
       end
 
       def load_heckle_runner(heckle)
@@ -337,18 +327,18 @@ module Spec
         if examples.empty?
           if files.length == 1
             if File.directory?(files[0])
-              error_stream.puts "You must specify one file, not a directory when providing a line number"
+              error_stream.puts "You must specify one file, not a directory when using the --line option"
               exit(1) if stderr?
             else
               example = SpecParser.new(self).spec_name_for(files[0], line_number)
               @examples = [example]
             end
           else
-            error_stream.puts "Only one file can be specified when providing a line number: #{files.inspect}"
+            error_stream.puts "Only one file can be specified when using the --line option: #{files.inspect}"
             exit(3) if stderr?
           end
         else
-          error_stream.puts "You cannot use --example and specify a line number"
+          error_stream.puts "You cannot use both --line and --example"
           exit(4) if stderr?
         end
       end

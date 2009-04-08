@@ -18,11 +18,7 @@ module Spec
       #   description
       #   => "should start with a balance of 0"
       def description
-        if description = @_proxy.description || ::Spec::Matchers.generated_description
-          description
-        else
-          raise Spec::Example::NoDescriptionError.new("example", @_proxy.location)
-        end
+        @_proxy.description || ::Spec::Matchers.generated_description || "NO NAME"
       end
       
       def options # :nodoc:
@@ -92,7 +88,10 @@ module Spec
       
       # Deprecated - use +backtrace()+
       def implementation_backtrace
-        Spec.deprecate("ExampleMethods#implementation_backtrace","ExampleMethods#backtrace")
+        Kernel.warn <<-WARNING
+ExampleMethods#implementation_backtrace is deprecated and will be removed
+from a future version. Please use ExampleMethods#backtrace instead.
+WARNING
         backtrace
       end
       

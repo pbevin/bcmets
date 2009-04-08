@@ -24,8 +24,11 @@ module Spec
 
       # Deprecated - use +backtrace()+
       def example_group_backtrace
-        Spec.deprecate("ExampleGroupMethods#example_group_backtrace", "ExampleGroupMethods#backtrace")
-        defined?(@backtrace) ? @backtrace : nil
+        Kernel.warn <<-WARNING
+ExampleGroupMethods#example_group_backtrace is deprecated and will be removed
+from a future version. Please use ExampleGroupMethods#backtrace instead.
+WARNING
+        backtrace
       end
       
       # Makes the describe/it syntax available from a class. For example:
@@ -43,7 +46,6 @@ module Spec
       #   end
       #
       def describe(*args, &example_group_block)
-        raise Spec::Example::NoDescriptionError.new("example group", caller(0)[1]) if args.empty?
         if example_group_block
           Spec::Example::set_location(args, caller(0)[1])
           options = args.last
@@ -75,7 +77,8 @@ module Spec
       end
       
       def pending_implementation
-        lambda { raise(Spec::Example::NotYetImplementedError) }
+        error = Spec::Example::NotYetImplementedError.new(caller)
+        lambda { raise(error) }
       end
 
       alias_method :it, :example
@@ -109,8 +112,8 @@ module Spec
         self
       end
       
-      def notify(reporter) # :nodoc:
-        reporter.example_group_started(ExampleGroupProxy.new(self))
+      def notify(listener) # :nodoc:
+        listener.add_example_group(ExampleGroupProxy.new(self))
       end
 
       def description
@@ -223,9 +226,9 @@ module Spec
       
       def examples_to_run(run_options)
         return example_proxies unless specified_examples?(run_options)
-        example_proxies.reject do |proxy|
+        example_proxies.reject do |example|
           matcher = ExampleGroupMethods.matcher_class.
-            new(description.to_s, proxy.description)
+            new(description.to_s, example.description)
           !matcher.matches?(run_options.examples)
         end
       end

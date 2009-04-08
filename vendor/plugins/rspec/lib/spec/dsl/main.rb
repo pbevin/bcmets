@@ -13,14 +13,13 @@ module Spec
       #
       #   describe "name", :type => :something_special do ...
       #
-      # The reason for using different example group classes is to have different
+      # The reason for using different behaviour classes is to have different
       # matcher methods available from within the <tt>describe</tt> block.
       #
       # See Spec::Example::ExampleGroupFactory#register for details about how to
       # register special implementations.
       #
       def describe(*args, &block)
-        raise Spec::Example::NoDescriptionError.new("example group", caller(0)[1]) if args.empty?
         Spec::Example::set_location(args, caller(0)[1])
         Spec::Example::ExampleGroupFactory.assign_scope(self, args)
         Spec::Example::ExampleGroupFactory.create_example_group(*args, &block)

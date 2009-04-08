@@ -41,12 +41,12 @@ module Spec
         else
           message = <<-MESSAGE
 'should_not be #{@comparison_method} #{expected}' not only FAILED,
-it is a bit confusing.
+it reads really poorly.
           MESSAGE
           
           raise message << ([:===,:==].include?(@comparison_method) ?
-            "It might be more clearly expressed without the \"be\"?" :
-            "It might be more clearly expressed in the positive?")
+            "Why don't you try expressing it without the \"be\"?" :
+            "Why don't you try expressing it in the positive?")
         end
       end
       

@@ -1,1 +1,1 @@
-require 'spec/expectations/extensions/kernel'
+require 'spec/expectations/extensions/object'

@@ -5,7 +5,7 @@ Feature: implicit subject
   that example.
   
   Scenario: subject in top level group
-    Given a file named "top_level_subject_spec.rb" with:
+    Given the following spec:
       """
       describe Array, "when first created" do
         it "should be empty" do
@@ -13,11 +13,11 @@ Feature: implicit subject
         end
       end
       """
-    When I run "spec top_level_subject_spec.rb"
+    When I run it with the spec command
     Then the stdout should match "1 example, 0 failures"
 
   Scenario: subject in a nested group
-    Given a file named "nested_subject_spec.rb" with:
+    Given the following spec:
       """
       describe Array do
         describe "when first created" do
@@ -27,5 +27,5 @@ Feature: implicit subject
         end
       end
       """
-    When I run "spec nested_subject_spec.rb"
+    When I run it with the spec command
     Then the stdout should match "1 example, 0 failures"

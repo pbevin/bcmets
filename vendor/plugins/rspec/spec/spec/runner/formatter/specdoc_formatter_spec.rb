@@ -20,11 +20,11 @@ module Spec
 
           describe "where ExampleGroup has no superclasss with a description" do
             before do
-              example_group_started
+              add_example_group
             end
 
-            def example_group_started
-              formatter.example_group_started(Spec::Example::ExampleGroupProxy.new(example_group))
+            def add_example_group
+              formatter.add_example_group(Spec::Example::ExampleGroupProxy.new(example_group))
             end
 
             describe "#dump_summary" do
@@ -39,7 +39,7 @@ module Spec
               end
             end
 
-            describe "#example_group_started" do
+            describe "#add_example_group" do
               it "should push ExampleGroup name" do
                 io.string.should eql("\nExampleGroup\n")
               end
@@ -73,10 +73,10 @@ module Spec
               describe "where ExampleGroup has two superclasses with a description" do
                 attr_reader :child_example_group, :grand_child_example_group
               
-                def example_group_started
+                def add_example_group
                   @child_example_group = Class.new(example_group).describe("Child ExampleGroup")
                   @grand_child_example_group = Class.new(child_example_group).describe("GrandChild ExampleGroup")
-                  formatter.example_group_started(Spec::Example::ExampleGroupProxy.new(grand_child_example_group))
+                  formatter.add_example_group(Spec::Example::ExampleGroupProxy.new(grand_child_example_group))
                 end
 
                 describe "when having an error" do

@@ -1,32 +1,3 @@
-=== Version 1.2.3 (in git)
-
-* deprecations
-
-  * BaseFormatter#add_example_group (use #example_group_started instead)
-  * ExampleGroupProxy#backtrace (use #location instead)
-  * ExampleProxy#backtrace (use #location instead)
-  * BaseFormatter#example_pending now expects two arguments. The third
-    argument is deprecated.
-  * ExampleGroupProxy#filtered_description. This was only used in one place
-    internally, and was a confusing solution to the problem. If you've got a
-    custom formatter that uses it, you can just use
-    ExampleGroupProxy#description and modify it directly.
-  * predicate_matchers (use the new Matcher DSL instead)
-
-* enhancements
-
-  * support for specifying single examples with colon syntax. Closes #712.
-    (Ben Mabey)
-    * you can now say "spec some_spec.rb:12" in addition to "spec some_spec.rb
-      --line 12"
-  * run specs locally with --drb if no drb server is running. Closes #780.
-    * still prints "No server running" to stderr
-
-* bug fixes
-
-  * support expectations on DelegateClass (Clifford T. Matthews). Closes #48.
-  * Fixed match_array blows up if elements can't be sorted (Jeff Dean). Closes #779.
-
 === Version 1.2.2 / 2009-03-22
 
 Bug-fix release (fixes regression introduced in 1.2.1)
@@ -43,7 +14,7 @@ rspec-1.2.0.
 
 See Upgrade.rdoc for information about upgrading to rspec-1.2.1
 
-* enhancements
+* enhancments
 
   * matchers, including the new DSL, easily added to your test/unit tests
   * added support for 0 to n args in matcher DSL

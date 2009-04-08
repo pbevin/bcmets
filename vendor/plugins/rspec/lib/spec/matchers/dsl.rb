@@ -1,7 +1,6 @@
 module Spec
   module Matchers
     module DSL
-      # See Spec::Matchers
       def create(name, &block_passed_to_create)
         define_method name do |*expected|
           Spec::Matchers::Matcher.new name, *expected, &block_passed_to_create
@@ -12,3 +11,5 @@ module Spec
 end
 
 Spec::Matchers.extend Spec::Matchers::DSL
+
+      

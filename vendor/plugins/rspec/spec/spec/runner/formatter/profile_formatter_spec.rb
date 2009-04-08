@@ -32,7 +32,7 @@ module Spec
           parent_example_group = Class.new(::Spec::Example::ExampleGroupDouble).describe('Parent')
           child_example_group = Class.new(parent_example_group).describe('Child')
 
-          formatter.example_group_started(Spec::Example::ExampleGroupProxy.new(child_example_group))
+          formatter.add_example_group(Spec::Example::ExampleGroupProxy.new(child_example_group))
           
           formatter.example_started('when foo')
           Time.stub!(:now).and_return(now+1)
@@ -50,7 +50,7 @@ module Spec
         
         it "should print the top 10 results" do
           example_group = Class.new(::Spec::Example::ExampleGroup).describe("ExampleGroup")
-          formatter.example_group_started(Spec::Example::ExampleGroupProxy.new(example_group))
+          formatter.add_example_group(Spec::Example::ExampleGroupProxy.new(example_group))
           formatter.instance_variable_set("@time", Time.now)
           
           15.times do 
@@ -59,25 +59,6 @@ module Spec
           
           io.should_receive(:print).exactly(10)
           formatter.start_dump
-        end
-
-        it "should have method_missing as private" do
-          ProfileFormatter.private_instance_methods.should include("method_missing")
-        end
-
-        it "should respond_to? all messages" do
-          formatter = ProfileFormatter.new({ }, StringIO.new)
-          formatter.should respond_to(:just_about_anything)
-        end
-
-        it "should respond_to? anything, when given the private flag" do
-          formatter = ProfileFormatter.new({ }, StringIO.new)
-          formatter.respond_to?(:method_missing, true).should be_true
-        end
-
-        it "should not respond_to? method_missing (because it's private)" do
-          formatter = ProfileFormatter.new({ }, StringIO.new)
-          formatter.respond_to?(:method_missing).should be_false
         end
       end
     end

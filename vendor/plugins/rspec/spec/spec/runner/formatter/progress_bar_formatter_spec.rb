@@ -30,7 +30,7 @@ module Spec
             end
           end
           example = example_group.examples.first
-          @formatter.example_group_started(Spec::Example::ExampleGroupProxy.new(example_group))
+          @formatter.add_example_group(Spec::Example::ExampleGroupProxy.new(example_group))
           @formatter.example_pending(example, "message", "#{__FILE__}:#{__LINE__}")
           @io.rewind
           @formatter.dump_summary(3, 2, 1, 1)
@@ -97,8 +97,8 @@ EOE
           end
           example = example_group.examples.first
           file = __FILE__
-          line = __LINE__ - 5
-          @formatter.example_group_started(Spec::Example::ExampleGroupProxy.new(example_group))
+          line = __LINE__ + 2
+          @formatter.add_example_group(Spec::Example::ExampleGroupProxy.new(example_group))
           @formatter.example_pending(example, "message", "#{__FILE__}:#{__LINE__}")
           @formatter.dump_pending
           @io.string.should ==(<<-HERE)
@@ -141,27 +141,6 @@ HERE
         it "should not produce summary on dry run" do
           @formatter.dump_summary(3, 2, 1, 0)
           @io.string.should eql("")
-        end
-      end
-
-      describe ProgressBarFormatter, "method_missing" do
-        it "should have method_missing as private" do
-          ProgressBarFormatter.private_instance_methods.should include("method_missing")
-        end
-
-        it "should respond_to? all messages" do
-          formatter = ProgressBarFormatter.new({ }, StringIO.new)
-          formatter.should respond_to(:just_about_anything)
-        end
-
-        it "should respond_to? anything, when given the private flag" do
-          formatter = ProgressBarFormatter.new({ }, StringIO.new)
-          formatter.respond_to?(:method_missing, true).should be_true
-        end
-
-        it "should not respond_to? method_missing (because it's private)" do
-          formatter = ProgressBarFormatter.new({ }, StringIO.new)
-          formatter.respond_to?(:method_missing).should be_false
         end
       end
     end

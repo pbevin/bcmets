@@ -4,7 +4,7 @@ Feature: mock with flexmock
   I want to be able to use flexmock without rspec mocks interfering
 
   Scenario: Mock with flexmock
-    Given a file named "flexmock_example_spec.rb" with:
+    Given the following spec:
       """
       Spec::Runner.configure do |config|
         config.mock_with :flexmock
@@ -22,6 +22,6 @@ Feature: mock with flexmock
         end
       end
       """
-    When I run "spec flexmock_example_spec.rb"
+    When I run it with the spec command
     Then the exit code should be 0
     And the stdout should match "2 examples, 0 failures"

@@ -4,7 +4,7 @@ module Spec
   module Runner
     module Formatter
       class SpecdocFormatter < BaseTextFormatter
-        def example_group_started(example_group)
+        def add_example_group(example_group)
           super
           output.puts
           output.puts example_group.description
@@ -22,7 +22,7 @@ module Spec
           output.flush
         end
         
-        def example_pending(example, message, deprecated_pending_location=nil)
+        def example_pending(example, message, pending_caller)
           super
           output.puts yellow("- #{example.description} (PENDING: #{message})")
           output.flush
