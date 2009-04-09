@@ -95,8 +95,8 @@ end
 
 describe Article, ".link_threads" do
   it "should link articles together based on parent_msgid" do
-    art1 = Article.create(:msgid => "<abc>")
-    art2 = Article.create(:msgid => "<def>", :parent_msgid => "<abc>")
+    art1 = Article.make(:msgid => "<abc>")
+    art2 = Article.make(:msgid => "<def>", :parent_msgid => "<abc>")
     
     Article.link_threads
     
@@ -104,9 +104,20 @@ describe Article, ".link_threads" do
     art2.parent_id.should eql(art1.id)
   end
 end  
+
+describe Article, ".thread_tree" do
+  before(:each) do
+    @art1 = Article.make()
+    @art2 = Article.make(:parent_id => @art1)
+    @art3 = Article.make(:parent_id => @art2)
+    @art4 = Article.make(:parent_id => @art1)
+    @art5 = Article.make()
+  end
   
+  it "should return all unparented articles"
+  it "should set children members"
   
-  
+end 
   
   
   

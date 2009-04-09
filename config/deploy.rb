@@ -15,3 +15,19 @@ set :scm, :git
 role :app, "petebevin.com"
 role :web, "petebevin.com"
 role :db,  "petebevin.com", :primary => true
+
+
+namespace :deploy do
+  task :start, :roles => :app do
+    run "touch #{current_release}/tmp/restart.txt"
+  end
+
+  task :stop, :roles => :app do
+    # Do nothing.
+  end
+
+  desc "Restart Application"
+  task :restart, :roles => :app do
+    run "touch #{current_release}/tmp/restart.txt"
+  end
+end

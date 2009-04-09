@@ -1,3 +1,5 @@
+require 'set'
+
 class ArchiveController < ApplicationController
   def index
     @year = Time.now.year
@@ -6,7 +8,9 @@ class ArchiveController < ApplicationController
 
   def month
     @year, @month = params[:year], params[:month]
-    @articles = Article.find(:all, :order => "received_at DESC")
+    candidates = Article.find(:all, :order => "received_at DESC")
+    
+    @articles = Article.thread_tree(candidates)
   end
 
   def article

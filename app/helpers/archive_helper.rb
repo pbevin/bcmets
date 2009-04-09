@@ -31,4 +31,19 @@ module ArchiveHelper
   def to_html(text)
     wrap('pre', auto_link(h(text)))
   end
+  
+  def thread_as_html(article)
+    x = "<li>#{link_to article.subject, article, :class => 'subject'}</li>"
+    if !article.children.nil? && !article.children.empty?
+      x += "<ul>"
+      for child in article.children
+        x += thread_as_html(child)
+      end
+      x += "</ul>"
+    end
+    return x
+  end
+  
+  
 end
+

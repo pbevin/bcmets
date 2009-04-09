@@ -1,6 +1,7 @@
 class Article < ActiveRecord::Base
   validates_uniqueness_of :msgid
-  acts_as_tree
+  attr_accessor :children
+  has_one :parent, :class_name => "Article", :foreign_key => "parent_id"
   
   def from
     if name == email
@@ -42,9 +43,29 @@ class Article < ActiveRecord::Base
   def self.link_threads
     articles_to_link = Article.find(:all, :conditions => "parent_msgid != ''")
     articles_to_link.each do |article|
-      article.parent = Article.find_by_msgid(article.parent_msgid)
+      article.parent_id = Article.find_by_msgid(article.parent_msgid).id
       article.save
     end
+  end
+  
+  def self.thread_tree(unthreaded)
+    hash = {}
+    for article in unthreaded
+      hash[article.id] = article
+    end
+    
+    retval = []
+    for article in unthreaded
+      if article.parent_id.nil? || !hash.has_key?(article.parent_id)
+        retval << article
+      else
+        parent = hash[article.parent_id]
+        parent.children ||= []
+        hash[article.parent_id].children << article
+      end
+    end
+    
+    return retval
   end
   
   def self.parse_sender(from)

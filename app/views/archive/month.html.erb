@@ -1,1 +1,5 @@
-<%= threaded_articles(@articles) %>
+<ul>
+	<% for article in @articles %>
+	<%= thread_as_html(article) %>
+	<% end %>
+</ul>
