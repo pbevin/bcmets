@@ -33,7 +33,7 @@ module ArchiveHelper
   end
   
   def thread_as_html(article)
-    x = "<li>#{link_to article.subject, article, :class => 'subject'}</li>"
+    x = "<li>#{link_to article.subject, article, :class => 'subject'} <small>#{h article.from}, #{article.sent_at.to_s(:short)}</small></li>"
     if !article.children.nil? && !article.children.empty?
       x += "<ul>"
       for child in article.children

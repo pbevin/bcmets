@@ -1,7 +1,6 @@
-<h1>Archives</h1>
 <% for year in @year.downto(2001) -%>
 	<h2><%= year %></h2>
-	<table>
+	<table class="index">
 		<tr>
 			<td><%= month_link(year, 1) %></td>
 			<td><%= month_link(year, 2) %></td>

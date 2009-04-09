@@ -1,0 +1,25 @@
+body {
+	font-family: "Optima", "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+	color: #333;
+}
+
+a {
+	color: #00f;
+}
+
+a:visited {
+	color: #060;
+}
+
+a:hover {
+	color: #f00;
+}
+
+table.index {
+	border-collapse: collapse;
+}
+
+table.index td {
+	border: 1px solid #999;
+	padding: 3px;
+}
