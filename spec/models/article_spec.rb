@@ -13,11 +13,18 @@ describe Article do
       :parent_msgid => nil,
       :parent_id => nil
     }
+    @article = Article.create(@valid_attributes)
   end
 
   it "should create a new instance given valid attributes" do
-    Article.create!(@valid_attributes)
+    @article.save
   end
+  
+  it "should be unique by msgid" do
+    duplicate = Article.new(:msgid => @article.msgid)
+    duplicate.should_not be_valid
+  end
+  
   
 end
 
@@ -86,7 +93,10 @@ describe Article, "parsing edge cases" do
     parse("Message-id: yyy").msgid.should eql("yyy")
   end
   
-  it "should not allow parent_msgid = <>"
+  it "should not allow parent_msgid = <>" do
+    parse("In-Reply-To: <>").parent_msgid.should be_nil
+  end
+
   it "should keep track of References: field while unresolved"
 end
 

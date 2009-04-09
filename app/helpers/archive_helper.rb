@@ -27,4 +27,8 @@ module ArchiveHelper
   def wrap(tag, content)
     "<#{tag}>#{content}</#{tag}>"
   end
+  
+  def to_html(text)
+    wrap('pre', auto_link(h(text)))
+  end
 end

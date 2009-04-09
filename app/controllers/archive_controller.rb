@@ -10,6 +10,7 @@ class ArchiveController < ApplicationController
   end
 
   def article
+    @article = Article.find_by_id(params[:id])
   end
 
 end

@@ -1,11 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ArchiveHelper do
-  
-  #Delete this example and add some real ones or delete this file
-  it "should be included in the object returned by #helper" do
-    included_modules = (class << helper; self; end).send :included_modules
-    included_modules.should include(ArchiveHelper)
+  describe "to_html" do
+    it "should protect angle brackets" do
+      helper.to_html("The <best> plan is...").should == '<pre>The &lt;best&gt; plan is...</pre>'
+    end
+    
+    it "should link email addresses" do
+      helper.to_html('pete@petebevin.com').should == '<pre><a href="mailto:pete@petebevin.com">pete@petebevin.com</a></pre>'
+    end
   end
-
 end

@@ -1,4 +1,5 @@
 class Article < ActiveRecord::Base
+  validates_uniqueness_of :msgid
   acts_as_tree
 
   def self.parse(text)
@@ -22,7 +23,10 @@ class Article < ActiveRecord::Base
       
       article.subject = headers['Subject']
       article.msgid = headers['Message-Id'] || headers['Message-ID'] || headers['Message-id']
-      article.parent_msgid = headers['In-Reply-To']
+      parent_msgid = headers['In-Reply-To']
+      if parent_msgid != '<>'
+        article.parent_msgid = parent_msgid
+      end
       article.body = body
     end
   end

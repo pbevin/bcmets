@@ -23,17 +23,27 @@ describe ArchiveController do
 
   describe "GET 'month'" do
     it "should be successful" do
-      get 'month'
+      get 'month', :year => '2009', :month => '3'
       response.should be_success
     end
     
     it "should set the articles list"
+    it "should include articles that are part of current threads"
   end
 
   describe "GET 'article'" do
+    before(:each) do
+      @article = Article.create(:body => "body")
+    end
+
     it "should be successful" do
-      get 'article'
+      get 'article', :id => @article.id
       response.should be_success
+    end
+    
+    it "should assign @article" do
+      get 'article', :id => @article.id
+      assigns(:article).should == @article
     end
   end
 end

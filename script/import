@@ -29,3 +29,6 @@ each_message("/Users/pete/tmp/2009-03") do |message|
   puts article.subject
   article.save
 end
+
+puts "Linking..."
+Article.link_threads
