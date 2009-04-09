@@ -9,7 +9,7 @@ class CreateArticles < ActiveRecord::Migration
       t.text :body
       t.string :msgid
       t.string :parent_msgid
-      t.string :parent_id
+      t.integer :parent_id
 
       t.timestamps
     end

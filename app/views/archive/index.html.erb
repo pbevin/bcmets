@@ -1,2 +1,24 @@
-<h1>Archive#index</h1>
-<p>Find me in app/views/archive/index.html.erb</p>
+<h1>Archives</h1>
+<% for year in @year.downto(2001) -%>
+	<h2><%= year %></h2>
+	<table>
+		<tr>
+			<td><%= month_link(year, 1) %></td>
+			<td><%= month_link(year, 2) %></td>
+			<td><%= month_link(year, 3) %></td>
+			<td><%= month_link(year, 4) %></td>
+		</tr>
+		<tr>
+			<td><%= month_link(year, 5) %></td>
+			<td><%= month_link(year, 6) %></td>
+			<td><%= month_link(year, 7) %></td>
+			<td><%= month_link(year, 8) %></td>
+		</tr>
+		<tr>
+			<td><%= month_link(year, 9) %></td>
+			<td><%= month_link(year, 10) %></td>
+			<td><%= month_link(year, 11) %></td>
+			<td><%= month_link(year, 12) %></td>
+		</tr>
+	</table>
+<% end -%>

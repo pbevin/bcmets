@@ -13,6 +13,12 @@ describe ArchiveController do
       get 'index'
       response.should be_success
     end
+    
+    it "should assign year" do
+      get 'index'
+      assigns(:year).should == Time.now.year
+      assigns(:month).should == Time.now.month
+    end
   end
 
   describe "GET 'month'" do
@@ -20,6 +26,8 @@ describe ArchiveController do
       get 'month'
       response.should be_success
     end
+    
+    it "should set the articles list"
   end
 
   describe "GET 'article'" do

@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 20090406210757) do
     t.text     "body"
     t.string   "msgid"
     t.string   "parent_msgid"
-    t.string   "parent_id"
+    t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
