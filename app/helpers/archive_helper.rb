@@ -17,7 +17,7 @@ module ArchiveHelper
     html = ''
     
     for article in articles
-      html += wrap('li', link_to(article.subject, article))
+      html += wrap('li', link_to(article.subject, article, :class => 'subject'))
     end
     
     return wrap('ul', html)

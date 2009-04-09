@@ -9,5 +9,7 @@ describe ArchiveHelper do
     it "should link email addresses" do
       helper.to_html('pete@petebevin.com').should == '<pre><a href="mailto:pete@petebevin.com">pete@petebevin.com</a></pre>'
     end
+    
+    it "should wrap long lines"
   end
 end

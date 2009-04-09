@@ -1,3 +1,10 @@
+<h1 id="subject"><%= @article.subject %></h1>
+<div id="header">
+	<ul>
+		<li id="from">From: <%= auto_link(h(@article.from)) %></li>
+		<li id="date">Date: <%= @article.sent_at %></li>
+	</ul>
+</div>
 <div id="body">
 	<%= to_html @article.body %>
-</p>
+</div>

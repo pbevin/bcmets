@@ -2,9 +2,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/archive/article" do
   before(:each) do
-    @article = Article.create(:subject => "subject", :body => "the body")
+    @article = Article.make()
     assigns[:article] = @article
     render "archive/article"
+  end
+  
+  it "should have a title" do
+    response.should have_tag('h1', @article.subject)
   end
   
   it "should display article body" do

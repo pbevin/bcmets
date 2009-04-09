@@ -6,7 +6,7 @@ class ArchiveController < ApplicationController
 
   def month
     @year, @month = params[:year], params[:month]
-    @articles = Article.find(:all)
+    @articles = Article.find(:all, :order => "received_at DESC")
   end
 
   def article

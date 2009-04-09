@@ -2,30 +2,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Article do
   before(:each) do
-    @valid_attributes = {
-      :sent_at => Time.now,
-      :received_at => Time.now,
-      :name => "Pete Bevin",
-      :email => "pete@petebevin.com",
-      :subject => "Test Article",
-      :body => "This is the article body.\n\nPete.\n",
-      :msgid => "<xyzzy@petebevin.com>",
-      :parent_msgid => nil,
-      :parent_id => nil
-    }
-    @article = Article.create(@valid_attributes)
+    @article = Article.make
   end
 
-  it "should create a new instance given valid attributes" do
-    @article.save
-  end
-  
   it "should be unique by msgid" do
     duplicate = Article.new(:msgid => @article.msgid)
     duplicate.should_not be_valid
   end
-  
-  
 end
 
 describe Article, ".from_headers" do
@@ -48,7 +31,7 @@ describe Article, ".from_headers" do
   end
   
   it "should set the subject from the subject line" do
-    @article.subject.should eql("[bcmets] Re: Confidentiality &amp; bcmets.org")
+    @article.subject.should eql("Re: Confidentiality &amp; bcmets.org")
   end
 
   it "should set the body" do
@@ -96,6 +79,16 @@ describe Article, "parsing edge cases" do
   it "should not allow parent_msgid = <>" do
     parse("In-Reply-To: <>").parent_msgid.should be_nil
   end
+  
+  it "should strip [...] from the subject line" do
+    parse("Subject: [bcmets] Grommets").subject.should == "Grommets"
+    parse("Subject: Re: [bcmets] Grommets").subject.should == "Re: Grommets"
+  end
+  
+  it "can reconstruct the From line" do
+    parse("From: Pete Bevin <pete@petebevin.com>").from.should == "Pete Bevin <pete@petebevin.com>"
+    parse("From: pete@petebevin.com").from.should == "pete@petebevin.com"
+  end
 
   it "should keep track of References: field while unresolved"
 end
@@ -110,8 +103,6 @@ describe Article, ".link_threads" do
     art2.reload
     art2.parent_id.should eql(art1.id)
   end
-  
-  
 end  
   
   
