@@ -9,7 +9,7 @@ class ArchiveController < ApplicationController
     @year, @month = params[:year], params[:month]
     @title = "#{Date::MONTHNAMES[@month.to_i]} #{@year}"
     
-    candidates = Article.find(:all, :order => "received_at DESC")
+    candidates = Article.for_month(@year.to_i, @month.to_i)
     
     @articles = Article.thread_tree(candidates)
   end

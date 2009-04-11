@@ -10,6 +10,15 @@ class Article < ActiveRecord::Base
       return name + " <" + email + ">"
     end
   end
+  
+  def self.for_month(year, month)
+    earliest = Time.local(year, month, 1, 0, 0, 0)
+    latest = Time.local(year, month + 1, 1, 0, 0, 0)
+    
+    self.find(:all,
+              :conditions => ["received_at >= ? and received_at < ?", earliest, latest],
+              :order => "received_at DESC")
+  end
 
   def self.parse(text)
     returning Article.new do |article|

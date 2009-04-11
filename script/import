@@ -24,11 +24,17 @@ def each_message(mbox_filename)
   yield article unless starting
 end
 
-each_message("/Users/pete/tmp/2009-03") do |message|
-  article = Article.parse(message)
-  puts article.subject
-  article.save
+if ARGV.blank?
+  puts "Usage: #{$0} file..."
+  exit
 end
 
+for file in ARGV
+  each_message(file) do |message|
+    article = Article.parse(message)
+    puts article.subject
+    article.save
+  end
+end
 puts "Linking..."
 Article.link_threads

@@ -36,7 +36,7 @@ describe ArchiveController do
     end
   end
 
-  describe "GET 'month'" do
+  describe "GET 'month' ordering" do
     before(:each) do
       Article.make(:subject => "3", :received_at => DateTime.parse("Thu, 12 Mar 2009 21:33:00 -0400 (EDT)"))
       Article.make(:subject => "2", :received_at => DateTime.parse("Thu, 12 Mar 2009 21:32:00 -0400 (EDT)"))
@@ -53,6 +53,7 @@ describe ArchiveController do
       assigns(:articles).count.should == 4
     end
 
+    # TODO: This is really a test on the model
     it "should list articles in reverse order" do
       articles = assigns(:articles)
       articles.consecutive_pairs do |a, b|
@@ -61,7 +62,7 @@ describe ArchiveController do
     end
     it "should include articles that are part of current threads"
   end
-
+  
   describe "GET 'article'" do
     before(:each) do
       @article = Article.create(:body => "body")

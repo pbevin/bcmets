@@ -1,5 +1,9 @@
-<ul>
-	<% for article in @articles %>
-	<%= thread_as_html(article) %>
-	<% end %>
-</ul>
+<% if !@articles.blank? %>
+  <ul>
+  <% for article in @articles %>
+    <%= thread_as_html(article) %>
+  <% end %>
+	</ul>
+<% else %>
+  <p>There are no articles.</p>
+<% end %>
