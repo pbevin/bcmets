@@ -43,7 +43,5 @@ module ArchiveHelper
     end
     return x
   end
-  
-  
 end
 

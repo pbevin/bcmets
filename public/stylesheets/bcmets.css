@@ -1,25 +1,58 @@
 body {
-	font-family: "Optima", "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+	font-family: "Optima","Lucida Grande","Trebuchet MS",Verdana,sans-serif;
 	color: #333;
+	background: #f8f8f8;
+	min-width: 970px;
 }
-
 a {
 	color: #00f;
 }
-
 a:visited {
 	color: #060;
 }
-
 a:hover {
 	color: #f00;
 }
-
 table.index {
+	border: 1px solid #999;
 	border-collapse: collapse;
 }
-
 table.index td {
-	border: 1px solid #999;
-	padding: 3px;
+	padding: 3px 10px;
 }
+#wrap {
+	margin: 0 auto;
+	width: 970px;
+}
+#pageheader {
+	background: #036;
+	color: #fff;
+	padding: 20px;
+}
+#main {
+	float: left;
+	margin-bottom: 20px;
+	width: 700px;
+}
+#sidebar {
+	float: right;
+	width: 250px;
+}
+#footer {
+	border-top: 1px solid #999;
+	padding-top: 0;
+	clear: both;
+}
+
+#sidebar h3 {
+	margin-bottom: 0;
+}
+#sidebar ul {
+	margin-top: 1ex;
+	padding-left: 1em;
+}
+#sidebar li {
+	list-style: url("/arrow.gif");;
+	padding-bottom: 1ex;
+}
+

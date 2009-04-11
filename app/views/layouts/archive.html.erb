@@ -1,14 +1,64 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<title>BCMets.org - Metastatic Breast Cancer</title>
-		<%= javascript_include_tag :all, :cache => true %>
-		<%= stylesheet_link_tag :all, :cache => true %>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<title>
+			BCMets.org - Metastatic Breast Cancer
+		</title><%= javascript_include_tag :all, :cache => true %><%= stylesheet_link_tag :all, :cache => true %>
 	</head>
 	<body>
-		<h1><%= @title %></h1>
-		<%= yield %>
+		<div id="wrap">
+			<div id="pageheader">
+				<h1>
+					BCMets.org - Metastatic Breast Cancer Information and Support
+				</h1>
+			</div>
+			<div id="main">
+				<h1>
+					<%= @title %>
+				</h1><%= yield %>
+			</div>
+			<div id="sidebar">
+				<p>
+					A wealth of information about breast cancer, from the experts.
+				</p>
+				<p>
+					<% form_tag do %> <%= text_field_tag :q, params[:q], :size => 10 %> <%= submit_tag "Search" %> <% end %>
+				</p>
+				<h3>
+					Links:
+				</h3>
+				<ul>
+					<li><a href="/join"><strong>Join the mailing list</strong></a>
+					</li>
+					<li><a href="/pages/howto">How to use the list</a>
+					</li>
+					<li><a href="http://darkwing.uoregon.edu/%7Ejbonine/abbrevs.html">Abbreviation list</a>
+					</li>
+					<li><a href="http://www.brainmetsbc.org/">BrainMetsBC.org</a>
+					</li>
+					<li><a href="http://www.picturetrail.com/">Picture Trail</a> (login: bcbeauties/bcmets)
+					</li>
+				</ul>
+				<h3>
+					Information
+				</h3>
+				<ul>
+					<li>Archive provided by <a href="http://www.petebevin.com/">Pete Bevin</a>.
+					</li>
+					<li>Please <a href="/donate">donate</a> to help keep this service running.
+					</li>
+					<li><a href="mailto:pete@petebevin.com">Email Pete</a> to report problems, or if you want the raw archive files.
+					</li>
+				</ul>
+
+			</div>
+			<div id="footer">
+				<p>
+					This archive is owned and operated by <%= link_to "Pete Bevin", "http://www.petebevin.com" %>. Please read the <%= link_to "disclaimer", "/pages/disclaimer" %> and <%= link_to "privacy policy", "/pages/privacy_policy" %>.
+				</p>
+			</div>
+		</div>
 	</body>
 </html>
