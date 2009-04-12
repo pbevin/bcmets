@@ -29,6 +29,7 @@ if ARGV.blank?
   exit
 end
 
+ARGV.shift
 for file in ARGV
   each_message(file) do |message|
     article = Article.parse(message)
