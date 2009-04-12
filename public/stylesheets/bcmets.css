@@ -5,13 +5,13 @@ body {
 	min-width: 970px;
 }
 a {
-	color: #00f;
+	color: #009;
 }
 a:visited {
 	color: #060;
 }
 a:hover {
-	color: #f00;
+	color: #c00;
 }
 table.index {
 	border: 1px solid #999;
