@@ -22,12 +22,11 @@ table.index td {
 }
 #wrap {
 	margin: 0 auto;
-	width: 970px;
+	width: 960px;
 }
 #pageheader {
-	background: #036;
 	color: #fff;
-	padding: 20px;
+	padding: 0px;
 }
 #main {
 	float: left;

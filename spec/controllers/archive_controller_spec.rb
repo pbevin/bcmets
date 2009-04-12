@@ -66,16 +66,19 @@ describe ArchiveController do
   describe "GET 'article'" do
     before(:each) do
       @article = Article.create(:body => "body")
+      get 'article', :id => @article.id
     end
 
     it "should be successful" do
-      get 'article', :id => @article.id
       response.should be_success
     end
     
     it "should assign @article" do
-      get 'article', :id => @article.id
       assigns(:article).should == @article
+    end
+    
+    it "should have a title" do
+      assigns(:title).should == @article.subject
     end
   end
 end

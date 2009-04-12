@@ -7,10 +7,6 @@ describe "/archive/article" do
     render "archive/article"
   end
   
-  it "should have a title" do
-    response.should have_tag('h1', @article.subject)
-  end
-  
   it "should display article body" do
     response.should have_tag('div#body', @article.body)
   end

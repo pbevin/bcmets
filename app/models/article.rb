@@ -13,7 +13,7 @@ class Article < ActiveRecord::Base
   
   def self.for_month(year, month)
     earliest = Time.local(year, month, 1, 0, 0, 0)
-    latest = Time.local(year, month + 1, 1, 0, 0, 0)
+    latest = Time.local(year, month + 1, 1, 0, 0, 0)  # XXX Doesn't work for December!
     
     self.find(:all,
               :conditions => ["received_at >= ? and received_at < ?", earliest, latest],
@@ -50,18 +50,18 @@ class Article < ActiveRecord::Base
   end
   
   def self.link_threads
-    articles_to_link = Article.find(:all, :conditions => "parent_msgid != ''")
+    articles_to_link = Article.find(:all, :conditions => "parent_msgid != '' and parent_id is null")
     articles_to_link.each do |article|
-      article.parent_id = Article.find_by_msgid(article.parent_msgid).id
+      parent = Article.find_by_msgid(article.parent_msgid)
+      if parent != nil
+        article.parent_id = parent.id
+      end
       article.save
     end
   end
   
   def self.thread_tree(unthreaded)
-    hash = {}
-    for article in unthreaded
-      hash[article.id] = article
-    end
+    hash = unthreaded.index_by(&:id)
     
     retval = []
     for article in unthreaded
