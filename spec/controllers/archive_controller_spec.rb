@@ -52,6 +52,10 @@ describe ArchiveController do
     it "should set the articles list" do
       assigns(:articles).count.should == 4
     end
+    
+    it "should set the article count" do
+      assigns(:article_count).should == 4
+    end
 
     # TODO: This is really a test on the model
     it "should list articles in reverse order" do

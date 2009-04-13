@@ -12,6 +12,7 @@ class ArchiveController < ApplicationController
     candidates = Article.for_month(@year.to_i, @month.to_i)
     
     @articles = Article.thread_tree(candidates)
+    @article_count = candidates.count
   end
 
   def article
