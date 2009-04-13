@@ -64,7 +64,23 @@ describe ArchiveController do
         a.received_at.should > b.received_at
       end
     end
-    it "should include articles that are part of current threads"
+    # TODO it "should include articles that are part of current threads"
+  end
+  
+  describe "GET month_by_date" do
+    it "should list articles in reverse date order" do
+      article1 = Article.make(:received_at => DateTime.parse("Thu, 12 Mar 2009 21:33:00 -0400 (EDT)"))
+      article2 = Article.make(:received_at => DateTime.parse("Fri, 13 Mar 2009 21:33:00 -0400 (EDT)"))
+      article3 = Article.make(:received_at => DateTime.parse("Fri, 13 Mar 2009 22:46:00 -0400 (EDT)"))
+      get 'month_by_date', :year => '2009', :month => '3'
+      
+      thu = Date.new(2009, 3, 12)
+      fri = Date.new(2009, 3, 13)
+
+      assigns(:dates).should == [fri, thu]      
+      assigns(:articles).should == { fri => [article3, article2], thu => [article1] }
+      assigns(:article_count).should == 3
+    end
   end
   
   describe "GET 'article'" do

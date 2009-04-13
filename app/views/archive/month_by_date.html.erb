@@ -1,0 +1,15 @@
+<% if !@dates.blank? %>
+  <p><%= @article_count %> articles.  <%= link_to 'View in thread order', archive_month_path(:year => @year, :month => @month) %></p>
+  <% for date in @dates %>
+    <h2><%= date.strftime("%a %b #{date.day.ordinalize}") %></h2>
+		<ul class="bydate">
+			<% for article in @articles[date] %>
+			  <li><%= link_to article.subject, article, :class => "subject" %>
+					<small><%=h article.from %>, <%= article.received_at.to_s(:short) %></small>
+				</li>
+			<% end %>
+		</ul>
+  <% end %>
+<% else %>
+<p>No articles.</p>  
+<% end %>

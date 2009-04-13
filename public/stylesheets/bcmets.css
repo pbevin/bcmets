@@ -76,6 +76,10 @@ table.index td {
 margin-top : 1em;
 }
 
+#main ul.bydate li {
+	margin-top: .1em;
+}
+
 
 #main ul ul li {
 margin-top : .1em;

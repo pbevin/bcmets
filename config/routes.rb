@@ -6,6 +6,10 @@ ActionController::Routing::Routes.draw do |map|
   map.article 'archive/article/:id',
               :controller => 'archive',
               :action => 'article'
+  map.archive_month_by_date '/archive/:year/:month/date',
+                            :controller => 'archive',
+                            :action => 'month_by_date'
+  
   map.archive_month 'archive/:year/:month',
                     :controller => 'archive',
                     :action => 'month'
