@@ -1,8 +1,9 @@
 body {
 	font-family: "Optima","Lucida Grande","Trebuchet MS",Verdana,sans-serif;
 	color: #333;
-	background: #f8f8f8;
+	background: #fffefe;
 	min-width: 970px;
+	line-height : 1.5em;
 }
 a {
 	color: #009;
@@ -10,9 +11,16 @@ a {
 a:visited {
 	color: #060;
 }
-a:hover {
-	color: #c00;
+a:hover, a:focus, a:active {
+	background-color: #009;
+	color : #fff;
+	text-decoration : none;
 }
+
+#pageheader a:hover, #pageheader a:focus, #pageheader a:active {
+	background-color: #fffefe;
+}
+
 table.index {
 	border: 1px solid #999;
 	border-collapse: collapse;
@@ -51,7 +59,24 @@ table.index td {
 	padding-left: 1em;
 }
 #sidebar li {
-	list-style: url("/arrow.gif");;
+	list-style: url("/arrow.gif");
 	padding-bottom: 1ex;
 }
 
+#sidebar strong {
+	background-color: #009;
+	color : #fff;
+	text-decoration : none;
+	padding : 3px;
+}
+
+
+
+#main li {
+margin-top : 1em;
+}
+
+
+#main ul ul li {
+margin-top : .1em;
+}
