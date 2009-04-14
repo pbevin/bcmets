@@ -16,13 +16,6 @@ end
 
 
 describe ArchiveController do
-
-  #Delete these examples and add some real ones
-  it "should use ArchiveController" do
-    controller.should be_an_instance_of(ArchiveController)
-  end
-
-
   describe "GET 'index'" do
     it "should be successful" do
       get 'index'
@@ -85,7 +78,7 @@ describe ArchiveController do
   
   describe "GET 'article'" do
     before(:each) do
-      @article = Article.create(:body => "body")
+      @article = Article.make(:body => "body")
       get 'article', :id => @article.id
     end
 
@@ -112,18 +105,48 @@ describe ArchiveController do
   end
   
   describe "POST 'post'" do
-    it "should send email if all fields are set" do
-      article = Article.make :msgid => nil
-      article.should_receive(:send_via_email).once
-      article.should_receive(:save).once
-      post 'post', :article => article
-      
-      article.msgid.should =~ /<[0-9a-f]{16}@bcmets.org>/
-      article.received_at.should == article.sent_at
-      article.received_at.should > 1.second.ago
-      article.received_at.should < 1.second.from_now
+    before(:each) do
+      controller.stub!(:send_via_email)
+      @article = Article.make_unsaved :msgid => nil      
     end
 
-    it "should validate fields"
+    def do_post
+      post 'post', :article => {
+        :name => @article.name,
+        :email => @article.email,
+        :subject => @article.subject,
+        :body => @article.body 
+      }
+      @article = assigns(:article)
+    end
+    
+    it "should send email if all fields are set" do
+      controller.should_receive(:send_via_email).once
+      do_post
+    end
+    
+    it "should get saved" do
+      lambda { do_post }.should change { Article.count }.by(1)
+    end
+    
+    it "should redirect with flash" do
+      do_post
+      response.should redirect_to(articles_url)
+      flash[:notice].should == "Message sent."
+    end
+    
+    it "should initialize fields" do
+      do_post
+      @article.msgid.should =~ /<[0-9a-f]{16}@bcmets.org>/
+      @article.received_at.should == @article.sent_at
+      @article.received_at.should > 1.second.ago
+      @article.received_at.should < 1.second.from_now
+    end
+    
+    it "should validate fields" do
+      @article.email = ""
+      controller.should_not_receive(:send_via_email)
+      lambda { do_post }.should_not change { Article.count }
+    end
   end
 end

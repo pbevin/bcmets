@@ -2,6 +2,10 @@ class Article < ActiveRecord::Base
   validates_uniqueness_of :msgid
   attr_accessor :children
   has_one :parent, :class_name => "Article", :foreign_key => "parent_id"
+  validates_presence_of :name
+  validates_presence_of :email
+  validates_presence_of :subject
+  validates_presence_of :body
   
   def from
     if name == email
@@ -111,5 +115,18 @@ class Article < ActiveRecord::Base
     n.times { hexCode << validChars.rand }
 
     hexCode
+  end
+  
+  def send_via_email
+    msg = "From: #{self.from}\n"
+    msg += "To: pete@petebevin.com\n"
+    msg += "Subject: #{self.subject}\n"
+    msg += "Message-Id: #{self.msgid}"
+    msg += "\n"
+    msg += self.body
+
+    Net::SMTP::start('feste.bestiary.com', 2025) do |smtp|
+      smtp.send_message msg, 'pete@petebevin.com', 'pete@petebevin.com'
+    end
   end
 end

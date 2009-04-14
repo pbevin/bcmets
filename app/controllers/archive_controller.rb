@@ -32,13 +32,20 @@ class ArchiveController < ApplicationController
 
   def post
     if request.post?
-      article = params[:article]
-      article.prepare_for_email
-      article.send_via_email
-      article.save
-      redirect_to :action => "index"
+      @article = Article.new(params[:article])
+      if @article.valid?
+        @article.prepare_for_email
+        send_via_email(@article)
+        @article.save
+        flash[:notice] = "Message sent."
+        redirect_to :action => "index"
+      end
     else
       @article = Article.new
     end
+  end
+  
+  def send_via_email(article)
+    article.send_via_email
   end
 end
