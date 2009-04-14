@@ -1,0 +1,26 @@
+<h1>Post a Message</h1>
+<% form_for :article, :html => { :id => "post_form" } do |f| %>
+	<fieldset>
+		<legend>Post to the list</legend>
+		
+		<div>
+			<%= f.label :name, "Name" %>
+			<%= f.text_field :name %>
+		</div>
+		<div>
+			<%= f.label :email, "Email" %>
+			<%= f.text_field :email %>
+		</div>
+		<div>
+			<%= f.label :subject, "Subject" %>
+			<%= f.text_field :subject %>
+		</div>
+		<div>
+			<%= f.label :body, "Message" %>
+			<%= f.text_area :body, :rows => 30, :cols => 70 %>
+		</div>
+		<div>
+			<%= submit_tag "Post" %>
+		</div>
+	</fieldset>
+<% end %>

@@ -101,4 +101,29 @@ describe ArchiveController do
       assigns(:title).should == @article.subject
     end
   end
+  
+  describe "GET 'post'" do
+    it "should have blank fields" do
+      get 'post'
+      assigns(:article).should be_instance_of(Article)
+      assigns(:article).subject.should be_blank
+      assigns(:article).body.should be_blank
+    end
+  end
+  
+  describe "POST 'post'" do
+    it "should send email if all fields are set" do
+      article = Article.make :msgid => nil
+      article.should_receive(:send_via_email).once
+      article.should_receive(:save).once
+      post 'post', :article => article
+      
+      article.msgid.should =~ /<[0-9a-f]{16}@bcmets.org>/
+      article.received_at.should == article.sent_at
+      article.received_at.should > 1.second.ago
+      article.received_at.should < 1.second.from_now
+    end
+
+    it "should validate fields"
+  end
 end

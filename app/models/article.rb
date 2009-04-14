@@ -97,4 +97,19 @@ class Article < ActiveRecord::Base
   def self.parse_from_line(from_line)
     from_line.sub(/.*?  /, '')
   end
+  
+  def prepare_for_email
+    self.sent_at = self.received_at = Time.now
+    self.msgid = "<#{hex(16)}@bcmets.org>"
+  end
+  
+  def hex(n)
+    validChars = ("a".."f").to_a + ("0".."9").to_a
+    length = validChars.size
+
+    hexCode = ""
+    n.times { hexCode << validChars.rand }
+
+    hexCode
+  end
 end
