@@ -2,6 +2,8 @@ class Article < ActiveRecord::Base
   validates_uniqueness_of :msgid
   attr_accessor :children
   has_one :parent, :class_name => "Article", :foreign_key => "parent_id"
+  attr_accessor :reply_type # list, sender, or both
+  attr_accessor :to
   validates_presence_of :name
   validates_presence_of :email
   validates_presence_of :subject
@@ -74,7 +76,7 @@ class Article < ActiveRecord::Base
       else
         parent = hash[article.parent_id]
         parent.children ||= []
-        hash[article.parent_id].children << article
+        parent.children << article
       end
     end
     
@@ -118,15 +120,33 @@ class Article < ActiveRecord::Base
   end
   
   def send_via_email
-    msg = "From: #{self.from}\n"
-    msg += "To: pete@petebevin.com\n"
-    msg += "Subject: #{self.subject}\n"
-    msg += "Message-Id: #{self.msgid}"
-    msg += "\n"
-    msg += self.body
-
+    email = TMail::Mail.new
+    email.to = "pete@petebevin.com"
+    email.from = self.from
+    email.message_id = self.msgid
+    email.subject = seldf.subject
+    email.body = self.body
     Net::SMTP::start('feste.bestiary.com', 2025) do |smtp|
-      smtp.send_message msg, 'pete@petebevin.com', 'pete@petebevin.com'
+      smtp.send_message email.to_s, self.email, 'pete@petebevin.com'
+    end
+  end
+  
+  def reply
+    returning Article.new do |reply|
+      reply.subject = self.subject
+      reply.subject = "Re: #{reply.subject}" unless reply.subject =~ /^Re:/i
+      reply.to = self.from
+      reply.parent_id = self.id
+      reply.parent_msgid = self.msgid
+      reply.body = "#{self.name} writes:\n#{quote(self.body)}"
+    end
+  end
+  
+private
+
+  def quote(string)
+    returning "" do |body|
+      string.each_line { |line| body << "> #{line}" }
     end
   end
 end

@@ -108,19 +108,52 @@ end
 describe Article, ".thread_tree" do
   before(:each) do
     @art1 = Article.make()
-    @art2 = Article.make(:parent_id => @art1)
-    @art3 = Article.make(:parent_id => @art2)
-    @art4 = Article.make(:parent_id => @art1)
+    @art2 = Article.make(:parent_id => @art1.id)
+    @art3 = Article.make(:parent_id => @art2.id)
+    @art4 = Article.make(:parent_id => @art1.id)
     @art5 = Article.make()
+    
+    @tree = Article.thread_tree([@art1, @art2, @art3, @art4, @art5])
   end
   
-  it "should return all unparented articles"
-  it "should set children members"
+  it "should return all unparented articles" do
+    @tree.count.should == 2
+  end
   
+  it "should set children members" do
+    @art1.children.map(&:id).should == [@art2.id, @art4.id]
+    @art1.children.should == [@art2, @art4]
+    @art5.children.should be_nil  # not sure - maybe should be []
+    @art2.children.should == [@art3]
+  end
 end 
   
+describe Article, ".reply" do
+  before(:each) do
+    @article = Article.make
+  end
   
+  it "should Re: the subject line" do
+    @article.reply.subject.should == "Re: #{@article.subject}"
+  end
+
+  it "should not add Re: if the subject line already has it" do
+    @article.subject = "Re: grommet welding"
+    @article.reply.subject.should == @article.subject
+  end
+
+  it "should set the To: field" do
+    @article.reply.to.should == @article.from
+  end
   
+  it "should set the parent_id and parent_msgid fields" do
+    @article.reply.parent_id.should == @article.id
+    @article.reply.parent_msgid.should == @article.msgid
+  end
   
-  
-  
+  it "should quote the original text" do
+    @article.body = "I\nlike\ncheese\n"
+    @article.name = "Pete Bevin"
+    @article.reply.body.should == "Pete Bevin writes:\n> I\n> like\n> cheese\n"
+  end
+end
