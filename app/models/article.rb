@@ -124,7 +124,7 @@ class Article < ActiveRecord::Base
     email.to = "pete@petebevin.com"
     email.from = self.from
     email.message_id = self.msgid
-    email.subject = seldf.subject
+    email.subject = self.subject
     email.body = self.body
     Net::SMTP::start('feste.bestiary.com', 2025) do |smtp|
       smtp.send_message email.to_s, self.email, 'pete@petebevin.com'
