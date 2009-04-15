@@ -202,3 +202,14 @@ pre {
 font-family: "Optima","Lucida Grande","Trebuchet MS",Verdana,sans-serif;
 font-size : 1em;
 }
+
+
+
+
+
+
+
+
+#main ul.bydate li {
+  margin-top: .1em;
+}
