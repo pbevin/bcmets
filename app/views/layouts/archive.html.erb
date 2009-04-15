@@ -6,7 +6,7 @@
 		<title>
 			BCMets.org - Metastatic Breast Cancer
 		</title>
-		<meta name="robots" content="noindex, nofollow">
+		<meta name="robots" content="noindex, nofollow" />
 		<%= javascript_include_tag :all, :cache => true %><%= stylesheet_link_tag :all, :cache => true %>
 	</head>
 	<body>
@@ -14,7 +14,7 @@
 			<div id="pageheader">
 				<h1>
 					<a href="/">
-						<img src="/images/bcmets-header.png" width="960" height="150" alt="BCMets.org - Metastatic Breast Cancer Help and Support" border="0" />
+						<img src="/images/bcmets-header.png" width="960" height="150" alt="BCMets.org - Metastatic Breast Cancer Help and Support" />
 					</a>
 				</h1>
 			</div>
@@ -31,9 +31,7 @@
 				<p>
 					A wealth of information about breast cancer, from the experts.
 				</p>
-				<p>
-					<% form_tag do %> <%= text_field_tag :q, params[:q], :size => 10 %> <%= submit_tag "Search" %> <% end %>
-				</p>
+				<% form_tag do %> <%= text_field_tag :q, params[:q], :size => 10 %> <%= submit_tag "Search" %> <% end %>
 				<h3>
 					Links
 				</h3>
@@ -48,6 +46,7 @@
 					</li>
 					<li><a href="http://www.picturetrail.com/">Picture Trail</a> (login: bcbeauties/bcmets)
 					</li>
+					<li><a href="http://validator.w3.org/check/referer"><small>Validate</small></a></li>
 				</ul>
 				<h3>
 					Information
