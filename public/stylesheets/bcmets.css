@@ -124,6 +124,7 @@ width : 230px;
 #pageheader img {
 padding-left : 0px;
 padding-right : 0px;
+border: 0;
 }
 
 #headerright {
