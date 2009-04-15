@@ -12,11 +12,14 @@
 	<body>
 		<div id="wrap">
 			<div id="pageheader">
-				<h1>
-					<a href="/">
-						<img src="/images/bcmets-header.png" width="960" height="150" alt="BCMets.org - Metastatic Breast Cancer Help and Support" />
+				<div id="banner">
+					<a href="http://new.bcmets.org/">
+						<img src="/images/bcmets-header.png" alt="home page" height="150" width="960" />
 					</a>
-				</h1>
+				</div>
+				<div id="searchform">
+					 <% form_tag do %> <%= text_field_tag :q, params[:q], :size => 10 %> <%= submit_tag "Search" %> <% end %>			
+				</div>
 			</div>
 			<div id="main">
 				<h1>
@@ -28,10 +31,6 @@
 				<%= yield %>
 			</div>
 			<div id="sidebar">
-				<p>
-					A wealth of information about breast cancer, from the experts.
-				</p>
-				<% form_tag do %> <%= text_field_tag :q, params[:q], :size => 10 %> <%= submit_tag "Search" %> <% end %>
 				<h3>
 					Links
 				</h3>
