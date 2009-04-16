@@ -17,7 +17,6 @@ describe "/archive/article" do
   it "should have a Reply link if recent" do
     @article.stub!(:recent?).and_return(true)
     render 'archive/article'
-    puts response.body
     response.should have_tag('a#reply[href=?]', article_reply_path(@article))
   end
     

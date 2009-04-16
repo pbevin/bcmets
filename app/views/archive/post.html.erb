@@ -1,5 +1,7 @@
 <h1>Post a Message</h1>
-<% form_for :article, :html => { :id => "post_form" } do |f| %>
+<% form_for :article,
+		:url => { :action => "post" },
+		:html => { :id => "post_form" } do |f| %>
 	<fieldset>		
 		<%= f.error_messages %>
 		
@@ -11,6 +13,15 @@
 			<%= f.label :email, "Email" %><br/>
 			<%= f.text_field :email %>
 		</div>
+		<% if @article.reply? -%>
+			<div>
+				<%= f.hidden_field :to %>
+				<%= f.hidden_field :parent_id %>
+				<%= f.hidden_field :parent_msgid %>
+				<%= f.label :reply_type, "Reply To:" %><br/>
+				<%= f.select :reply_type, ['List only', 'Sender only', 'Both'] %>
+			</div>
+		<% end -%>
 		<div>
 			<%= f.label :subject, "Subject" %><br/>
 			<%= f.text_field :subject %>

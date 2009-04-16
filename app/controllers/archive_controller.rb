@@ -45,6 +45,11 @@ class ArchiveController < ApplicationController
     end
   end
   
+  def reply
+    @article = Article.find_by_id(params[:id]).reply
+    render :template => 'archive/post'
+  end
+  
   def send_via_email(article)
     article.send_via_email
   end

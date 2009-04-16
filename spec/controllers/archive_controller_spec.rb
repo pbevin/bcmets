@@ -149,4 +149,13 @@ describe ArchiveController do
       lambda { do_post }.should_not change { Article.count }
     end
   end
+  
+  describe "GET 'reply'" do
+    it "should present fields based on Article.reply" do
+      controller.stub!(:send_via_email)
+      @article = Article.make
+      get 'reply', :id => @article.id
+      assigns[:article].attributes.should == @article.reply.attributes
+    end
+  end
 end

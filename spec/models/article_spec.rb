@@ -165,4 +165,9 @@ describe Article, ".reply" do
     @article.name = "Pete Bevin"
     @article.reply.body.should == "Pete Bevin writes:\n> I\n> like\n> cheese\n"
   end
+  
+  it "should be a reply" do
+    @article.should_not be_reply
+    @article.reply.should be_reply
+  end
 end

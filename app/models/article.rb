@@ -146,6 +146,10 @@ class Article < ActiveRecord::Base
     end
   end
   
+  def reply?
+    !to.nil?
+  end
+  
 private
 
   def quote(string)
