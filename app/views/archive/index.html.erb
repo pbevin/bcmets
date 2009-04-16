@@ -1,6 +1,8 @@
 <p><%= link_to "Post a message to the list", :controller => "archive", :action => "post" %></p>
 <% for year in @year.downto(2001) -%>
-  <hr/>
+	<% if year != @year %>
+	  <hr/>
+	<% end %>
 	<h2><%= year %></h2>
 	<table class="index">
 		<tbody>

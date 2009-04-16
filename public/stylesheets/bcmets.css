@@ -21,7 +21,8 @@ a:hover, a:focus, a:active {
 
 hr {
 	border: 0;
-	width: 80%;
+	width: 600px;
+	float: left;
 	color: #a5c3e1;
 	background-color: #a5c3e1;
 	height: 8px;
