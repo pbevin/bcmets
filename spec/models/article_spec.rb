@@ -9,6 +9,15 @@ describe Article do
     duplicate = Article.new(:msgid => @article.msgid)
     duplicate.should_not be_valid
   end
+  
+  it "should know what recent means" do
+    @article.received_at = 1.day.ago
+    @article.should be_recent
+    
+    @article.received_at = 3.months.ago
+    @article.should_not be_recent
+  end
+  
 end
 
 describe Article, ".from_headers" do

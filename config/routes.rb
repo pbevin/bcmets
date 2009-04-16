@@ -1,18 +1,20 @@
 ActionController::Routing::Routes.draw do |map|
   # The priority is based upon order of creation: first created -> highest priority.
   map.articles 'archive',
-              :controller => 'archive',
-              :action => 'index'
+    :controller => 'archive',
+    :action => 'index'
   map.article 'archive/article/:id',
-              :controller => 'archive',
-              :action => 'article'
+    :controller => 'archive',
+    :action => 'article'
   map.archive_month_by_date '/archive/:year/:month/date',
-                            :controller => 'archive',
-                            :action => 'month_by_date'
-  
+    :controller => 'archive',
+    :action => 'month_by_date'
+  map.article_reply '/archive/article/:id/reply',
+    :controller => 'archive',
+    :action => 'reply'
   map.archive_month 'archive/:year/:month',
-                    :controller => 'archive',
-                    :action => 'month'
+    :controller => 'archive',
+    :action => 'month'
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'

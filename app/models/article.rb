@@ -17,6 +17,10 @@ class Article < ActiveRecord::Base
     end
   end
   
+  def recent?
+    received_at > 1.month.ago
+  end
+  
   def self.for_month(year, month)
     earliest = Time.local(year, month, 1, 0, 0, 0)
     latest = Time.local(year, month + 1, 1, 0, 0, 0)  # XXX Doesn't work for December!
