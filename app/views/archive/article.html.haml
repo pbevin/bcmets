@@ -1,0 +1,12 @@
+- if @article.recent?
+  = link_to "Reply to the list", article_reply_path(@article), :id => "reply"
+#header
+  %ul
+    %li#from
+      From:
+      = auto_link(h(@article.from))
+    %li#date
+      Date:
+      = @article.sent_at
+#body
+  = to_html @article.body

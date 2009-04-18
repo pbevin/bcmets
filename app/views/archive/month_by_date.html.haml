@@ -1,0 +1,19 @@
+- if !@dates.blank?
+  %p
+    = @article_count
+    articles.
+    = link_to 'View in thread order', archive_month_path(:year => @year, :month => @month)
+  - for date in @dates
+    %h2
+      = date.strftime("%a %b #{date.day.ordinalize}")
+    %ul.bydate
+      - for article in @articles[date]
+        %li
+          = link_to article.subject, article, :class => "subject"
+          %small
+            = h article.from
+            ,
+            = article.received_at.to_s(:short)
+- else
+%p
+  No articles.

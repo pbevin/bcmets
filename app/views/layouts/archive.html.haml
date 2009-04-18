@@ -1,0 +1,76 @@
+!!! Strict
+%html
+  %head
+    %title
+      BCMets.org - Metastatic Breast Cancer
+    %meta{ :name => "robots", :content => "noindex, nofollow" }
+    = javascript_include_tag :all, :cache => true
+    = stylesheet_link_tag :all, :cache => true
+  %body
+    #wrap
+      #pageheader
+        #banner
+          %a{ :href => "http://new.bcmets.org/" }
+            %img{ :src => "/images/bcmets-header.png", :height => "150", :alt => "home page", :width => "960" }
+        #searchform
+          - form_tag do
+            = text_field_tag :q, params[:q], :size => 10
+            = submit_tag "Search"
+      #main
+        %h1
+          = @title
+        - if flash[:notice]
+          #notice
+            = flash[:notice]
+        = yield
+      #sidebar
+        %h3
+          Links
+        %ul
+          %li
+            %a{ :href => "/join" }
+              %strong
+                Join the mailing list
+          %li
+            %a{ :href => "/pages/howto" }
+              How to use the list
+          %li
+            %a{ :href => "http://darkwing.uoregon.edu/%7Ejbonine/abbrevs.html" }
+              Abbreviation list
+          %li
+            %a{ :href => "http://www.brainmetsbc.org/" }
+              BrainMetsBC.org
+          %li
+            %a{ :href => "http://www.picturetrail.com/" }
+              Picture Trail
+            (login: bcbeauties/bcmets)
+          %li
+            %a{ :href => "http://validator.w3.org/check/referer" }
+              %small
+                Validate
+        %h3
+          Information
+        %ul
+          %li
+            Archive provided by
+            %a{ :href => "http://www.petebevin.com/" }
+              Pete Bevin
+            \.
+          %li
+            Please
+            %a{ :href => "/donate" }
+              donate
+            to help keep this service running.
+          %li
+            %a{ :href => "mailto:pete@petebevin.com" }
+              Email Pete
+            to report problems, or if you want the raw archive files.
+      #footer
+        %p
+          This archive is owned and operated by
+          = link_to "Pete Bevin", "http://www.petebevin.com"
+          \. Please read the
+          = link_to "disclaimer", "/pages/disclaimer"
+          and
+          = link_to "privacy policy", "/pages/privacy_policy"
+          \.

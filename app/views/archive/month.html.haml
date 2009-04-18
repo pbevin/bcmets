@@ -1,0 +1,11 @@
+- if !@articles.blank?
+  %p
+    = @article_count
+    articles.
+    = link_to 'View in date order', archive_month_by_date_path(:year => @year, :month => @month)
+  %ul
+    - for article in @articles
+      = thread_as_html(article)
+- else
+  %p
+    There are no articles.

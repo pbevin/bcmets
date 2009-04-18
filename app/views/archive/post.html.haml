@@ -1,0 +1,31 @@
+%h1
+  Post a Message
+- form_for :article, :url => { :action => "post" }, :html => { :id => "post_form" } do |f|
+  %fieldset
+    = f.error_messages
+    %div
+      = f.label :name, "Name"
+      %br
+      = f.text_field :name
+    %div
+      = f.label :email, "Email"
+      %br
+      = f.text_field :email
+    - if @article.reply?
+      %div
+        = f.hidden_field :to
+        = f.hidden_field :parent_id
+        = f.hidden_field :parent_msgid
+        = f.label :reply_type, "Reply To:"
+        %br
+        = f.select :reply_type, ['List only', 'Sender only', 'Both']
+    %div
+      = f.label :subject, "Subject"
+      %br
+      = f.text_field :subject
+    %div
+      = f.label :body, "Message:"
+      %br
+      = f.text_area :body, :rows => 30, :cols => 70
+    %div
+      = submit_tag "Post"
