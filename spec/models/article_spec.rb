@@ -142,6 +142,11 @@ describe Article, ".reply" do
     @article = Article.make
   end
   
+  it "should be a reply" do
+    @article.should_not be_reply
+    @article.reply.should be_reply
+  end
+  
   it "should Re: the subject line" do
     @article.reply.subject.should == "Re: #{@article.subject}"
   end
@@ -165,9 +170,7 @@ describe Article, ".reply" do
     @article.name = "Pete Bevin"
     @article.reply.body.should == "Pete Bevin writes:\n> I\n> like\n> cheese\n"
   end
-  
-  it "should be a reply" do
-    @article.should_not be_reply
-    @article.reply.should be_reply
-  end
+
+  it "should wrap long lines when quoting"
+
 end
