@@ -1,6 +1,6 @@
 !!! Strict
 %html
-  %head { :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en" }
+  %head{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en" }
     %title
       BCMets.org - Metastatic Breast Cancer
     %meta{ :name => "robots", :content => "noindex, nofollow" }
@@ -21,7 +21,7 @@
             %img{ :src => "/images/bcmets-header.png", :height => "120", :alt => "home page", :width => "950" }
         #searchform
           - form_tag do
-            fieldset
+            %fieldset
               = text_field_tag :q, params[:q], :size => 10
               = submit_tag "Search"
       #main
