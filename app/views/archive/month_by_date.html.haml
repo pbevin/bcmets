@@ -9,7 +9,7 @@
     %ul.bydate
       - for article in @articles[date]
         %li
-          = link_to article.subject, article, :class => "subject"
+          = link_to h(article.subject), article, :class => "subject"
           %small
             = h article.from
             ,
