@@ -12,10 +12,10 @@ describe ArchiveHelper do
     
     it "should decode quoted-printable messages" do
       msg = <<-END
-        of hospitalized patients who felt that doctors or=20
-        nurses =93always=94 communicated well (the=20
-        differences among hospitals surprised me).
-      END
+of hospitalized patients who felt that doctors or=20
+nurses =93always=94 communicated well (the=20
+differences among hospitals surprised me).
+END
       
       helper.to_html(msg).should =~ /or +nurses/
       helper.to_html(msg).should_not =~ /=9[34]/

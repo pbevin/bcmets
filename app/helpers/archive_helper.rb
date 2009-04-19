@@ -30,7 +30,7 @@ module ArchiveHelper
   
   def to_html(text)
     if (text =~ /=20$/)
-      text.gsub!(/=20\n/, "")
+      text.gsub!(/=20\n/, " ")
       text.gsub!(/=\n/, "")
       text.gsub!(/\n/m, $/)
       text.gsub!(/=([\dA-F]{2})/) { $1.hex.chr }
