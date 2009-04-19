@@ -17,7 +17,6 @@ describe Article do
     @article.received_at = 3.months.ago
     @article.should_not be_recent
   end
-  
 end
 
 describe Article, ".from_headers" do
@@ -172,5 +171,10 @@ describe Article, ".reply" do
   end
 
   it "should wrap long lines when quoting"
+end
 
+describe Article, " bugs" do
+  it "should be able to get articles from December" do
+    Article.for_month(2006, 12).should_not be_nil
+  end
 end

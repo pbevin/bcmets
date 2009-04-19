@@ -23,7 +23,11 @@ class Article < ActiveRecord::Base
   
   def self.for_month(year, month)
     earliest = Time.local(year, month, 1, 0, 0, 0)
-    latest = Time.local(year, month + 1, 1, 0, 0, 0)  # XXX Doesn't work for December!
+    if month == 12
+      latest = Time.local(year + 1, "Jan", 1, 0, 0, 0)
+    else
+      latest = Time.local(year, month + 1, 1, 0, 0, 0)
+    end
     
     self.find(:all,
               :conditions => ["received_at >= ? and received_at < ?", earliest, latest],
