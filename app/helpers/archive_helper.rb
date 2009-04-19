@@ -33,8 +33,9 @@ module ArchiveHelper
   end
   
   def thread_as_html(article, x = "")
-    # x << "<li>#{link_to article.subject, article, :class => 'subject'} <small>#{h article.from}, #{article.sent_at.to_s(:short)}</small></li>"
-    x << "<li><a href=\"/archive/article/#{article.id}\" class=\"subject\">#{article.subject}</a> <small>#{h article.from}, #{article.sent_at.to_s(:short)}</small></li>"
+    x << "<li>"
+    x << "<a href=\"/archive/article/#{article.id}\" class=\"subject\">#{h article.subject}</a> "
+    x << "<small>#{h article.from}, #{article.sent_at.to_s(:short)}</small>"
     children = article.children
     if !children.nil? && !children.empty?
       x << "<ul>"
@@ -43,6 +44,7 @@ module ArchiveHelper
       end
       x << "</ul>"
     end
+    x << "</li>"
     return x
   end
 end
