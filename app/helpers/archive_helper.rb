@@ -29,7 +29,7 @@ module ArchiveHelper
   end
   
   def to_html(text)
-    wrap('pre', auto_link(h(text)))
+    auto_link(simple_format(h(text)))
   end
   
   def thread_as_html(article, x = "")
