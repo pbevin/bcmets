@@ -8,13 +8,13 @@ describe "/archive/index" do
   end
   
   it "should render years back to 2001" do
-    (2001..2009).each do |year|
+    (2000..2009).each do |year|
       response.should have_tag('h2', year.to_s)
     end
   end
   
   it "should have links for every month" do
-    (2002..2008).each do |year|
+    (2001..2008).each do |year|
       response.should have_tag('td>a', "March #{year}")
       response.should have_tag('td>a', "June #{year}")
       response.should have_tag('td>a', "September #{year}")
