@@ -32,8 +32,8 @@ describe "/archive/index" do
   end
   
   it "should not render Jan 2001 as a link since it has no articles" do
-    response.should have_tag('td>a', "January 2002")
-    response.should have_tag('td', "January 2001")
-    response.should_not have_tag("td>a", "January 2001")
+    response.should have_tag('td>a', "January 2001")
+    response.should have_tag('td', "January 2000")
+    response.should_not have_tag("td>a", "January 2000")
   end
 end

@@ -6,7 +6,7 @@ module ArchiveHelper
       text = "<strong>#{text}</strong>"
     end
     
-    if (year == @year && month > @month) || (year == 2001 && month == 1)
+    if (year == @year && month > @month) || (year == 2000 && month == 1)
       return text
     end
 
