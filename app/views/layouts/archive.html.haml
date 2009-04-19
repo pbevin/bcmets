@@ -5,13 +5,20 @@
       BCMets.org - Metastatic Breast Cancer
     %meta{ :name => "robots", :content => "noindex, nofollow" }
     = javascript_include_tag :all, :cache => true
-    = stylesheet_link_tag :all, :cache => true
+    = stylesheet_link_tag "bcmets", "forms", :cache => true
+    -#= stylesheet_link_tag "blueprint/screen", :media => "screen, projection"
+    -#= stylesheet_link_tag "blueprint/print", :media => "print"
+    -#/ [if ie]
+      -#= stylesheet_link_tag "blueprint/ie", :media => "screen, projection"
+    -#= stylesheet_link_tag "type"
+    -#= stylesheet_link_tag "colour"
+    -#= stylesheet_link_tag "layout"
   %body
     #wrap
       #pageheader
         #banner
-          %a{ :href => "http://new.bcmets.org/" }
-            %img{ :src => "/images/bcmets-header.png", :height => "150", :alt => "home page", :width => "960" }
+          %a{ :href => "/" }
+            %img{ :src => "/images/bcmets-header.png", :height => "120", :alt => "home page", :width => "950" }
         #searchform
           - form_tag do
             = text_field_tag :q, params[:q], :size => 10
