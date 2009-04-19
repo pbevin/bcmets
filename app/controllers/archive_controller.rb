@@ -29,6 +29,12 @@ class ArchiveController < ApplicationController
     @article = Article.find_by_id(params[:id])
     @title = @article.subject
   end
+  
+  def author
+    Struct.new("Author", :name, :email)
+    @author = Struct::Author.new(params[:name], params[:email])
+    @articles = Article.find_all_by_email(params[:email], :order => "sent_at DESC")
+  end
 
   def post
     if request.post?

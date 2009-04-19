@@ -11,7 +11,7 @@
         %li
           = link_to h(article.subject), article, :class => "subject"
           %small
-            = h article.from
+            = link_to(h(article.from), :action => "author", :email => article.email)
             ,
             = article.received_at.to_s(:short)
 - else

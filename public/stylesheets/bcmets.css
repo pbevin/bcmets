@@ -16,8 +16,20 @@ a:visited {
 a:hover, a:focus, a:active {
 	background-color: #009;
 	color : #fff;
-	text-decoration : none;
+	text-decoration: none;
 }
+
+small a:link, small a:visited {
+  color: #222;
+  text-decoration: none;
+}
+
+small a:hover, small a:focus, small a:active {
+  background: none;
+	color: #000;
+	text-decoration: underline;
+}
+
 
 hr {
 	border: 0;
