@@ -24,6 +24,18 @@ module ArchiveHelper
   end
   
   
+  def from_linked(author)
+    if author.name == author.email
+      return email_linked(author)
+    else
+      return author.name + " &lt;" + email_linked(author) + "&gt;"
+    end
+  end
+  
+  def email_linked(author)
+    link_to author.email, :controller => "archive", :action => "author", :email => author.email
+  end
+  
   def wrap(tag, content)
     "<#{tag}>#{content}</#{tag}>"
   end
