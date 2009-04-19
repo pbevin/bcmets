@@ -24,5 +24,9 @@ describe ArchiveHelper do
     it "should not decode quoted-printable when inappropriate" do
       helper.to_html("19+1=20 (1)").should == "<p>19+1=20 (1)</p>"
     end
+    
+    it "should convert stupid Windows characters to UTF8" do
+      helper.to_html("it\x92s").should == "<p>it’s</p>"
+    end
   end
 end
