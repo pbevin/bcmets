@@ -1,6 +1,6 @@
 !!! Strict
 %html
-  %head
+  %head { :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en" }
     %title
       BCMets.org - Metastatic Breast Cancer
     %meta{ :name => "robots", :content => "noindex, nofollow" }
@@ -21,8 +21,9 @@
             %img{ :src => "/images/bcmets-header.png", :height => "120", :alt => "home page", :width => "950" }
         #searchform
           - form_tag do
-            = text_field_tag :q, params[:q], :size => 10
-            = submit_tag "Search"
+            fieldset
+              = text_field_tag :q, params[:q], :size => 10
+              = submit_tag "Search"
       #main
         %h1
           = @title
@@ -48,7 +49,7 @@
             %a{ :href => "http://www.brainmetsbc.org/" }
               BrainMetsBC.org
           %li
-            %a{ :href => "http://www.picturetrail.com/" }
+            %a{ :href => "http://www.picturetrail.com/sfx/album/listing/user/bcbeauties" }
               Picture Trail
             (login: bcbeauties/bcmets)
           %li
