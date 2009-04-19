@@ -1,6 +1,8 @@
 %h1
   = @author.email
-  
+%p
+  = @articles.count
+  articles.
 %ul.bydate
   - @articles.each do |article|
     %li

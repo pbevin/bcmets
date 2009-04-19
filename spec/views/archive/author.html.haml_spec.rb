@@ -18,4 +18,8 @@ describe "/archive/author" do
     response.should have_tag "ul>li>a", @article1.subject
     response.should have_tag "ul>li>a", @article2.subject
   end
+  
+  it "should count articles" do
+    response.should have_tag "p", /2\s+articles\./
+  end
 end
