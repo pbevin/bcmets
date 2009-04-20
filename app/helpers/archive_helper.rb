@@ -58,8 +58,8 @@ module ArchiveHelper
   def th(articles, x)
     for article in articles
       x << "<li>"
-      x << "<a href=\"/archive/article/#{article.id}\" class=\"subject\">#{h article.subject}</a> "
-      x << "<small><a href=\"/archive/author/#{URI.escape(article.email)}\">#{h article.from}</a>, #{article.sent_at.to_s(:short)}</small>"
+      x << link_to_article(article) << " "
+      x << "<small>#{link_to_author(article)}, #{article.sent_at.to_s(:short)}</small>"
       children = article.children
       if !children.nil? && !children.empty?
         x << "<ul>"
