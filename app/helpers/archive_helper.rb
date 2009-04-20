@@ -51,20 +51,32 @@ module ArchiveHelper
     text = Iconv.conv('utf-8', 'WINDOWS-1252', text)
   end
   
-  def thread_as_html(article, x = "")
-    x << "<li>"
-    x << "<a href=\"/archive/article/#{article.id}\" class=\"subject\">#{h article.subject}</a> "
-    x << "<small>#{link_to h(article.from), :action => "author", :email => article.email }, #{article.sent_at.to_s(:short)}</small>"
-    children = article.children
-    if !children.nil? && !children.empty?
-      x << "<ul>"
-      for child in article.children
-        thread_as_html(child, x)
+  def thread_as_html(articles)
+    Rails.cache.fetch("thread.#{@year}.#{@month}") { th(articles, "") }
+  end
+  
+  def th(articles, x)
+    for article in articles
+      x << "<li>"
+      x << "<a href=\"/archive/article/#{article.id}\" class=\"subject\">#{h article.subject}</a> "
+      x << "<small><a href=\"/archive/author/#{URI.escape(article.email)}\">#{h article.from}</a>, #{article.sent_at.to_s(:short)}</small>"
+      children = article.children
+      if !children.nil? && !children.empty?
+        x << "<ul>"
+        th(children, x)
+        x << "</ul>"
       end
-      x << "</ul>"
+      x << "</li>"
     end
-    x << "</li>"
     return x
+  end
+
+  def link_to_author(article)
+    "<a href=\"/archive/author/#{URI.escape(article.email)}\">#{h article.from}</a>"
+  end
+  
+  def link_to_article(article)
+    "<a href=\"/archive/article/#{article.id}\" class=\"subject\">#{h article.subject}</a>"
   end
 end
 
