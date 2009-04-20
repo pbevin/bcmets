@@ -72,7 +72,7 @@ module ArchiveHelper
   end
 
   def link_to_author(article)
-    "<a href=\"/archive/author/#{URI.escape(article.email)}\">#{h article.from}</a>"
+    "<a href=\"/archive/author?email=#{URI.escape(article.email)}\">#{h article.from}</a>"
   end
   
   def link_to_article(article)
