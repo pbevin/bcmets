@@ -52,7 +52,8 @@ module ArchiveHelper
   end
   
   def thread_as_html(articles)
-    Rails.cache.fetch("thread.#{@year}.#{@month}", :expires_in => 1.minute) { th(articles, "") }
+    # Rails.cache.fetch("thread.#{@year}.#{@month}", :expires_in => 1.minute) { th(articles, "") }
+    th(articles, "")
   end
   
   def th(articles, x)
