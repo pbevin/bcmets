@@ -18,3 +18,4 @@ config.action_mailer.raise_delivery_errors = false
 
 config.cache_store = :memory_store
 
+Article.list_address = 'pbevin@gmail.com'

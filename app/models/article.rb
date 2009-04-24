@@ -4,10 +4,18 @@ class Article < ActiveRecord::Base
   has_one :parent, :class_name => "Article", :foreign_key => "parent_id"
   attr_accessor :reply_type # list, sender, or both
   attr_accessor :to
+  attr_accessor :mail_to
+  attr_accessor :mail_cc
   validates_presence_of :name
   validates_presence_of :email
   validates_presence_of :subject
   validates_presence_of :body
+  
+  @@list_address = 'pete@petebevin.com'  # for safety
+  
+  def self.list_address=(addr)
+    @@list_address = addr
+  end
   
   def from
     if name == email
@@ -128,17 +136,21 @@ class Article < ActiveRecord::Base
   end
   
   def send_via_email
+    if @@list_address == nil
+      raise "Can't send email in test environment"
+    end
     email = TMail::Mail.new
-    email.to = "pete@petebevin.com"
+    email.to = self.mail_to
+    email.cc = self.mail_cc
     email.from = self.from
     email.message_id = self.msgid
     email.subject = self.subject
     email.body = self.body
     Net::SMTP::start('feste.bestiary.com', 2025) do |smtp|
-      smtp.send_message email.to_s, self.email, 'pete@petebevin.com'
+      smtp.send_message email.to_s, t.from.first, (email.to | email.cc)
     end
   end
-  
+
   def reply
     returning Article.new do |reply|
       reply.subject = self.subject
@@ -147,6 +159,18 @@ class Article < ActiveRecord::Base
       reply.parent_id = self.id
       reply.parent_msgid = self.msgid
       reply.body = "#{self.name} writes:\n#{quote(self.body)}"
+      
+      if reply_type == 'sender'
+        reply.mail_to = reply.to
+      else
+        reply.mail_to = @@list_address
+      end
+      
+      if reply_type == 'both'
+        reply.mail_cc = reply.to
+      else
+        reply.mail_cc = ''
+      end
     end
   end
   
@@ -158,7 +182,13 @@ private
 
   def quote(string)
     returning "" do |body|
-      string.each_line { |line| body << "> #{line}" }
+      wrap(string).each { |line| body << "> #{line}\n" }
+    end
+  end
+
+  def wrap(text, columns = 72)
+    text.split("\n").collect do |line|
+     line.length > columns ? line.gsub(/(.{1,#{columns}})(\s+|$)/, "\\1\n").strip : line
     end
   end
 end

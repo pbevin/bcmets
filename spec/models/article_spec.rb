@@ -168,7 +168,26 @@ describe Article, ".reply" do
     @article.reply.body.should == "Pete Bevin writes:\n> I\n> like\n> cheese\n"
   end
 
-  it "should wrap long lines when quoting"
+  it "should wrap long lines when quoting" do
+    @article.body = (["asdf"] * 100).join(' ')
+    @article.reply.body.lines.count.should > 5
+  end
+  
+  it "should set mail_to and mail_cc based on reply_type" do
+    Article.list_address = 'list@example.com'
+    
+    @article.reply_type = 'list'
+    @article.reply.mail_to.should == 'list@example.com'
+    @article.reply.mail_cc.should == ''
+    
+    @article.reply_type = 'sender'
+    @article.reply.mail_to.should == @article.from
+    @article.reply.mail_cc.should == ''
+    
+    @article.reply_type = 'both'
+    @article.reply.mail_to.should == 'list@example.com'
+    @article.reply.mail_cc.should == @article.from
+  end
 end
 
 describe Article, " bugs" do
