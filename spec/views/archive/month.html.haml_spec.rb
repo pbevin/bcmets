@@ -17,8 +17,6 @@ describe "/archive/month" do
     response.should have_tag("a.subject", @art2.subject)
   end
   
-  it "should put articles in conversation order"
-  
   it "should link to by_date view" do
     response.should have_tag("a[href=#{archive_month_by_date_path(:year => 2009, :month => 3)}]")
   end

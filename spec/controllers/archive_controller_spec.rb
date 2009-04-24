@@ -57,7 +57,6 @@ describe ArchiveController do
         a.received_at.should > b.received_at
       end
     end
-    # TODO it "should include articles that are part of current threads"
   end
   
   describe "GET month_by_date" do

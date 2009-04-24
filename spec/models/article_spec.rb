@@ -97,8 +97,6 @@ describe Article, "parsing edge cases" do
     parse("From: Pete Bevin <pete@petebevin.com>").from.should == "Pete Bevin <pete@petebevin.com>"
     parse("From: pete@petebevin.com").from.should == "pete@petebevin.com"
   end
-
-  it "should keep track of References: field while unresolved"
 end
 
 describe Article, ".link_threads" do
