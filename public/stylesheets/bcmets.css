@@ -189,37 +189,29 @@ margin-left : 0;
 h1 {
 color : #f70f0f;
 font-weight : normal;
-font-size : 3em;
+/*font-size : 3em;*/
 line-height : 1.5em;
 }
 
 h2 {
 color : #a40808;
 font-weight : normal;
-font-size : 2.5em;
+/*font-size : 2.5em;*/
 clear : both;
 }
 
 h3 {
 color : #a40808;
 font-weight : normal;
-font-size : 1.7em;
+/*font-size : 1.7em;*/
 padding-bottom : .2em;
 padding-top : 1em;
 }
-
 
 pre {
 font-family: "Optima","Lucida Grande","Trebuchet MS",Verdana,sans-serif;
 font-size : 1em;
 }
-
-
-
-
-
-
-
 
 #main ul.bydate li {
   margin-top: .1em;
