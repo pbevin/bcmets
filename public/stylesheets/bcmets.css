@@ -72,9 +72,9 @@ table.index td {
 }
 
 #sidebar strong {
-text-decoration : none;
-border : solid 1px #f70f0f;
-color : #f70f0f; 
+  text-decoration : none;
+  border : solid 1px #f70f0f;
+  color : #f70f0f; 
 	background-color: #fff; /*ffff00*/
 	text-decoration : none;
 	padding : 5px;
@@ -89,34 +89,34 @@ color : #f70f0f;
 
 
 #main {
-clear : both;
+  clear : both;
 	float: left;
 	margin-bottom: 20px;
 	width: 700px;
-background-color : transparent;
+  background-color : transparent;
 }
 
 #main li {
-margin-top : 1em;
+  margin-top : 1em;
 }
 
 
 #main ul ul li {
-margin-top : .1em;
+  margin-top : .1em;
 }
 
 
 #pageheader {
-color : #009;
-background-color : transparent;
-width : 1000px;
-font-weight : normal;
-font-size : 1.7em;
-text-decoration : none;
-float : left;
-padding: 0px;
-padding-top : 30px;
-padding-bottom : 0;
+  color : #009;
+  background-color : transparent;
+  width : 1000px;
+  font-weight : normal;
+  font-size : 1.7em;
+  text-decoration : none;
+  float : left;
+  padding: 0px;
+  padding-top : 30px;
+  padding-bottom : 0;
 }
 
 
