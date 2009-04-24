@@ -45,10 +45,12 @@ class ArchiveController < ApplicationController
         send_via_email(@article)
         @article.save
         flash[:notice] = "Message sent."
+        cookies[:name] = { :value => @article.name, :expires => 3.months.from_now, :path => "/" }
+        cookies[:email] = { :value => @article.email, :expires => 3.months.from_now }
         redirect_to :action => "index"
       end
     else
-      @article = Article.new
+      @article = Article.new({ :name => cookies[:name], :email => cookies[:email] })
     end
   end
   

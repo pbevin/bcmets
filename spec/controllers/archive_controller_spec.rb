@@ -147,6 +147,14 @@ describe ArchiveController do
       controller.should_not_receive(:send_via_email)
       lambda { do_post }.should_not change { Article.count }
     end
+    
+    it "should set cookies" do
+      @article.name = 'Pete Bevin'
+      @article.email = 'pete@petebevin.com'
+      do_post
+      cookies[:name].should == 'Pete+Bevin'
+      cookies[:email].should == 'pete%40petebevin.com'
+    end
   end
   
   describe "GET 'reply'" do
