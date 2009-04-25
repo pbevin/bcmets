@@ -56,6 +56,8 @@ class ArchiveController < ApplicationController
   
   def reply
     @article = Article.find_by_id(params[:id]).reply
+    @article.name = cookies[:name]
+    @article.email = cookies[:email]
     render :template => 'archive/post'
   end
   

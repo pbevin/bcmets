@@ -101,6 +101,14 @@ describe ArchiveController do
       assigns(:article).subject.should be_blank
       assigns(:article).body.should be_blank
     end
+    
+    it "should default to cookies for name and email" do
+      cookies[:name] = 'My Name'
+      cookies[:email] = 'my.email@example.com'
+      get 'post'
+      assigns(:article).name.should == 'My Name'
+      assigns(:article).email.should == 'my.email@example.com'
+    end
   end
   
   describe "POST 'post'" do
@@ -159,10 +167,18 @@ describe ArchiveController do
   
   describe "GET 'reply'" do
     it "should present fields based on Article.reply" do
-      controller.stub!(:send_via_email)
       @article = Article.make
       get 'reply', :id => @article.id
       assigns[:article].attributes.should == @article.reply.attributes
+    end
+    
+    it "should default name and email from cookies" do
+      cookies[:name] = 'My Name'
+      cookies[:email] = 'my.email@example.com'
+      @article = Article.make
+      get 'reply', :id => @article.id
+      assigns[:article].name.should == 'My Name'
+      assigns[:article].email.should == 'my.email@example.com'
     end
   end
 end
