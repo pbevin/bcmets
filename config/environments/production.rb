@@ -27,4 +27,4 @@ config.cache_store = :mem_cache_store
 # Enable threaded mode
 # config.threadsafe!
 
-Article.list_addr = 'bcmets@bcmets.org'
+Article.list_address = 'bcmets@bcmets.org'
