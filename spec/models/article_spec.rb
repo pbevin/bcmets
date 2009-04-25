@@ -194,4 +194,21 @@ describe Article, " bugs" do
   it "should be able to get articles from December" do
     Article.for_month(2006, 12).should_not be_nil
   end
+  
+  it "should figure out mail_to and mail_cc" do
+    params = {
+      "name"=>"Pete Bevin",
+      "body"=>"Pete Bevin writes:\r\n> Pete Bevin writes:\r\n> > xxx\r\n> > \r\n> > Pete Bevin writes:\r\n> > > Pete Bevin writes:\r\n> > > > askdfjafiqb\r\n",
+      "to"=>"Pete Bevin <pete@petebevin.com>",
+      "subject"=>"Re: Thingummy",
+      "parent_id"=>"5282",
+      "parent_msgid"=>"<c5e58b18c735b668@bcmets.org>",
+      "reply_type"=>"list",
+      "email"=>"pete@petebevin.com"
+    }
+    Article.list_address = 'list@example.com'
+    @article = Article.new(params)
+    
+    @article.mail_to.should == 'list@example.com'
+  end
 end

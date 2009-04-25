@@ -47,10 +47,14 @@ class ArchiveController < ApplicationController
         flash[:notice] = "Message sent."
         cookies[:name] = { :value => @article.name, :expires => 3.months.from_now, :path => "/" }
         cookies[:email] = { :value => @article.email, :expires => 3.months.from_now }
-        redirect_to :action => "index"
+        if @article.reply?
+          redirect_to(:action => "article", :id => @article.parent_id)
+        else
+          redirect_to :action => "index"
+        end
       end
     else
-      @article = Article.new({ :name => cookies[:name], :email => cookies[:email] })
+      @article = Article.new(:name => cookies[:name], :email => cookies[:email])
     end
   end
   

@@ -181,4 +181,25 @@ describe ArchiveController do
       assigns[:article].email.should == 'my.email@example.com'
     end
   end
+  
+  describe "POST 'reply'" do
+    it "should redirect back to the original article" do
+      controller.stub!(:send_via_email)
+      @article = Article.make
+      @reply = @article.reply
+      @reply.name = 'My Name'
+      @reply.email = 'my.email@example.com'
+      post 'post', :id => @article.id, :article => {
+        :name => @reply.name,
+        :email => @reply.email,
+        :to => @reply.to,
+        :parent_id => @reply.parent_id,
+        :parent_msgid => @reply.parent_msgid,
+        :subject => @reply.subject,
+        :body => @reply.body 
+      }
+
+      response.should redirect_to(:controller => 'archive', :action => 'article', :id => @article.id)
+    end
+  end
 end

@@ -15,6 +15,10 @@ ActionController::Routing::Routes.draw do |map|
   map.archive_month 'archive/:year/:month',
     :controller => 'archive',
     :action => 'month'
+    
+  map.connect 'post.pl',
+    :controller => "archive",
+    :action => "post"
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'

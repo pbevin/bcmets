@@ -4,8 +4,6 @@ class Article < ActiveRecord::Base
   has_one :parent, :class_name => "Article", :foreign_key => "parent_id"
   attr_accessor :reply_type # list, sender, or both
   attr_accessor :to
-  attr_accessor :mail_to
-  attr_accessor :mail_cc
   validates_presence_of :name
   validates_presence_of :email
   validates_presence_of :subject
@@ -147,30 +145,37 @@ class Article < ActiveRecord::Base
     email.subject = self.subject
     email.body = self.body
     Net::SMTP::start('feste.bestiary.com', 2025) do |smtp|
-      smtp.send_message email.to_s, t.from.first, (email.to | email.cc)
+      to_addrs = email.to || []
+      to_addrs << email.cc unless email.cc.nil?
+      smtp.send_message email.to_s, email.from.first, to_addrs
+    end
+  end
+  
+  def mail_to
+    if reply_type == 'sender'
+      self.to
+    else
+      @@list_address
+    end
+  end
+  
+  def mail_cc
+    if reply_type == 'both'
+      self.to
+    else
+      ''
     end
   end
 
   def reply
     returning Article.new do |reply|
+      reply.reply_type = self.reply_type
       reply.subject = self.subject
       reply.subject = "Re: #{reply.subject}" unless reply.subject =~ /^Re:/i
       reply.to = self.from
       reply.parent_id = self.id
       reply.parent_msgid = self.msgid
       reply.body = "#{self.name} writes:\n#{quote(self.body)}"
-      
-      if reply_type == 'sender'
-        reply.mail_to = reply.to
-      else
-        reply.mail_to = @@list_address
-      end
-      
-      if reply_type == 'both'
-        reply.mail_cc = reply.to
-      else
-        reply.mail_cc = ''
-      end
     end
   end
   

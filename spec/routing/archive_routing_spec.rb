@@ -23,4 +23,11 @@ describe ArchiveController, "route generation" do
       :action => "article",
       :id => "14" }
   end
+  
+  it "recognizes some old URLs" do
+    params_from(:get, '/post.pl').should == {
+      :controller => 'archive',
+      :action => 'post'
+    }
+  end
 end

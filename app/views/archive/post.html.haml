@@ -18,7 +18,7 @@
         = f.hidden_field :parent_msgid
         = f.label :reply_type, "Reply To:"
         %br
-        = f.select :reply_type, ['List only', 'Sender only', 'Both']
+        = f.select :reply_type, [['List only', 'list'], ['Sender only', 'sender'], ['Both', 'both']]
     %div
       = f.label :subject, "Subject"
       %br
