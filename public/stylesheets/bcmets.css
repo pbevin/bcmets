@@ -96,12 +96,12 @@ table.index td {
   background-color : transparent;
 }
 
-#main li {
-  margin-top : 1em;
+#main ul.month li {
+  margin-top : .8em;
 }
 
 
-#main ul ul li {
+#main ul.month ul li {
   margin-top : .1em;
 }
 
