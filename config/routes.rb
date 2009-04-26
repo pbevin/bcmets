@@ -16,6 +16,9 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'archive',
     :action => 'month'
     
+  map.connect 'post',
+    :controller => "archive",
+    :action => "post"
   map.connect 'post.pl',
     :controller => "archive",
     :action => "post"

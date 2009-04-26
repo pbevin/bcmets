@@ -36,4 +36,8 @@ describe "/archive/index" do
     response.should have_tag('td', "January 2000")
     response.should_not have_tag("td>a", "January 2000")
   end
+  
+  it "should link to /post, not /post.pl" do
+    response.should have_tag("a[href=/post]", /Post a message/i)
+  end
 end
