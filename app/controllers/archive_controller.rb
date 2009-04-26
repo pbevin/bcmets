@@ -43,7 +43,7 @@ class ArchiveController < ApplicationController
       if @article.valid?
         @article.prepare_for_email
         send_via_email(@article)
-        @article.save
+        @article.save unless @article.reply_type == 'sender'
         flash[:notice] = "Message sent."
         cookies[:name] = { :value => @article.name, :expires => 3.months.from_now, :path => "/" }
         cookies[:email] = { :value => @article.email, :expires => 3.months.from_now }

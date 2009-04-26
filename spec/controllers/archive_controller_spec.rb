@@ -183,7 +183,7 @@ describe ArchiveController do
   end
   
   describe "POST 'reply'" do
-    it "should redirect back to the original article" do
+    def do_post(reply_type = 'list')
       controller.stub!(:send_via_email)
       @article = Article.make
       @reply = @article.reply
@@ -192,14 +192,28 @@ describe ArchiveController do
       post 'post', :id => @article.id, :article => {
         :name => @reply.name,
         :email => @reply.email,
+        :reply_type => reply_type,
         :to => @reply.to,
         :parent_id => @reply.parent_id,
         :parent_msgid => @reply.parent_msgid,
         :subject => @reply.subject,
         :body => @reply.body 
-      }
-
+      }      
+    end
+    
+    it "should redirect back to the original article" do
+      do_post
       response.should redirect_to(:controller => 'archive', :action => 'article', :id => @article.id)
+    end
+    
+    it "should not save if reply_type is sender" do
+      do_post('sender')
+      assigns[:article].should be_new_record
+    end
+    
+    it "should save the article" do
+      do_post('list')
+      assigns[:article].should_not be_new_record
     end
   end
 end
