@@ -1,7 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
+  # The priority is based upon order of creation: first created -> highest priority.
+  map.connect 'donations/stats',
+    :controller => 'donations',
+    :action => 'stats'
+
   map.resources :donations
 
-  # The priority is based upon order of creation: first created -> highest priority.
   map.articles 'archive',
     :controller => 'archive',
     :action => 'index'
@@ -24,6 +28,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'post.pl',
     :controller => "archive",
     :action => "post"
+
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'

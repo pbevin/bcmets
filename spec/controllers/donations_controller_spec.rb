@@ -9,7 +9,7 @@ describe DonationsController do
   describe "GET index" do
 
     it "exposes all donations as @donations" do
-      Donation.should_receive(:find).with(:all).and_return([mock_donation])
+      Donation.should_receive(:find).and_return([mock_donation])
       get :index
       assigns[:donations].should == [mock_donation]
     end
@@ -17,7 +17,7 @@ describe DonationsController do
     describe "with mime type of xml" do
   
       it "renders all donations as xml" do
-        Donation.should_receive(:find).with(:all).and_return(donations = mock("Array of Donations"))
+        Donation.should_receive(:find).and_return(donations = mock("Array of Donations"))
         donations.should_receive(:to_xml).and_return("generated XML")
         get :index, :format => 'xml'
         response.body.should == "generated XML"
@@ -25,6 +25,15 @@ describe DonationsController do
     
     end
 
+  end
+  
+  describe "GET stats" do
+    it "gives me the monthly and yearly totals" do
+      Donation.should_receive(:total_this_month).and_return("monthly")
+      Donation.should_receive(:total_this_year).and_return("yearly")
+      get :stats
+      response.body.should == "monthly yearly"
+    end
   end
 
   describe "GET show" do

@@ -2,17 +2,16 @@
 
 <table>
   <tr>
-    <th>Email</th>
     <th>Date</th>
     <th>Amount</th>
+    <th>Email</th>
   </tr>
 
 <% @donations.each do |donation| %>
   <tr>
-    <td><%=h donation.email %></td>
     <td><%=h donation.date %></td>
-    <td><%=h donation.amount %></td>
-    <td><%= link_to 'Show', donation %></td>
+    <td><%=h number_to_currency(donation.amount, :precision => 0) %></td>
+    <td><%=h donation.email %></td>
     <td><%= link_to 'Edit', edit_donation_path(donation) %></td>
     <td><%= link_to 'Destroy', donation, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>

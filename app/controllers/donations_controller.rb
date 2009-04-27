@@ -2,7 +2,7 @@ class DonationsController < ApplicationController
   # GET /donations
   # GET /donations.xml
   def index
-    @donations = Donation.all
+    @donations = Donation.all(:order => "date DESC")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -81,5 +81,10 @@ class DonationsController < ApplicationController
       format.html { redirect_to(donations_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  # GET /donations/stats
+  def stats
+    render :text => "#{Donation.total_this_month} #{Donation.total_this_year}"
   end
 end
