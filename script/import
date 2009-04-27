@@ -33,7 +33,6 @@ ARGV.shift
 for file in ARGV
   each_message(file) do |message|
     article = Article.parse(message)
-    puts article.subject
     article.save
   end
 end
