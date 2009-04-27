@@ -84,7 +84,12 @@ module ArchiveHelper
   
   def last_donation
     date = Donation.last_donation_on
-    "Last donation #{time_ago_in_words(date)} ago"
+    if date.to_date == Date.today
+      last_donation = "today"
+    else
+      last_donation = "#{time_ago_in_words(date)} ago"
+    end
+    "Last donation: #{last_donation}"
   end
 
   def link_to_author(article)

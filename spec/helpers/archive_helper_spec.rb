@@ -29,4 +29,16 @@ END
       helper.to_html("it\x92s").should == "<p>it’s</p>"
     end
   end
+  
+  describe "last_donation" do
+    it "should tell me when the most recent donation was" do
+      Donation.should_receive(:last_donation_on).and_return(3.days.ago)
+      helper.last_donation.should == "Last donation: 3 days ago"
+    end
+    
+    it "should special case today" do
+      Donation.should_receive(:last_donation_on).and_return(3.hours.ago)
+      helper.last_donation.should == "Last donation: today"
+    end      
+  end
 end
