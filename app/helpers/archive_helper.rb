@@ -81,6 +81,11 @@ module ArchiveHelper
     amount = Donation.total_this_year
     "#{number_to_currency(amount, :precision => 0)} this year (target: $6,000)"
   end
+  
+  def last_donation
+    date = Donation.last_donation_on
+    "Last donation #{time_ago_in_words(date)} ago"
+  end
 
   def link_to_author(article)
     "<a href=\"/archive/author?email=#{URI.escape(article.email)}\">#{h article.from}</a>"

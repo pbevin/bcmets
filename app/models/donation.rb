@@ -14,4 +14,8 @@ class Donation < ActiveRecord::Base
     end_of_year = 1.year.since(start_of_year)
     self.sum(:amount, :conditions => ["date >= ? and date < ?", start_of_year, end_of_year])
   end
+  
+  def self.last_donation_on
+    self.maximum(:date)
+  end
 end
