@@ -174,7 +174,7 @@ describe Article, ".reply" do
   end
   
   it "should set mail_to and mail_cc based on reply_type" do
-    Article.list_address = 'list@example.com'
+    $list_address = 'list@example.com'
     
     @article.reply_type = 'list'
     @article.reply.mail_to.should == 'list@example.com'
@@ -206,7 +206,7 @@ describe Article, " bugs" do
       "reply_type"=>"list",
       "email"=>"pete@petebevin.com"
     }
-    Article.list_address = 'list@example.com'
+    $list_address = 'list@example.com'
     @article = Article.new(params)
     
     @article.mail_to.should == 'list@example.com'

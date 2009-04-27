@@ -9,12 +9,6 @@ class Article < ActiveRecord::Base
   validates_presence_of :subject
   validates_presence_of :body
   
-  @@list_address = 'pete@petebevin.com'  # for safety
-  
-  def self.list_address=(addr)
-    @@list_address = addr
-  end
-  
   def from
     if name == email
       return email
@@ -130,7 +124,7 @@ class Article < ActiveRecord::Base
   end
   
   def send_via_email
-    if @@list_address == nil
+    if $list_address == nil
       raise "Can't send email in test environment"
     end
     email = TMail::Mail.new
@@ -151,7 +145,7 @@ class Article < ActiveRecord::Base
     if reply_type == 'sender'
       self.to
     else
-      @@list_address
+      $list_address
     end
   end
   
