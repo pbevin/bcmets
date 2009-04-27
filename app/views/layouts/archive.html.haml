@@ -33,8 +33,7 @@
             = flash[:notice]
         = yield
       #sidebar
-        %h3
-          Links
+        %h3 Links
         %ul
           %li
             %a{ :href => "http://www.bcmets.org/mailman/listinfo/bcmets" }
@@ -53,19 +52,26 @@
             %a{ :href => "http://www.picturetrail.com/sfx/album/listing/user/bcbeauties" }
               Picture Trail
             (login: bcbeauties/bcmets)
-        %h3
-          Information
+        
+        %h3 Donations
+        %ul
+          %li
+            = donations_this_month
+          %li
+            = donations_this_year
+          %li
+            Please
+            %a{ :href => "/donate" }
+              donate
+            to help keep this service running.
+
+        %h3 Information
         %ul
           %li
             Archive provided by
             %a{ :href => "http://www.petebevin.com/" }
               Pete Bevin
             \.
-          %li
-            Please
-            %a{ :href => "/donate" }
-              donate
-            to help keep this service running.
           %li
             %a{ :href => "mailto:pete@petebevin.com" }
               Email Pete

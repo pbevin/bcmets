@@ -71,6 +71,14 @@ module ArchiveHelper
     end
     return x
   end
+  
+  def donations_this_month
+    "$135 this month (target = $500)"
+  end
+  
+  def donations_this_year
+    "$3,740 this year (target = $6,000)"
+  end
 
   def link_to_author(article)
     "<a href=\"/archive/author?email=#{URI.escape(article.email)}\">#{h article.from}</a>"
