@@ -73,11 +73,13 @@ module ArchiveHelper
   end
   
   def donations_this_month
-    "$135 this month (target = $500)"
+    amount = 135
+    "#{number_to_currency(amount, :precision => 0)} this month (target: $500)"
   end
   
   def donations_this_year
-    "$3,740 this year (target = $6,000)"
+    amount = 3740
+    "#{number_to_currency(amount, :precision => 0)} this year (target: $6,000)"
   end
 
   def link_to_author(article)
