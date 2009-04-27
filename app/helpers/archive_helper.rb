@@ -73,11 +73,13 @@ module ArchiveHelper
   end
   
   def donations_this_month
+    # amount = Donation.total_this_month
     amount = 135
     "#{number_to_currency(amount, :precision => 0)} this month (target: $500)"
   end
   
   def donations_this_year
+    # amount = Donation.total_this_year
     amount = 3740
     "#{number_to_currency(amount, :precision => 0)} this year (target: $6,000)"
   end
