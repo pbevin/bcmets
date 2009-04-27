@@ -1,6 +1,8 @@
 *.sqlite3
-log/*.log
+log/*
 doc/api
 doc/app
 .DS_Store
 tmp
+db/sphinx
+

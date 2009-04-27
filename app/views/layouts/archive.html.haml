@@ -21,7 +21,7 @@
           %a{ :href => "/" }
             %img{ :src => "/images/bcmets-header.png", :height => "120", :alt => "home page", :width => "950" }
         #searchform
-          - form_tag do
+          - form_tag({ :controller => 'archive', :action => 'search' }, :method => 'get') do
             %fieldset
               = text_field_tag :q, params[:q], :size => 10
               = submit_tag "Search"

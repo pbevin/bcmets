@@ -31,6 +31,14 @@ class ArchiveController < ApplicationController
     @title = @article.subject
   end
   
+  def search
+    @articles = Article.search(
+      @q = params['q'],
+      :page => (params['page'] || 1),
+      :field_weights => { "subject" => 10, "name" => 5, "email" => 5, "body" => 1 }
+    )
+  end
+  
   def author
     Struct.new("Author", :name, :email)
     @author = Struct::Author.new(params[:name], params[:email])

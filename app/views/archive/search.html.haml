@@ -1,0 +1,13 @@
+%h2
+  Search results for
+  = @q
+= will_paginate @articles
+%p
+- for article in @articles
+  %li
+    = link_to_article(article)
+    %small
+      = link_to_author(article)
+      ,
+      = article.received_at.to_s(:short)
+= will_paginate @articles

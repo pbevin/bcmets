@@ -9,6 +9,10 @@ class Article < ActiveRecord::Base
   validates_presence_of :subject
   validates_presence_of :body
   
+  define_index do
+    indexes name, email, subject, body
+  end
+  
   def from
     if name == email
       return email
