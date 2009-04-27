@@ -7,6 +7,7 @@
       = from_linked(@article)
     %li#date
       Date:
-      = @article.sent_at
+      = @article.sent_at.strftime("%B %d, %Y, %H:%M:%S")
+      = "(#{time_ago_in_words(@article.sent_at)} ago)"
 #body
   = to_html @article.body
