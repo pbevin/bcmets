@@ -113,7 +113,7 @@ describe ArchiveController do
   
   describe "POST 'post'" do
     before(:each) do
-      controller.stub!(:send_via_email)
+      Article.stub!(:send_via_smtp)
       @article = Article.make_unsaved :msgid => nil      
     end
 
@@ -184,7 +184,7 @@ describe ArchiveController do
   
   describe "POST 'reply'" do
     def do_post(reply_type = 'list')
-      controller.stub!(:send_via_email)
+      Article.stub!(:send_via_smtp)
       @article = Article.make
       @reply = @article.reply
       @reply.name = 'My Name'
@@ -198,7 +198,7 @@ describe ArchiveController do
         :parent_msgid => @reply.parent_msgid,
         :subject => @reply.subject,
         :body => @reply.body 
-      }      
+      }
     end
     
     it "should redirect back to the original article" do

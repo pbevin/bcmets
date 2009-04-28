@@ -125,9 +125,6 @@ class Article < ActiveRecord::Base
   end
   
   def send_via_email
-    if $list_address == nil
-      raise "Can't send email in test environment"
-    end
     email = TMail::Mail.new
     email.to = self.mail_to
     email.cc = self.mail_cc
@@ -136,10 +133,15 @@ class Article < ActiveRecord::Base
     email.in_reply_to = self.parent_msgid
     email.subject = self.subject
     email.body = self.body
+    to_addrs = email.to || []
+    to_addrs << email.cc unless email.cc.nil?
+    Article.send_via_smtp(email.to_s, email.from.first, to_addrs)
+  end
+  
+  def self.send_via_smtp(msg, from, to)
+    raise "Can't send mail in test environment" if Rails.env.test?
     Net::SMTP::start('feste.bestiary.com', 2025) do |smtp|
-      to_addrs = email.to || []
-      to_addrs << email.cc unless email.cc.nil?
-      smtp.send_message email.to_s, email.from.first, to_addrs
+      smtp.send_message msg, from, to
     end
   end
   
