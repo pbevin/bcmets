@@ -118,12 +118,9 @@ class Article < ActiveRecord::Base
   end
   
   def hex(n)
-    validChars = ("a".."f").to_a + ("0".."9").to_a
-    length = validChars.size
-
-    hexCode = ""
-    n.times { hexCode << validChars.rand }
-
+    f = File.open("/dev/random", "rb")
+    hexCode = r.read(n/2).unpack("H*")
+    f.close
     hexCode
   end
   
