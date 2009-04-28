@@ -119,7 +119,7 @@ class Article < ActiveRecord::Base
   
   def hex(n)
     f = File.open("/dev/random", "rb")
-    hexCode = r.read(n/2).unpack("H*")
+    hexCode = f.read(n/2).unpack("H*")
     f.close
     hexCode
   end
@@ -133,6 +133,7 @@ class Article < ActiveRecord::Base
     email.cc = self.mail_cc
     email.from = self.from
     email.message_id = self.msgid
+    email.in_reply_to = self.parent_msgid
     email.subject = self.subject
     email.body = self.body
     Net::SMTP::start('feste.bestiary.com', 2025) do |smtp|
