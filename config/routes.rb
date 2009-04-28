@@ -12,6 +12,10 @@ ActionController::Routing::Routes.draw do |map|
   map.article 'archive/article/:id',
     :controller => 'archive',
     :action => 'article'
+  map.connect 'archive/:old_year_month',
+    :controller => 'archive',
+    :action => 'month',
+    :requirements => { :old_year_month => /\d{4}-\d{2}/ }
   map.archive_month_by_date '/archive/:year/:month/date',
     :controller => 'archive',
     :action => 'month_by_date'

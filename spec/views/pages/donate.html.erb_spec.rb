@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/donate/index" do
   before(:each) do
-    render 'donate/index'
+    render 'pages/donate'
   end
   
   it "should link to paypal" do

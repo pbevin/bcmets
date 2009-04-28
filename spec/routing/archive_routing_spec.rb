@@ -29,5 +29,11 @@ describe ArchiveController, "route generation" do
       :controller => 'archive',
       :action => 'post'
     }
+    
+    params_from(:get, '/archive/2006-05').should == {
+      :controller => 'archive',
+      :action => 'month',
+      :old_year_month => '2006-05'
+    }
   end
 end

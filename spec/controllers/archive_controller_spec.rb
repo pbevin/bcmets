@@ -59,6 +59,18 @@ describe ArchiveController do
     end
   end
   
+  describe "GET month" do
+    it "should recognize @year and @month" do
+      Article.should_receive(:for_month).once().with(2006, 5).and_return([])
+      get 'month', :year => '2006', :month => '05'
+    end
+
+    it "should recognize @old_year_month" do
+      Article.should_receive(:for_month).once().with(2006, 5).and_return([])
+      get 'month', :old_year_month => '2006-05'
+    end
+  end
+  
   describe "GET month_by_date" do
     it "should list articles in reverse date order" do
       article1 = Article.make(:received_at => DateTime.parse("Thu, 12 Mar 2009 21:33:00 -0400 (EDT)"))

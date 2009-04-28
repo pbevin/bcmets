@@ -6,7 +6,11 @@ class ArchiveController < ApplicationController
   end
 
   def month
-    @year, @month = params[:year], params[:month]
+    if params[:old_year_month]
+      @year, @month = (params[:old_year_month] =~ /(\d{4})-(\d{2})/ && [$1, $2])
+    else
+      @year, @month = params[:year], params[:month]
+    end
     @title = "#{Date::MONTHNAMES[@month.to_i]} #{@year}"
     
     candidates = Article.for_month(@year.to_i, @month.to_i)
