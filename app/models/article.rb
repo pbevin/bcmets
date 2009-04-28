@@ -128,13 +128,14 @@ class Article < ActiveRecord::Base
     email = TMail::Mail.new
     email.to = self.mail_to
     email.cc = self.mail_cc
-    email.from = self.from
+    email.from = TMail::Address.special_quote_address(self.from)
     email.message_id = self.msgid
     email.in_reply_to = self.parent_msgid
     email.subject = self.subject
     email.body = self.body
     to_addrs = email.to || []
     to_addrs << email.cc unless email.cc.nil?
+    puts self.inspect if email.from.nil?
     Article.send_via_smtp(email.to_s, email.from.first, to_addrs)
   end
   
