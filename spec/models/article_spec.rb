@@ -171,6 +171,7 @@ describe Article, ".reply" do
   it "should wrap long lines when quoting" do
     @article.body = (["asdf"] * 100).join(' ')
     @article.reply.body.lines.count.should > 5
+    @article.reply.body.lines.find_all {/^> /}.count.should > 5
   end
   
   it "should set mail_to and mail_cc based on reply_type" do

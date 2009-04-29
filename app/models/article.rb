@@ -178,11 +178,10 @@ class Article < ActiveRecord::Base
     !to.nil?
   end
   
-private
-
   def quote(string)
     returning "" do |body|
-      wrap(string).each { |line| body << "> #{line}\n" }
+      lines = wrap(string).collect{|line| line.split("\n")}.flatten
+      lines.each { |line| body << "> #{line}\n" }
     end
   end
 
