@@ -70,6 +70,13 @@ describe ArchiveController do
       get 'month', :old_year_month => '2006-05'
     end
   end
+
+  describe "GET this_month" do
+    it "should redirect" do
+      get 'this_month'
+      response.should be_redirect
+    end
+  end
   
   describe "GET month_by_date" do
     it "should list articles in reverse date order" do

@@ -31,6 +31,12 @@
         - if flash[:notice]
           #notice
             = flash[:notice]
+            - if flash[:links]
+              %p From here you can go to:
+              %ul
+              - for text, url in flash[:links]
+                %li
+                  = link_to(text, url) 
         = yield
       #sidebar
         %h3 Links

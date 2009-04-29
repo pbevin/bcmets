@@ -48,6 +48,10 @@ class ArchiveController < ApplicationController
     @author = Struct::Author.new(params[:name], params[:email])
     @articles = Article.find_all_by_email(params[:email], :order => "sent_at DESC")
   end
+  
+  def this_month
+    redirect_to url_for(:action => 'month', :year => Date.today.year, :month => Date.today.month)
+  end
 
   def post
     if request.post?
@@ -57,6 +61,8 @@ class ArchiveController < ApplicationController
         send_via_email(@article)
         @article.save unless @article.reply_type == 'sender'
         flash[:notice] = "Message sent."
+        flash[:links] = [['Home', url_for(:action => 'index')],
+                         ['Current Articles', url_for(:action => 'this_month')]]
         cookies[:name] = { :value => @article.name, :expires => 3.months.from_now, :path => "/" }
         cookies[:email] = { :value => @article.email, :expires => 3.months.from_now }
         if @article.reply?
