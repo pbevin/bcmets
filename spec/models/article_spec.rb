@@ -198,7 +198,7 @@ describe Article, " bugs" do
   it "should figure out mail_to and mail_cc" do
     params = {
       "name"=>"Pete Bevin",
-      "body"=>"Pete Bevin writes:\r\n> Pete Bevin writes:\r\n> > xxx\r\n> > \r\n> > Pete Bevin writes:\r\n> > > Pete Bevin writes:\r\n> > > > askdfjafiqb\r\n",
+      "body"=>"xxx",
       "to"=>"Pete Bevin <pete@petebevin.com>",
       "subject"=>"Re: Thingummy",
       "parent_id"=>"5282",
