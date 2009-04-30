@@ -3,8 +3,12 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'donations/stats',
     :controller => 'donations',
     :action => 'stats'
+    
+  map.connect 'donations.html',
+    :controller => 'pages',
+    :action => 'donate'
 
-  map.resources :donations
+  # map.resources :donations
 
   map.articles 'archive',
     :controller => 'archive',
