@@ -11,6 +11,7 @@ class Article < ActiveRecord::Base
   
   define_index do
     indexes name, email, subject, body
+    indexes received_at, :sortable => true
   end
   
   def from

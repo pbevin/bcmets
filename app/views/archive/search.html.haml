@@ -1,6 +1,11 @@
 %h2
   Search results for
   = @q
+%p.minimize
+  Sorted by
+  = "#{@sorting_by}."
+  = link_to("Sort by #{@switch_sort}", @switch_url)
+
 = will_paginate @articles
 %p
 - for article in @articles
@@ -9,5 +14,5 @@
     %small
       = link_to_author(article)
       ,
-      = article.received_at.to_s(:short)
+      = article.received_at.to_date.strftime("%b %d %Y")
 = will_paginate @articles

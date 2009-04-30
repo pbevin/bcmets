@@ -103,6 +103,12 @@ table.index td {
   background-color : transparent;
 }
 
+p.minimize {
+  margin-top: 0;
+  text-align: right;
+  font-size: smaller;
+}
+
 #main ul.month li {
   margin-top : .8em;
 }

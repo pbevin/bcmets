@@ -36,11 +36,24 @@ class ArchiveController < ApplicationController
   end
   
   def search
-    @articles = Article.search(
-      @q = params['q'],
+    @q = params['q']
+    order = params['sort']
+    
+    search_options = {
       :page => (params['page'] || 1),
-      :field_weights => { "subject" => 10, "name" => 5, "email" => 5, "body" => 1 }
-    )
+      :field_weights => { "subject" => 10, "name" => 5, "email" => 5, "body" => 1 },
+    }
+    if order == 'date'
+      search_options.merge!(:order => :received_at, :sort_mode => :desc)
+      @sorting_by = "date"
+      @switch_sort = "relevance"
+      @switch_url = url_for(:action => "search", :q => @q)
+    else
+      @sorting_by = "relevance"
+      @switch_sort = "date"
+      @switch_url = url_for(:action => "search", :q => @q, :sort => 'date')
+    end      
+    @articles = Article.search(@q, search_options)
   end
   
   def author
