@@ -36,4 +36,11 @@ describe ArchiveController, "route generation" do
       :old_year_month => '2006-05'
     }
   end
+
+  it "routes /donate the way I like" do
+    params_from(:get, "/donate").should == {
+      :controller => "pages",
+      :action => "donate"
+    }
+  end
 end

@@ -32,7 +32,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'post.pl',
     :controller => "archive",
     :action => "post"
-
+  map.connect 'donate',
+    :controller => 'pages',
+    :action => 'donate'
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
