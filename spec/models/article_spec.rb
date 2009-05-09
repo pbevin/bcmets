@@ -191,7 +191,7 @@ describe Article, ".reply" do
   end
 end
 
-describe Article, " bugs" do
+describe Article, "bugs" do
   it "should be able to get articles from December" do
     Article.for_month(2006, 12).should_not be_nil
   end
@@ -212,4 +212,40 @@ describe Article, " bugs" do
     
     @article.mail_to.should == 'list@example.com'
   end
+end
+
+describe Article, "conversation handling" do
+  it "should create a new conversation for a new article" do
+    article = Article.make
+    article.conversation.should_not be_nil
+    article.conversation.articles.should == [article]
+  end
+
+  it "should add a reply to its parent's conversation" do
+    article = Article.make
+    reply = article.reply
+    reply.name = Faker::Name.name
+    reply.email = Faker::Internet.email
+    reply.save!
+    article.conversation.should == reply.conversation
+    article.conversation.articles.should == [article, reply]
+  end
+  
+  it "should rely on parent_id, not just parent, for conversation handling" do
+    article = Article.make
+    params = {
+      "name"=>"Pete Bevin",
+      "email" => "pete@petebevin.com",
+      "body"=>"xxx",
+      "to" => article.from,
+      "subject" => article.reply.subject,
+      "parent_id" => article.id,
+      "parent_msgid" => article.msgid,
+      "reply_type" => "list"
+    }
+    reply = Article.new(params)
+    reply.save!
+    article.conversation.should == reply.conversation
+  end
+    
 end

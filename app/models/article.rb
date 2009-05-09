@@ -2,6 +2,8 @@ class Article < ActiveRecord::Base
   validates_uniqueness_of :msgid
   attr_accessor :children
   has_one :parent, :class_name => "Article", :foreign_key => "parent_id"
+  belongs_to :conversation
+  before_create :start_conversation
   attr_accessor :reply_type # list, sender, or both
   attr_accessor :to
   validates_presence_of :name
@@ -169,6 +171,7 @@ class Article < ActiveRecord::Base
       reply.subject = self.subject
       reply.subject = "Re: #{reply.subject}" unless reply.subject =~ /^Re:/i
       reply.to = self.from
+      reply.parent = self
       reply.parent_id = self.id
       reply.parent_msgid = self.msgid
       reply.body = "#{self.name} writes:\n#{quote(self.body)}"
@@ -189,6 +192,16 @@ class Article < ActiveRecord::Base
   def wrap(text, columns = 72)
     text.split("\n").collect do |line|
      line.length > columns ? line.gsub(/(.{1,#{columns}})(\s+|$)/, "\\1\n").strip : line
+    end
+  end
+  
+  def start_conversation
+    if self.parent
+      self.conversation = parent.conversation
+    elsif self.parent_id
+      self.conversation = Article.find_by_id(self.parent_id).conversation
+    else
+      self.conversation ||= Conversation.create(:title => self.subject)
     end
   end
 end

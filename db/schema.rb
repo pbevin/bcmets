@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090427153638) do
+ActiveRecord::Schema.define(:version => 20090509163640) do
 
   create_table "articles", :force => true do |t|
     t.datetime "sent_at"
@@ -23,12 +23,20 @@ ActiveRecord::Schema.define(:version => 20090427153638) do
     t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "conversation_id"
   end
 
+  add_index "articles", ["conversation_id"], :name => "index_articles_on_conversation_id"
   add_index "articles", ["email"], :name => "index_articles_on_email"
   add_index "articles", ["msgid"], :name => "index_articles_on_msgid"
   add_index "articles", ["parent_msgid"], :name => "index_articles_on_parent_msgid"
   add_index "articles", ["received_at"], :name => "index_articles_on_received_at"
+
+  create_table "conversations", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "donations", :force => true do |t|
     t.string   "email"

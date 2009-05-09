@@ -242,12 +242,8 @@ describe ArchiveController do
         "article"=> {
             "name"=>"Cathy in L. A.",  # final period causes problems unless quoted
             "email"=>"ogpanfilo2@aol.com",
-            "body"=>"xxxx",
             "subject"=>"Re: Re: New look for bcmets",
-            "to"=>"Linda McBride <linda6321@yahoo.com>",
-            "parent_msgid"=>"<469899.23241.qm@web56605.mail.re3.yahoo.com>",
-            "parent_id"=>"116763",
-            "reply_type"=>"list",
+            "body"=>"xxxx",
         },
         "commit"=>"Post",
         "authenticity_token"=>"CzuSHm/qCOy+af5uAYEUDAFD5W/MteGNpr58sIi87Pk="
