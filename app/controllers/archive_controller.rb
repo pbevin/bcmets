@@ -68,6 +68,15 @@ class ArchiveController < ApplicationController
 
   def post
     if request.post?
+      if params[:article][:body] != '' && params[:article][:body] != nil
+        # spam attempt!
+        flash[:notice] = "Message sent."
+        redirect_to :action => "index"
+        return
+      end
+      
+      params[:article][:body] = params[:article][:qt]
+      
       @article = Article.new(params[:article])
       if @article.valid?
         @article.prepare_for_email
@@ -83,6 +92,8 @@ class ArchiveController < ApplicationController
         else
           redirect_to :action => "index"
         end
+      else
+        @article.body = nil
       end
     else
       @article = Article.new(:name => cookies[:name], :email => cookies[:email])
@@ -93,6 +104,8 @@ class ArchiveController < ApplicationController
     @article = Article.find_by_id(params[:id]).reply
     @article.name = cookies[:name]
     @article.email = cookies[:email]
+    @article.qt = @article.body
+    @article.body = nil
     render :template => 'archive/post'
   end
   

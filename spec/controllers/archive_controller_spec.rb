@@ -141,7 +141,7 @@ describe ArchiveController do
         :name => @article.name,
         :email => @article.email,
         :subject => @article.subject,
-        :body => @article.body 
+        :qt => @article.body 
       }
       @article = assigns(:article)
     end
@@ -185,19 +185,26 @@ describe ArchiveController do
   end
   
   describe "GET 'reply'" do
+    before(:each) do
+      cookies[:name] = 'My Name'
+      cookies[:email] = 'my.email@example.com'
+      article = Article.make
+      @reply = article.reply
+      get 'reply', :id => article.id
+
+      @article = assigns[:article]
+    end
+
     it "should present fields based on Article.reply" do
-      @article = Article.make
-      get 'reply', :id => @article.id
-      assigns[:article].attributes.should == @article.reply.attributes
+      @article.subject.should == @reply.subject
+      @article.to.should == @reply.to
+      @article.parent_id.should == @reply.parent_id
+      @article.parent_msgid.should == @reply.parent_msgid
     end
     
     it "should default name and email from cookies" do
-      cookies[:name] = 'My Name'
-      cookies[:email] = 'my.email@example.com'
-      @article = Article.make
-      get 'reply', :id => @article.id
-      assigns[:article].name.should == 'My Name'
-      assigns[:article].email.should == 'my.email@example.com'
+      @article.name.should == 'My Name'
+      @article.email.should == 'my.email@example.com'
     end
   end
   
@@ -216,7 +223,7 @@ describe ArchiveController do
         :parent_id => @reply.parent_id,
         :parent_msgid => @reply.parent_msgid,
         :subject => @reply.subject,
-        :body => @reply.body 
+        :qt => @reply.body 
       }
     end
     
@@ -240,10 +247,10 @@ describe ArchiveController do
     it "should let Cathy in L.A. post" do
       params = {
         "article"=> {
-            "name"=>"Cathy in L. A.",  # final period causes problems unless quoted
-            "email"=>"ogpanfilo2@aol.com",
-            "subject"=>"Re: Re: New look for bcmets",
-            "body"=>"xxxx",
+            :name => "Cathy in L. A.",  # final period causes problems unless quoted
+            :email => "ogpanfilo2@aol.com",
+            :subject => "Re: Re: New look for bcmets",
+            :qt => "xxxx"
         },
         "commit"=>"Post",
         "authenticity_token"=>"CzuSHm/qCOy+af5uAYEUDAFD5W/MteGNpr58sIi87Pk="
@@ -251,6 +258,60 @@ describe ArchiveController do
       
       Article.should_receive(:send_via_smtp).with(anything(), "ogpanfilo2@aol.com", anything())
       post 'post', params
+    end
+  end
+  
+  describe "Spam prevention" do
+    it "should reject spam" do
+      params = {
+        "article"=> {
+            :name => "Buy Viagra!",
+            :email => "buy@viagra.example.com", 
+            :subject => "Viagra spam",
+            :body => "oops, fell into the spam trap"
+        },
+        "commit"=>"Post"
+      }
+      
+      Article.should_not_receive(:send_via_smtp)
+      lambda { post 'post', params }.should_not change { Article.count }
+      response.should redirect_to(:controller => "archive", :action => "index")
+      flash[:notice].should == "Message sent."
+    end
+    
+    it "should accept ham" do
+      params = {
+        :article => {
+          :name => "Fred",
+          :email => "fred@example.com",
+          :subject => "Subject",
+          :body => "",
+          :qt => "xxxx"
+        }
+      }
+      Article.should_receive(:send_via_smtp)
+      post 'post', params
+    end
+    
+    it "should clear body field when fields have errors" do
+      params = {
+        :article => {
+          :name => "",
+          :email => "",
+          :subject => "",
+          :qt => "body"
+        }
+      }
+      post 'post', params
+      assigns[:article].body.should be_nil
+      assigns[:article].qt.should == "body"
+    end
+    
+    it "should assign qt, not body, on reply" do
+      article = Article.make
+      get 'reply', { :id => article.id }
+      assigns(:article).body.should be_nil
+      assigns(:article).qt.should == article.reply.body
     end
   end
 end

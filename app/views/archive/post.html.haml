@@ -23,9 +23,13 @@
       = f.label :subject, "Subject"
       %br
       = f.text_field :subject
-    %div
+    %div{:style => "display:none;"}
       = f.label :body, "Message:"
       %br
-      = f.text_area :body, :rows => 30, :cols => 70
+      = f.text_area :body, :rows => 30, :cols => 60
+    %div
+      = f.label :qt, "Message:"
+      %br
+      = f.text_area :qt, :rows => 30, :cols => 60
     %div
       = submit_tag "Post"

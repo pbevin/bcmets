@@ -11,6 +11,8 @@ class Article < ActiveRecord::Base
   validates_presence_of :subject
   validates_presence_of :body
   
+  attr_accessor :qt  # honeytrap for body field
+  
   define_index do
     indexes name, email, subject, body
     indexes received_at, :sortable => true
