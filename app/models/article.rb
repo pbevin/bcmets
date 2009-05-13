@@ -74,6 +74,12 @@ class Article < ActiveRecord::Base
       parent = Article.find_by_msgid(article.parent_msgid)
       if parent != nil
         article.parent_id = parent.id
+        if article.conversation.nil?
+          article.conversation = parent.conversation
+        else
+          Article.update_all(["conversation_id = ?", parent.conversation],
+                             ["conversation_id = ?", article.conversation])
+        end
       end
       article.save
     end

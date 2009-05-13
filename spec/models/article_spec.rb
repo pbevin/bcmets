@@ -215,37 +215,64 @@ describe Article, "bugs" do
 end
 
 describe Article, "conversation handling" do
-  it "should create a new conversation for a new article" do
-    article = Article.make
-    article.conversation.should_not be_nil
-    article.conversation.articles.should == [article]
+  describe "on creation" do
+    it "creates a new conversation for a new article" do
+      article = Article.make
+      article.conversation.should_not be_nil
+      article.conversation.articles.should == [article]
+    end
+
+    it "adds a reply to its parent's conversation" do
+      article = Article.make
+      reply = article.reply
+      reply.name = Faker::Name.name
+      reply.email = Faker::Internet.email
+      reply.save!
+      article.conversation.should == reply.conversation
+      article.conversation.articles.should == [article, reply]
+    end
+
+    it "relies on parent_id, not just parent, for conversation handling" do
+      article = Article.make
+      params = {
+        "name"=>"Pete Bevin",
+        "email" => "pete@petebevin.com",
+        "body"=>"xxx",
+        "to" => article.from,
+        "subject" => article.reply.subject,
+        "parent_id" => article.id,
+        "parent_msgid" => article.msgid,
+        "reply_type" => "list"
+      }
+      reply = Article.new(params)
+      reply.save!
+      article.conversation.should == reply.conversation
+    end
   end
 
-  it "should add a reply to its parent's conversation" do
-    article = Article.make
-    reply = article.reply
-    reply.name = Faker::Name.name
-    reply.email = Faker::Internet.email
-    reply.save!
-    article.conversation.should == reply.conversation
-    article.conversation.articles.should == [article, reply]
-  end
-  
-  it "should rely on parent_id, not just parent, for conversation handling" do
-    article = Article.make
-    params = {
-      "name"=>"Pete Bevin",
-      "email" => "pete@petebevin.com",
-      "body"=>"xxx",
-      "to" => article.from,
-      "subject" => article.reply.subject,
-      "parent_id" => article.id,
-      "parent_msgid" => article.msgid,
-      "reply_type" => "list"
-    }
-    reply = Article.new(params)
-    reply.save!
-    article.conversation.should == reply.conversation
-  end
+  describe "link_threads()" do  
+    it "links up conversations" do
+      a1 = Article.make
+      a2 = Article.make(:parent_msgid => a1.msgid)
+      Article.link_threads
+      a1.reload.conversation.should === a1.reload.conversation
+    end
     
+    it "handles out of order message arrival" do
+      a1 = Article.make(:msgid => "3", :parent_msgid => "2")
+      Article.link_threads
+      
+      a2 = Article.make(:msgid => "2", :parent_msgid => "1")
+      Article.link_threads
+      
+      a3 = Article.make(:msgid => "1")
+      Article.link_threads
+      
+      a1.reload
+      a2.reload
+      a3.reload
+
+      a1.conversation.should === a2.conversation
+    end
+  end
 end
