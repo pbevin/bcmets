@@ -112,6 +112,14 @@ class Article < ActiveRecord::Base
     end
   end
   
+  def each_child(&block)
+    return if children.nil?
+    children.each do |child|
+      yield child
+      child.each_child(&block)
+    end
+  end
+  
   def self.parse_rfc2822_headers(header_text)
     returning Hash.new do |headers|
       matches = header_text.scan(/^([^:]*): (.*(?:\n\s+.*)*)/)

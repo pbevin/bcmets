@@ -131,7 +131,13 @@ describe Article do
       @art5.children.should be_nil  # not sure - maybe should be []
       @art2.children.should == [@art3]
     end
-  end 
+    
+    it "can iterate over all the children" do
+      children = []
+      @art1.each_child { |child| children << child }
+      children.should == [@art2, @art3, @art4]
+    end
+  end
 
   describe ".reply" do
     before(:each) do
