@@ -18,6 +18,14 @@ describe Article do
     @article.should_not be_recent
   end
   
+  describe "validation" do
+    it "requires a full email address" do
+      @article.email = "invalid"
+      @article.should_not be_valid
+    end
+  end
+  
+  
   describe ".from_headers" do
     before(:each) do
       text = File.read(File.dirname(__FILE__) + "/../fixtures/article.txt")
