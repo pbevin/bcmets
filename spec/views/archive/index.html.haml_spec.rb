@@ -12,7 +12,7 @@ describe "/archive/index" do
       response.should have_tag('h2', year.to_s)
     end
   end
-  
+
   it "should have links for every month" do
     (2001..2008).each do |year|
       response.should have_tag('td>a', "March #{year}")

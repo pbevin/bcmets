@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   layout "archive"
+  before_filter :allow_search_engines
   
   def index
     redirect_to '/'
@@ -9,4 +10,9 @@ class PagesController < ApplicationController
     
   end
 
+private
+
+  def allow_search_engines
+    @indexable = true
+  end
 end

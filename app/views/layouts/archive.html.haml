@@ -3,7 +3,8 @@
   %head
     %title
       BCMets.org - Metastatic Breast Cancer
-    %meta{ :name => "robots", :content => "noindex, nofollow" }
+    - if not @indexable
+      %meta{ :name => "robots", :content => "noindex, nofollow" }
     %meta{"http-equiv" => "Content-type", :content => "text/html;charset=UTF-8"}
     = javascript_include_tag :all, :cache => true
     = stylesheet_link_tag "bcmets", "forms", :cache => true

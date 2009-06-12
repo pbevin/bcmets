@@ -1,4 +1,6 @@
 class ArchiveController < ApplicationController
+  before_filter :disable_search_engines
+  
   def index
     @title = "Archives"
     @year = Time.now.year
@@ -111,5 +113,11 @@ class ArchiveController < ApplicationController
   
   def send_via_email(article)
     article.send_via_email
+  end
+  
+private
+
+  def disable_search_engines
+    @indexable = (params[:action] == 'index')
   end
 end

@@ -27,6 +27,11 @@ describe ArchiveController do
       assigns(:year).should == Time.now.year
       assigns(:month).should == Time.now.month
     end
+    
+    it "should allow search engines" do
+      get 'index'
+      assigns(:indexable).should == true
+    end
   end
 
   describe "GET 'month' ordering" do
@@ -56,6 +61,10 @@ describe ArchiveController do
       articles.consecutive_pairs do |a, b|
         a.received_at.should > b.received_at
       end
+    end
+    
+    it "does not allow search engines" do
+      assigns(:indexable).should == false
     end
   end
   
