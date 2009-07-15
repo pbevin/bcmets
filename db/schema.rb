@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090509163640) do
+ActiveRecord::Schema.define(:version => 20090513162622) do
 
   create_table "articles", :force => true do |t|
     t.datetime "sent_at"
