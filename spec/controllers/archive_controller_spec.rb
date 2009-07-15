@@ -87,6 +87,21 @@ describe ArchiveController do
     end
   end
   
+  describe "GET old_article" do
+    it "should redirect" do
+      article = Article.new
+      article.id = 666
+      Article.should_receive(:find_by_legacy_id).once().with('2009-04/0179').and_return(article)
+      
+      get 'old_article', :old_year_month => '2009-04', :article_number => '0179'
+      response.should redirect_to(
+        :controller => "archive",
+        :action => "article",
+        :id => article.id)
+    end
+  end
+      
+  
   describe "GET month_by_date" do
     it "should list articles in reverse date order" do
       article1 = Article.make(:received_at => DateTime.parse("Thu, 12 Mar 2009 21:33:00 -0400 (EDT)"))

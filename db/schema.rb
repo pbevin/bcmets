@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090513162622) do
+ActiveRecord::Schema.define(:version => 20090715171351) do
 
   create_table "articles", :force => true do |t|
     t.datetime "sent_at"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20090513162622) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "conversation_id"
+    t.string   "legacy_id"
   end
 
   add_index "articles", ["conversation_id"], :name => "index_articles_on_conversation_id"

@@ -9,7 +9,7 @@ class ArchiveController < ApplicationController
 
   def month
     if params[:old_year_month]
-      @year, @month = (params[:old_year_month] =~ /(\d{4})-(\d{2})/ && [$1, $2])
+      @year, @month = old_year_month
     else
       @year, @month = params[:year], params[:month]
     end
@@ -35,6 +35,14 @@ class ArchiveController < ApplicationController
   def article
     @article = Article.find_by_id(params[:id])
     @title = @article.subject
+  end
+  
+  # For people with legacy bookmarks - can probably remove this feature after Dec 2010.
+  def old_article
+    year, month = old_year_month
+    article_number = params[:article_number]
+    @article = Article.find_by_legacy_id("#{year}-#{month}/#{article_number}")
+    redirect_to :action => "article", :id => @article
   end
   
   def search
@@ -119,5 +127,9 @@ private
 
   def disable_search_engines
     @indexable = (params[:action] == 'index')
+  end
+  
+  def old_year_month
+    params[:old_year_month] =~ /(\d{4})-(\d{2})/ && [$1, $2]
   end
 end

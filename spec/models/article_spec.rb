@@ -18,13 +18,19 @@ describe Article do
     @article.should_not be_recent
   end
   
+  it "can have a legacy ID" do
+    id = "2009-04/0479"
+    @article.legacy_id = id
+    @article.save
+    Article.find_by_legacy_id(id).should == @article
+  end
+
   describe "validation" do
     it "requires a full email address" do
       @article.email = "invalid"
       @article.should_not be_valid
     end
   end
-  
   
   describe ".from_headers" do
     before(:each) do

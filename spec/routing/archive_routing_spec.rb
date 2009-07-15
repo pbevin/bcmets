@@ -43,4 +43,13 @@ describe ArchiveController, "route generation" do
       :action => "donate"
     }
   end
+  
+  it "figures out legacy URLs" do
+    params_from(:get, "/archive/2009-04/0179.html").should == {
+      :controller => "archive",
+      :action => "old_article",
+      :old_year_month => "2009-04",
+      :article_number => "0179"
+    }
+  end
 end

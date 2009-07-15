@@ -16,6 +16,10 @@ ActionController::Routing::Routes.draw do |map|
   map.article 'archive/article/:id',
     :controller => 'archive',
     :action => 'article'
+  map.connect 'archive/:old_year_month/:article_number.html',
+    :controller => 'archive',
+    :action => 'old_article',
+    :requirements => { :old_year_month => /\d{4}-\d{2}/, :article_number => /\d{4}/ }
   map.connect 'archive/:old_year_month',
     :controller => 'archive',
     :action => 'month',
