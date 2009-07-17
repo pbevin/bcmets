@@ -158,7 +158,7 @@ class Article < ActiveRecord::Base
     to_addrs = email.to || []
     to_addrs << email.cc unless email.cc.nil?
     puts self.inspect if email.from.nil?
-    Article.send_via_smtp(email.to_s, email.from.first, to_addrs)
+    Article.send_via_smtp(email.to_s, self.email, to_addrs)
   end
   
   def self.send_via_smtp(msg, from, to)
