@@ -43,6 +43,7 @@ class ArchiveController < ApplicationController
     article_number = params[:article_number]
     @article = Article.find_by_legacy_id("#{year}-#{month}/#{article_number}")
     if @article.nil?
+      flash[:notice] = "Oops.  We couldn't find your bookmark.  You can use the Search function to try and locate it, or click on a month below."
       redirect_to :action => "index"
     else
       redirect_to :action => "article", :id => @article

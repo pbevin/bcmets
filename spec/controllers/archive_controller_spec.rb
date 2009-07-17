@@ -105,6 +105,7 @@ describe ArchiveController do
       
       get 'old_article', :old_year_month => '2009-04', :article_number => '0666'
       response.should redirect_to(:controller => "archive", :action => "index")
+      flash[:notice].should =~ /bookmark/
     end
   end
       
