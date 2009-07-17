@@ -42,7 +42,11 @@ class ArchiveController < ApplicationController
     year, month = old_year_month
     article_number = params[:article_number]
     @article = Article.find_by_legacy_id("#{year}-#{month}/#{article_number}")
-    redirect_to :action => "article", :id => @article
+    if @article.nil?
+      redirect_to :action => "index"
+    else
+      redirect_to :action => "article", :id => @article
+    end
   end
   
   def search

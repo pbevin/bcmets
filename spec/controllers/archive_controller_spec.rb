@@ -99,6 +99,13 @@ describe ArchiveController do
         :action => "article",
         :id => article.id)
     end
+    
+    it "should handle not-found bookmarks gracefully" do
+      Article.should_receive(:find_by_legacy_id).and_return(nil)
+      
+      get 'old_article', :old_year_month => '2009-04', :article_number => '0666'
+      response.should redirect_to(:controller => "archive", :action => "index")
+    end
   end
       
   
