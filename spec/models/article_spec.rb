@@ -274,7 +274,7 @@ describe Article do
         a1 = Article.make
         a2 = Article.make(:parent_msgid => a1.msgid)
         Article.link_threads
-        a1.reload.conversation.should === a1.reload.conversation
+        a1.reload.conversation.should === a2.reload.conversation
       end
 
       it "handles out of order message arrival" do
