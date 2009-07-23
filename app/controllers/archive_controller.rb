@@ -35,6 +35,11 @@ class ArchiveController < ApplicationController
   def article
     @article = Article.find_by_id(params[:id])
     @title = @article.subject
+    begin
+      @conversation_roots = Article.thread_tree(@article.conversation.articles)
+    rescue
+      @conversation_roots = nil
+    end
   end
   
   # For people with legacy bookmarks - can probably remove this feature after Dec 2010.

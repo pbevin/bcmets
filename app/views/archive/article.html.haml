@@ -11,3 +11,8 @@
       = "(#{time_ago_in_words(@article.sent_at)} ago)"
 #body
   = to_html @article.body
+  - if @conversation_roots
+    %div.thread
+      %h2 Articles in this thread
+      %ul.conversation
+        = thread_as_html(@conversation_roots)
