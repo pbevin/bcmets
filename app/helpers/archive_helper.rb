@@ -48,7 +48,11 @@ module ArchiveHelper
       text.gsub!(/=([\dA-F]{2})/) { $1.hex.chr }
     end
     text = auto_link(simple_format(h(text)))
-    text = Iconv.conv('utf-8', 'WINDOWS-1252', text)
+    begin
+      text = Iconv.conv('utf-8', 'WINDOWS-1252', text)
+    rescue
+    end
+    text
   end
   
   def thread_as_html(articles)
