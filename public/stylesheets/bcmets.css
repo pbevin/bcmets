@@ -238,3 +238,8 @@ div.thread ul {
   list-style: none;
   padding-left: 2em;
 }
+
+#user_nav {
+  float: right;
+  font-size: 12px;
+}

@@ -18,6 +18,7 @@ Rails::Initializer.run do |config|
   config.gem "faker"
   config.gem "haml"
   config.gem 'mislav-will_paginate', :version => '~> 2.3.4', :lib => 'will_paginate', :source => 'http://gems.github.com'
+  config.gem 'authlogic'
   #require 'will_paginate'
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
