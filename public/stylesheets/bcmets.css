@@ -239,7 +239,15 @@ div.thread ul {
   padding-left: 2em;
 }
 
-#user_nav {
+#usernav {
   float: right;
   font-size: 12px;
+}
+
+#usernav ul {
+  list-style-type: none;
+}
+
+#usernav li {
+  display: inline;
 }

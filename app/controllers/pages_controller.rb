@@ -1,5 +1,4 @@
 class PagesController < ApplicationController
-  layout "archive"
   before_filter :allow_search_engines
   
   def index

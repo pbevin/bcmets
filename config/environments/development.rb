@@ -19,3 +19,12 @@ config.action_mailer.raise_delivery_errors = false
 config.cache_store = :memory_store
 
 $list_address = 'pete@petebevin.com'
+
+config.action_mailer.default_url_options = { :host => 'bcmets.local' }
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  :address => "petebevin.com",
+  :port => 2025,
+  :domain => "petebevin.com"
+}
+config.action_mailer.raise_delivery_errors = true

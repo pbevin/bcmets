@@ -1,0 +1,46 @@
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
+
+  <% if @user.new_record? %>
+    <p>
+      <%= f.label :username %><br />
+      <%= f.text_field :username %>
+    </p>
+  <% end %>
+
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>
+  
+  <p>
+    Email Delivery Options:<br />
+    
+    <%= f.radio_button :email_delivery, :full %>
+    <label for="user_email_delivery_full">
+      <strong>Full</strong> - I want to receive every message posted to the list (about 10-20 a day).
+    </label><br />
+    
+    <%= f.radio_button :email_delivery, :digest %>
+    <label for="user_email_delivery_digest">
+      <strong>Digest</strong> - I want to receive a couple of emails a day with batches of messages.
+    </label><br />
+    
+    <%= f.radio_button :email_delivery, :none %>
+    <label for="user_email_delivery_none">
+      <strong>None</strong> - I just want to read and post on the web site.
+    </label><br />
+  </p>
+  
+  <p>
+    <%= f.submit 'Submit' %>
+  </p>
+<% end %>

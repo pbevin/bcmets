@@ -72,8 +72,14 @@ class ArchiveController < ApplicationController
       @sorting_by = "relevance"
       @switch_sort = "date"
       @switch_url = url_for(:action => "search", :q => @q, :sort => 'date')
-    end      
-    @articles = Article.search(@q, search_options)
+    end
+    
+    begin
+      @articles = Article.search(@q, search_options)
+    rescue
+      @articles = [].paginate
+      flash[:notice] = "Sorry, search isn't working right now. Please give <a href=\"mailto:owner@bcmets.org\">Pete</a> a kick."
+    end
   end
   
   def author
@@ -116,17 +122,25 @@ class ArchiveController < ApplicationController
         @article.body = nil
       end
     else
-      @article = Article.new(:name => cookies[:name], :email => cookies[:email])
+      @article = Article.new(:name => default_name, :email => default_email)
     end
   end
   
   def reply
     @article = Article.find_by_id(params[:id]).reply
-    @article.name = cookies[:name]
-    @article.email = cookies[:email]
+    @article.name = default_name
+    @article.email = default_email
     @article.qt = @article.body
     @article.body = nil
     render :template => 'archive/post'
+  end
+  
+  def default_name
+    cookies[:name] || (current_user && current_user.name)
+  end
+  
+  def default_email
+    cookies[:email] || (current_user && current_user.email)
   end
   
   def send_via_email(article)

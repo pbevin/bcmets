@@ -1,0 +1,48 @@
+%h2 Activate your Account
+
+%p
+  Thank you for signing up with bcmets.  To complete your signup, please select a password,
+  and tell us how often you'd like to receive email.
+
+- form_for(:user, :url => activate_path(@user), :html => { :method => :post }) do |f|
+  = f.error_messages
+  %p
+    = f.label :name
+    %br/
+    = f.text_field :name
+
+  %p
+    = f.label :email
+    %br/
+    = f.text_field :email
+    
+  %p
+    = f.label :password
+    %br/
+    = f.password_field :password
+    
+  %p
+    = f.label :password_confirmation
+    %br/
+    = f.password_field :password_confirmation
+    
+  %p
+    Email delivery preference
+    %br/
+
+    = f.radio_button :email_delivery, :full
+    %strong Full
+    \- I want to receive every message posted to the list (about 10-20 a day).
+    %br/
+
+    = f.radio_button :email_delivery, :digest
+    %strong Digest
+    \- I want to receive a couple of emails a day with batches of messages.
+    %br/
+
+    = f.radio_button :email_delivery, :none
+    %strong None
+    \- I just want to read and post on the web site.
+    
+  %p
+    = f.submit "Sign me up!"
