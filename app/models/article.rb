@@ -2,6 +2,7 @@ class Article < ActiveRecord::Base
   validates_uniqueness_of :msgid
   attr_accessor :children
   has_one :parent, :class_name => "Article", :foreign_key => "parent_id"
+  belongs_to :user
   belongs_to :conversation
   before_create :start_conversation
   attr_accessor :reply_type # list, sender, or both

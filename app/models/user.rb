@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
     c.validates_length_of_password_confirmation_field_options = {:on => :update, :minimum => 4, :if => :has_no_credentials?}
   end
   
+  validates_presence_of :name
+  
   attr_protected :active
 
   def has_no_credentials?

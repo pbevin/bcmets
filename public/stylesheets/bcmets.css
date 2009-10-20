@@ -6,7 +6,6 @@ body {
 	line-height : 1.5em;
 }
 
-
 a:link {
 	color: #36414d;
 }
@@ -18,7 +17,6 @@ a:hover, a:focus, a:active {
 	color : #fff;
 	text-decoration: none;
 }
-
 small a:link, small a:visited {
   color: #222;
   text-decoration: none;
@@ -28,6 +26,10 @@ small a:hover, small a:focus, small a:active {
   background: none;
 	color: #000;
 	text-decoration: underline;
+}
+
+a.user {
+  font-weight: bold;
 }
 
 table.index {
@@ -43,7 +45,6 @@ table.index td {
 	margin: 0 auto;
 	width: 960px;
 }
-
 
 #sidebar {
 	float: right;
@@ -250,4 +251,18 @@ div.thread ul {
 
 #usernav li {
   display: inline;
+}
+
+#profile #picture {
+  float: left;
+  margin-right: 20px;
+}
+
+#history {
+  padding-top: 60px;
+}
+
+#history ul {
+  list-style-type: none;
+  padding-left: 0;
 }

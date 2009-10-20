@@ -21,7 +21,7 @@ class UsersController < ApplicationController
         begin
           @user.deliver_activation_instructions!
         rescue
-          @user.delete!
+          @user.destroy
         end
         flash[:notice] = 'Registration successful.  Please check your email for activation instructions.'
         format.html { redirect_to(root_url) }
@@ -46,5 +46,10 @@ class UsersController < ApplicationController
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
+  end
+  
+  def profile
+    @user = User.find(params[:id])
+    @articles = @articles = Article.find_all_by_email(@user.email, :order => "sent_at DESC")
   end
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091015202720) do
+ActiveRecord::Schema.define(:version => 20091020184939) do
 
   create_table "albums", :force => true do |t|
     t.string   "title"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20091015202720) do
     t.datetime "updated_at"
     t.integer  "conversation_id"
     t.string   "legacy_id"
+    t.integer  "user_id"
   end
 
   add_index "articles", ["conversation_id"], :name => "index_articles_on_conversation_id"
@@ -100,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20091015202720) do
     t.string   "email_delivery"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "location"
   end
 
 end

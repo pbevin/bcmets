@@ -28,3 +28,10 @@ Donation.blueprint do
   amount
   date
 end
+
+User.blueprint do
+  name
+  email
+  
+  password { "secret" }
+end

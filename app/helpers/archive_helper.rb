@@ -25,7 +25,9 @@ module ArchiveHelper
   
   
   def from_linked(author)
-    if author.name == author.email
+    if author.user
+      return user_linked(author.user)
+    elsif author.name == author.email
       return email_linked(author)
     else
       return author.name + " &lt;" + email_linked(author) + "&gt;"
@@ -34,6 +36,10 @@ module ArchiveHelper
   
   def email_linked(author)
     link_to author.email, :controller => "archive", :action => "author", :email => author.email
+  end
+  
+  def user_linked(user)
+    link_to user.name, user_profile_path(user), :class => "user"
   end
   
   def wrap(tag, content)
@@ -64,7 +70,8 @@ module ArchiveHelper
     for article in articles
       x << "<li>"
       x << link_to_article(article) << " "
-      x << "<small>#{link_to_author(article)}, #{article.sent_at.to_s(:short)}</small>"
+      #x << "<small>#{link_to_author(article)}, #{article.sent_at.to_s(:short)}</small>"
+      x << "<small>#{from_linked(article)}, #{article.sent_at.to_s(:short)}</small>"
       children = article.children
       if !children.nil? && !children.empty?
         x << "<ul>"
@@ -88,7 +95,9 @@ module ArchiveHelper
   
   def last_donation
     date = Donation.last_donation_on
-    if date.to_date == Date.today
+    if date == nil
+      last_donation = "never"
+    elsif date.to_date == Date.today
       last_donation = "today"
     else
       last_donation = "#{time_ago_in_words(date)} ago"

@@ -273,6 +273,14 @@ describe ArchiveController do
       do_post('list')
       assigns[:article].should_not be_new_record
     end
+    
+    it "adds the user_id to the article if logged in" do
+      @user = User.make
+      controller.stub!(:current_user).and_return(@user)
+      do_post('list')
+      assigns[:article].user.should == @user
+    end
+      
   end
   
   describe "Post 'reply' bugs" do

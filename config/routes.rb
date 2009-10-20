@@ -4,6 +4,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.register '/register/:activation_code', :controller => 'activations', :action => 'new'
   map.activate '/activate/:id', :controller => 'activations', :action => 'create'
+  
+  map.user_profile "/user_profile/:id", :controller => "users", :action => "profile"
 
   map.resources :user_sessions
   map.resources :users

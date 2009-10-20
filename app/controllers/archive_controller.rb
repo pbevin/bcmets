@@ -105,6 +105,7 @@ class ArchiveController < ApplicationController
       
       @article = Article.new(params[:article])
       if @article.valid?
+        @article.user = current_user
         @article.prepare_for_email
         send_via_email(@article)
         @article.save unless @article.reply_type == 'sender'
