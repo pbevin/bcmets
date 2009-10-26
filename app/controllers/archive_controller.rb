@@ -2,7 +2,7 @@ class ArchiveController < ApplicationController
   before_filter :disable_search_engines
   
   def index
-    @title = "Archives"
+    @heading = "Archives"
     @year = Time.now.year
     @month = Time.now.month
   end
@@ -14,6 +14,7 @@ class ArchiveController < ApplicationController
       @year, @month = params[:year], params[:month]
     end
     @title = "#{Date::MONTHNAMES[@month.to_i]} #{@year}"
+    @heading = @title
     
     candidates = Article.for_month(@year.to_i, @month.to_i)
     @articles = Article.thread_tree(candidates)
@@ -58,6 +59,8 @@ class ArchiveController < ApplicationController
   def search
     @q = params['q']
     order = params['sort']
+    
+    @title = @q
     
     search_options = {
       :page => (params['page'] || 1),
@@ -123,11 +126,13 @@ class ArchiveController < ApplicationController
         @article.body = nil
       end
     else
+      @title = "Post a new message"
       @article = Article.new(:name => default_name, :email => default_email)
     end
   end
   
   def reply
+    @title = "Reply to message"
     @article = Article.find_by_id(params[:id]).reply
     @article.name = default_name
     @article.email = default_email
@@ -136,6 +141,8 @@ class ArchiveController < ApplicationController
     render :template => 'archive/post'
   end
   
+  private
+
   def default_name
     cookies[:name] || (current_user && current_user.name)
   end
@@ -148,8 +155,6 @@ class ArchiveController < ApplicationController
     article.send_via_email
   end
   
-private
-
   def disable_search_engines
     @indexable = (params[:action] == 'index')
   end

@@ -1,28 +1,19 @@
 <h1>Edit Profile</h1>
 
+If you need to change your email address or password, please click on one of the following:
+<ul>
+  <li><%= link_to 'Change email address', :action => 'edit_email' %></li>
+  <li><%= link_to 'Change password', :action => 'edit_password' %></li>
+</ul>
+
 <% form_for(@user) do |f| %>
   <%= f.error_messages %>
 
-  <% if @user.new_record? %>
-    <p>
-      <%= f.label :username %><br />
-      <%= f.text_field :username %>
-    </p>
-  <% end %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
 
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </p>
-  <p>
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %>
-  </p>
-  
   <p>
     <%= f.label :location %><br/>
     <%= f.text_field :location %>

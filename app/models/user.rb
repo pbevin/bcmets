@@ -1,3 +1,5 @@
+require 'maxmind'
+
 class User < ActiveRecord::Base
   acts_as_authentic do |c|
     c.validates_length_of_password_field_options = {:on => :update, :minimum => 4, :if => :has_no_credentials?}
@@ -24,7 +26,11 @@ class User < ActiveRecord::Base
     self.password_confirmation = params[:user][:password_confirmation]
     save
   end
-
+  
+  def guess_location(ip_addr)
+    self.location = MaxMind::lookup(ip_addr) unless self.location && self.location != ""
+  end
+  
   def active?
     active
   end
@@ -37,5 +43,10 @@ class User < ActiveRecord::Base
   def deliver_activation_confirmation!
     reset_perishable_token!
     Notifier.deliver_activation_confirmation(self)
+  end
+  
+  def reset_password!
+    reset_perishable_token!
+    Notifier.deliver_password_reset(self)
   end
 end

@@ -1,5 +1,7 @@
 <h1>Login</h1>
 
+Enter your username and password below.
+
 <% form_for(@user_session) do |f| %>
   <%= f.error_messages %>
 
@@ -15,3 +17,5 @@
     <%= f.submit 'Login' %>
   </p>
 <% end %>
+
+<%= link_to "Forgot your password?", forgot_password_path %>

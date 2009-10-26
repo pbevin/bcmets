@@ -2,7 +2,8 @@
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en" }
   %head
     %title
-      BCMets.org - Metastatic Breast Cancer
+      BCMets.org - 
+      = @title || "Metastatic Breast Cancer"
     - if not @indexable
       %meta{ :name => "robots", :content => "noindex, nofollow" }
     %meta{"http-equiv" => "Content-type", :content => "text/html;charset=UTF-8"}
@@ -26,8 +27,8 @@
               = text_field_tag :q, params[:q], :size => 10
               = submit_tag "Search"
       #main
-        %h1
-          = @title
+        - if @heading
+          %h1= @heading
         - if flash[:notice]
           #notice
             = flash[:notice]

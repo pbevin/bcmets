@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
+    @user.guess_location(request.remote_ip)
   end
 
   def create
@@ -45,6 +46,19 @@ class UsersController < ApplicationController
         format.html { render :action => "edit" }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+  
+  def password
+    if request.post?
+      @user = User.find_by_email(params[:email])
+      if @user
+        @user.reset_password!
+        flash[:notice] = "Instructions sent to #{params[:email]}"
+      else
+        flash[:notice] = "No such email"
+      end
+      redirect_to login_path
     end
   end
   
