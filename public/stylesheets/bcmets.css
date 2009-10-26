@@ -266,3 +266,20 @@ div.thread ul {
   list-style-type: none;
   padding-left: 0;
 }
+
+table.admin {
+  border-collapse: collapse;
+}
+
+table.admin tbody {
+  border: 1px solid #000;
+}
+
+table.admin th {
+  text-align: left;
+  vertical-align: bottom;
+}
+
+table.admin .admin-odd {
+  background: #edf3fe;
+}

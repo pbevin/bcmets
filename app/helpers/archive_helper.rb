@@ -25,13 +25,18 @@ module ArchiveHelper
   
   
   def from_linked(author)
-    if author.user
-      return user_linked(author.user)
-    elsif author.name == author.email
+    if author.name == author.email
       return email_linked(author)
     else
       return author.name + " &lt;" + email_linked(author) + "&gt;"
     end
+    # if author.user
+    #   return user_linked(author.user)
+    # elsif author.name == author.email
+    #   return email_linked(author)
+    # else
+    #   return author.name + " &lt;" + email_linked(author) + "&gt;"
+    # end
   end
   
   def email_linked(author)
