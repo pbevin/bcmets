@@ -1,0 +1,42 @@
+!!! Strict
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en" }
+  %head
+    %title
+      BCMets.org - 
+      = @title || "Metastatic Breast Cancer"
+    - if not @indexable
+      %meta{ :name => "robots", :content => "noindex, nofollow" }
+    %meta{"http-equiv" => "Content-type", :content => "text/html;charset=UTF-8"}
+    = javascript_include_tag :all, :cache => true
+    = stylesheet_link_tag "bcmets", "forms", :cache => true
+  %body
+    #wrap
+      #usernav
+        - if current_user
+          Logged in as
+          = link_to(current_user.name, edit_user_path(:current))
+          |
+          = link_to('Logout', logout_path)
+      #pageheader
+        #banner
+          %a{ :href => "/" }
+            %img{ :src => "/images/bcmets-header.png", :height => "120", :alt => "home page", :width => "950" }
+        #searchform
+          - form_tag({ :controller => 'archive', :action => 'search' }, :method => 'get') do
+            %fieldset
+              = text_field_tag :q, params[:q], :size => 10
+              = submit_tag "Search"
+      #main.admin
+        %h1 Administration Interface
+        - if @heading
+          %h2= @heading
+        - if flash[:notice]
+          #notice
+            = flash[:notice]
+            - if flash[:links]
+              %p From here you can go to:
+              %ul
+              - for text, url in flash[:links]
+                %li
+                  = link_to(text, url) 
+        = yield

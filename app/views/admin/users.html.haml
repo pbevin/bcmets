@@ -1,17 +1,17 @@
-%h1 Users
+%h2 Users
 
 %table.admin
   %thead
     %tr
-      %th Name
-      %th Email
+      %th User
+      %th Joined
       %th Delivery
   %tbody
     - for user in @users do
       %tr{:class => cycle('admin-odd', 'admin-even')}
-        %td= user.name
-        %td= user.email
+        %td=h "#{user.name} <#{user.email}>"
+        %td= user.created_at.to_date.to_s(:db)
         %td= user.email_delivery
         %td
-          = link_to 'View', :controller => user_profile_path(user)
-          = link_to 'Edit', :action => 'edituser', :id => user.id
+          = link_to 'V', :controller => user_profile_path(user)
+          = link_to 'E', :action => 'edituser', :id => user.id
