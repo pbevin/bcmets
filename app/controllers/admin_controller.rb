@@ -13,7 +13,6 @@ class AdminController < ApplicationController
       users = Mailman::parse(params[:file][:name])
       
       if !users.empty?
-        User.delete_all(["email <> ?", 'pete@petebevin.com'])
         errors = []
         users.each do |u|
           next if u[:email] == 'pete@petebevin.com'
@@ -23,12 +22,11 @@ class AdminController < ApplicationController
           delivery_type = "none" if u[:nomail]
         
           u[:name] = u[:email] if u[:name].nil? || u[:name] == ''
-        
-          user = User.new(
-            :name => u[:name],
-            :email => u[:email],
-            :password => u[:password],
-            :email_delivery => delivery_type)
+
+          user = User.find_by_email(u[:email]) || User.new(:email => u[:email])
+          user.name = u[:name]
+          user.password = u[:password]
+          user.email_delivery = delivery_type
           user.active = true
           user.save || errors << u[:email]
         end
