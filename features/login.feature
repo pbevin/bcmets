@@ -1,0 +1,51 @@
+Feature: Becoming a user
+  In order to get support
+  As a breast cancer patient
+  I want to register with the web site
+  
+  Scenario: Sign up
+    Given there is no user called "Mary Jones"
+    And I am not logged in
+    When I go to the front page
+    And I follow "Join bcmets"
+    And I fill in "Name" with "Mary Jones"
+    And I fill in "Email" with "mary@example.com"
+    And I press "Sign up"
+    Then I should see "Registration successful.  Please check your email for activation instructions."
+    
+  Scenario: Activate account
+    Given that I have a confirmation email
+    When I click on the activation link
+    And I fill in "Password" with "secret"
+    And I fill in "Password Confirmation" with "secret"
+    And I choose "user_email_delivery_full"
+    And I press "Sign me up!"
+    Then I should see "Thank you for registering!  Please check your email again for tips on using bcmets."
+    
+  Scenario: Login with valid account
+    Given user "mary@example.com" with password "secret"
+    When I go to Login
+    And I fill in "Email" with "mary@example.com"
+    And I fill in "Password" with "secret"
+    And I press "Login"
+    Then I should see "Logged in as"
+    And I should not see "Join bcmets"
+
+  Scenario: Log out
+    Given user "mary@example.com" with password "secret"
+    When I go to Login
+    And I fill in "Email" with "mary@example.com"
+    And I fill in "Password" with "secret"
+    And I press "Login"
+    And I go to the front page
+    And I follow "Logout"
+    Then I should not see "Logged in as"
+    And I should see "Join bcmets"
+
+  Scenario: Forgot Password
+    Given user "mary@example.com" with password "forgotten"
+    When I go to Login
+    And I follow "Forgot your password?"
+    And I fill in "email" with "mary@example.com"
+    And I press "Help!"
+    Then I should see "Instructions sent to mary@example.com"

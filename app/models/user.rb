@@ -15,9 +15,7 @@ class User < ActiveRecord::Base
     self.crypted_password.blank?
   end
 
-  def signup!(params)
-    self.email = params[:user][:email]
-    self.name  = params[:user][:name]
+  def signup!
     save_without_session_maintenance
   end
 

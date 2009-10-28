@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     @user.email_delivery = "none"
 
     respond_to do |format|
-      if @user.signup!(params)
+      if @user.signup!
         begin
           @user.deliver_activation_instructions!
         rescue
