@@ -28,3 +28,12 @@ config.cache_store = :mem_cache_store
 # config.threadsafe!
 
 $list_address = 'bcmets@bcmets.org'
+
+config.action_mailer.default_url_options = { :host => 'bcmets.org' }
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  :address => "localhost",
+  :port => 25,
+  :domain => "bcmets.org"
+}
+config.action_mailer.raise_delivery_errors = true
