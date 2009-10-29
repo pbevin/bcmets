@@ -11,13 +11,6 @@
 
 ActiveRecord::Schema.define(:version => 20091020184939) do
 
-  create_table "albums", :force => true do |t|
-    t.string   "title"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "articles", :force => true do |t|
     t.datetime "sent_at"
     t.datetime "received_at"
@@ -51,41 +44,6 @@ ActiveRecord::Schema.define(:version => 20091020184939) do
     t.string   "email"
     t.date     "date"
     t.integer  "amount"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "holds", :force => true do |t|
-    t.integer  "subscription_id"
-    t.date     "leave"
-    t.date     "return"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "photos", :force => true do |t|
-    t.string   "title"
-    t.text     "description"
-    t.integer  "album_id"
-    t.binary   "data",        :limit => 16777215
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "subscriptions", :force => true do |t|
-    t.string   "email"
-    t.string   "name"
-    t.string   "password"
-    t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "thumbnails", :force => true do |t|
-    t.binary   "data",       :limit => 16777215
-    t.integer  "width"
-    t.integer  "height"
-    t.integer  "photo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
