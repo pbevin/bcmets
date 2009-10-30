@@ -84,7 +84,7 @@ class ArchiveController < ApplicationController
       flash[:notice] = "Sorry, search isn't working right now. Please give <a href=\"mailto:owner@bcmets.org\">Pete</a> a kick."
     end
   end
-  
+
   def author
     Struct.new("Author", :name, :email)
     @author = Struct::Author.new(params[:name], params[:email])

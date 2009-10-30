@@ -7,7 +7,7 @@ development:
 
 test: &TEST
   adapter: sqlite3
-  database: ":memory:"
+  database: /tmp/bcmets-test
 
 production:
   adapter: mysql
@@ -15,7 +15,5 @@ production:
   user: pete
   socket: /var/lib/mysql/mysql.sock
 
-cucumber:
-  <<: *TEST
 cucumber:
   <<: *TEST

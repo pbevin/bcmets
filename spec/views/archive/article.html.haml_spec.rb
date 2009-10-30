@@ -14,6 +14,11 @@ describe "/archive/article" do
   it "should display links to other articles in thread"
   it "should show profile of sender"
 
+  it "tells search engines to go away" do
+    render "archive/article"
+    response.should have_tag("head>meta[name=?,content=?]", "robots", "noindex, nofollow")
+  end
+
   it "should have a Reply link if recent" do
     @article.stub!(:recent?).and_return(true)
     render 'archive/article'

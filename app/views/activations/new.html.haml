@@ -7,16 +7,6 @@
 - form_for(:user, :url => activate_path(@user), :html => { :method => :post }) do |f|
   = f.error_messages
   %p
-    = f.label :name
-    %br/
-    = f.text_field :name
-
-  %p
-    = f.label :email
-    %br/
-    = f.text_field :email
-    
-  %p
     = f.label :password
     %br/
     = f.password_field :password

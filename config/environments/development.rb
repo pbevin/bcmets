@@ -20,7 +20,9 @@ config.cache_store = :memory_store
 
 $list_address = 'pete@petebevin.com'
 
-config.action_mailer.default_url_options = { :host => 'bcmets.local' }
+hostname = ENV['HOSTNAME'] == 'loki' ? 'localhost:3000' : 'bcmets.local'
+
+config.action_mailer.default_url_options = { :host => hostname }
 config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings = {
   :address => "petebevin.com",

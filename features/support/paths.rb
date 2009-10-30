@@ -13,6 +13,9 @@ module NavigationHelpers
       
     when /Login/
       '/login'
+
+    when /the "([^"]*)" archive page/
+      "/archive/#{$1}"
     
     # Add more mappings here.
     # Here is a more fancy example:
