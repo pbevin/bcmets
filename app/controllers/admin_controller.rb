@@ -7,7 +7,7 @@ class AdminController < ApplicationController
   def users
     @users = User.find(:all, :order => "created_at DESC")
   end
-  
+
   def mailman_import
     if request.post?
       filename = params[:file][:name]
@@ -58,12 +58,4 @@ class AdminController < ApplicationController
     end
   end
   
-  private
-  
-  def logged_in_as_admin
-    if !current_user || current_user.email != 'pete@petebevin.com'
-      flash[:notice] = "Login first please"
-      redirect_to root_url
-    end
-  end
 end

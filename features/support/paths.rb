@@ -16,6 +16,12 @@ module NavigationHelpers
 
     when /the "([^"]*)" archive page/
       "/archive/#{$1}"
+
+    when "View Users"
+      "/admin/users"
+
+    when /Edit User for (.+)/
+      edit_user_path(model($1))
     
     # Add more mappings here.
     # Here is a more fancy example:

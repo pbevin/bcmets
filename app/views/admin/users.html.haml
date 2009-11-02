@@ -1,6 +1,6 @@
 %h2 Users
 
-%table.admin
+%table#users.admin
   %thead
     %tr
       %th User
@@ -14,4 +14,4 @@
         %td= user.email_delivery
         %td
           = link_to 'V', :controller => user_profile_path(user)
-          = link_to 'E', :action => 'edituser', :id => user.id
+          = link_to 'E', edit_user_path(user)

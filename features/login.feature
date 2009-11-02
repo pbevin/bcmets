@@ -11,7 +11,7 @@ Feature: Becoming a user
     And I fill in "Name" with "Mary Jones"
     And I fill in "Email" with "mary@example.com"
     And I press "Sign up"
-    Then I should see "Registration successful.  Please check your email for activation instructions."
+    Then I should see "Registration successful."
     
   Scenario: Activate account
     Given that I have a confirmation email
@@ -20,7 +20,7 @@ Feature: Becoming a user
     And I fill in "Password Confirmation" with "secret"
     And I choose "user_email_delivery_full"
     And I press "Sign me up!"
-    Then I should see "Thank you for registering!  Please check your email again for tips on using bcmets."
+    Then I should see "Thank you for registering!"
     
   Scenario: Login with valid account
     Given user "mary@example.com" with password "secret"

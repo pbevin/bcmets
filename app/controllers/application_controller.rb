@@ -39,4 +39,11 @@ class ApplicationController < ActionController::Base
       return false 
     end 
   end
+
+  def logged_in_as_admin
+    if !current_user || current_user.email != 'pete@petebevin.com'
+      flash[:notice] = "Login first please"
+      redirect_to root_url
+    end
+  end
 end

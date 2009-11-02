@@ -19,10 +19,8 @@ class User < ActiveRecord::Base
     save_without_session_maintenance
   end
 
-  def activate!(params)
+  def activate!
     self.active = true
-    self.password = params[:user][:password]
-    self.password_confirmation = params[:user][:password_confirmation]
     save
   end
   

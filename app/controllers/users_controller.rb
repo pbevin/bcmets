@@ -9,8 +9,13 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
-    @user.guess_location(request.remote_ip)
+    if params[:id] && logged_in_as_admin
+      @user = User.find_by_id(params[:id])
+      render :template => "users/edit_root"
+    else
+      @user = current_user
+      @user.guess_location(request.remote_ip)
+    end
   end
 
   def create
@@ -35,10 +40,17 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
+    if logged_in_as_admin
+      @user = User.find(params[:id])
+    else
+      @user = current_user
+    end
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
+        if params[:user][:active] && !@user.active?
+          @user.activate!
+        end
         flash[:notice] = 'Profile updated'
         format.html { redirect_to(root_url) }
         format.xml  { head :ok }
