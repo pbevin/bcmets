@@ -51,6 +51,6 @@ class User < ActiveRecord::Base
   private
 
   def update_mailman
-    system("/home/mailman/delivery", "bcmets", email, email_delivery) if active?
+    system("/home/mailman/delivery", "bcmets", email, email_delivery) if active? and email_delivery
   end
 end

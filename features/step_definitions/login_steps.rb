@@ -6,6 +6,14 @@ Given /^I am not logged in$/ do
   UserSession.find.destroy rescue nil
 end
 
+Then /^I should be logged in$/ do
+  UserSession.find.should_not be_nil
+end
+
+Then /^I should not be logged in$/ do
+  UserSession.find.should be_nil
+end
+
 Given /^that I have a confirmation email/ do
   User.delete_all
   @u = User.new(:name => "Mary Jones", :email => "mary@example.com")

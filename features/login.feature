@@ -14,6 +14,7 @@ Feature: Becoming a user
     And I press "Sign up"
     Then I should see "Registration successful."
     And a user should exist with name: "Mary Jones", email_delivery: "none"
+    And I should not be logged in
     
   Scenario: Activate account
     Given that I have a confirmation email for "mary@example.com"
@@ -24,6 +25,7 @@ Feature: Becoming a user
     And I press "Sign me up!"
     Then I should see "Thank you for registering!"
     And a user should exist with email: "mary@example.com", email_delivery: "full"
+    And I should be logged in
     
   Scenario: Login with valid account
     Given user "mary@example.com" with password "secret"
@@ -31,8 +33,9 @@ Feature: Becoming a user
     And I fill in "Email" with "mary@example.com"
     And I fill in "Password" with "secret"
     And I press "Login"
-    Then I should see "Logged in as"
-    And I should not see "Join bcmets"
+    Then I should be logged in
+    And I should see "Logged in as"
+    But I should not see "Join bcmets"
 
   Scenario: Log out
     Given user "mary@example.com" with password "secret"
@@ -42,8 +45,9 @@ Feature: Becoming a user
     And I press "Login"
     And I go to the front page
     And I follow "Logout"
-    Then I should not see "Logged in as"
-    And I should see "Join bcmets"
+    Then I should not be logged in
+    And I should not see "Logged in as"
+    But I should see "Join bcmets"
 
   Scenario: Forgot Password
     Given user "mary@example.com" with password "forgotten"
