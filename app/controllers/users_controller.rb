@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if params[:id] && logged_in_as_admin
+    if params[:id] != 'current' && logged_in_as_admin
       @user = User.find_by_id(params[:id])
       render :template => "users/edit_root"
     else
