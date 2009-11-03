@@ -6,7 +6,7 @@ module MaxMind
     Net::HTTP.start('geoip3.maxmind.com') do |http|
       response = http.get("/b?l=HINZ1x3Xvjap&i=#{ip_addr}")
       # US,NJ,Jersey City,40.724499,-74.062103
-      return parse(response.message)
+      return parse(response.body)
     end
   end
   
