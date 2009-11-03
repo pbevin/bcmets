@@ -23,14 +23,14 @@ Feature: Admin interface
     When I go to Edit User for that user
     And I choose "user_email_delivery_none"
     And I press "Submit"
-    Then that user should exist with email_delivery: "none"
+    Then a user should exist with email_delivery: "none"
 
   Scenario: Change email address
     Given a user exists with email: "test@example.com"
     When I go to Edit User for that user
     And I fill in "Email" with "new.email@example.com"
     And I press "Submit"
-    Then that user should exist with email: "new.email@example.com"
+    Then a user should exist with email: "new.email@example.com"
 
   Scenario: Not changing the password by default
     Given a user exists with email: "test@example.com", password: "secr3t"

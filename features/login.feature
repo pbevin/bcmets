@@ -13,15 +13,17 @@ Feature: Becoming a user
     And I fill in "Email" with "mary@example.com"
     And I press "Sign up"
     Then I should see "Registration successful."
+    And a user should exist with name: "Mary Jones", email_delivery: "none"
     
   Scenario: Activate account
-    Given that I have a confirmation email
+    Given that I have a confirmation email for "mary@example.com"
     When I click on the activation link
     And I fill in "Password" with "secret"
     And I fill in "Password Confirmation" with "secret"
     And I choose "user_email_delivery_full"
     And I press "Sign me up!"
     Then I should see "Thank you for registering!"
+    And a user should exist with email: "mary@example.com", email_delivery: "full"
     
   Scenario: Login with valid account
     Given user "mary@example.com" with password "secret"

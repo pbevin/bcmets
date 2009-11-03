@@ -22,32 +22,41 @@ class UsersController < ApplicationController
   end
 
   def create
-    p = params[:user]
-
-    activating = p[:active] == "1"
-
-    if !activating && logged_in_as_admin
-      p.delete(:password)
-      p.delete(:password_confirmation)
-      p.delete(:email_delivery)
+    if params[:user][:active] == "1" && logged_in_as_admin
+      create_and_activate
+    else
+      p = params[:user].slice(:name, :email)
+      @user = User.new(p)
+      @user.email_delivery = "none"
+      respond_to do |format|
+        if @user.signup!
+          begin
+            @user.deliver_activation_instructions!
+          rescue
+            @user.destroy
+          end
+          if logged_in_as_admin
+            flash[:notice] = "User added"
+          else
+            flash[:notice] = 'Registration successful.  Please check your email for activation instructions.'
+          end
+          format.html { redirect_to(root_url) }
+          format.xml  { render :xml => @user, :status => :created, :location => @user }
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+        end
+      end
     end
+  end
 
-    @user = User.new(p)
-    @user.email_delivery = "none" unless p[:email_delivery]
-    @user.activate! if activating
+  def create_and_activate
+    @user = User.new(params[:user])
+    @user.activate!
 
     respond_to do |format|
       if @user.signup!
-        begin
-          @user.deliver_activation_instructions!
-        rescue
-          @user.destroy
-        end
-        if logged_in_as_admin
-          flash[:notice] = "User added"
-        else
-          flash[:notice] = 'Registration successful.  Please check your email for activation instructions.'
-        end
+        flash[:notice] = "User added"
         format.html { redirect_to(root_url) }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
