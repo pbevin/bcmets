@@ -56,6 +56,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.signup!
+        @user.update_mailman
         flash[:notice] = "User added"
         format.html { redirect_to(root_url) }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
@@ -78,6 +79,7 @@ class UsersController < ApplicationController
         if params[:user][:active] && !@user.active?
           @user.activate!
         end
+        @user.update_mailman
         flash[:notice] = 'Profile updated'
         format.html { redirect_to(root_url) }
         format.xml  { head :ok }

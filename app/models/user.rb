@@ -10,8 +10,6 @@ class User < ActiveRecord::Base
   validates_presence_of :name
   attr_protected :active
 
-  after_save :update_mailman
-
   def has_no_credentials?
     self.crypted_password.blank?
   end
@@ -47,8 +45,6 @@ class User < ActiveRecord::Base
     reset_perishable_token!
     Notifier.deliver_password_reset(self)
   end
-
-  private
 
   def update_mailman
     system("/home/mailman/delivery", "bcmets", email, email_delivery) if active? and email_delivery
