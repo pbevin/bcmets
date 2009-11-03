@@ -3,6 +3,7 @@ Given /^there is no user called "([^\"]*)"$/ do |name|
 end
 
 Given /^I am not logged in$/ do
+  UserSession.find.destroy rescue nil
 end
 
 Given /^that I have a confirmation email/ do

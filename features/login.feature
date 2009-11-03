@@ -1,3 +1,4 @@
+@admin
 Feature: Becoming a user
   In order to get support
   As a breast cancer patient

@@ -41,7 +41,11 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_in_as_admin
-    if !current_user || current_user.email != 'pete@petebevin.com'
+    current_user && current_user.email == 'pete@petebevin.com'
+  end
+
+  def require_admin
+    if logged_in_as_admin
       flash[:notice] = "Login first please"
       redirect_to root_url
     end
