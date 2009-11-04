@@ -141,10 +141,7 @@ class Article < ActiveRecord::Base
   end
   
   def hex(n)
-    f = File.open("/dev/random", "rb")
-    hexCode = f.read(n/2).unpack("H*")
-    f.close
-    hexCode
+    SecureRandom::hex(n/2)
   end
   
   def send_via_email

@@ -295,3 +295,7 @@ table.admin tr:hover {
 table.admin .admin-odd {
   background: #edf3fe;
 }
+
+img.profile {
+  float: right;
+}

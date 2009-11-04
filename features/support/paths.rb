@@ -22,6 +22,9 @@ module NavigationHelpers
 
     when /Edit User for (.+)/
       edit_user_path(model($1))
+
+    when "my profile"
+      "/users/current/edit"
     
     # Add more mappings here.
     # Here is a more fancy example:

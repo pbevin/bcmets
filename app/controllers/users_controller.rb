@@ -68,28 +68,32 @@ class UsersController < ApplicationController
   end
 
   def update
-    if logged_in_as_admin
-      @user = User.find(params[:id])
-    else
+    if params[:id] == 'current' || !logged_in_as_admin
       @user = current_user
+    else
+      @user = User.find(params[:id])
     end
 
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        if params[:user][:active] && !@user.active?
-          @user.activate!
-        end
-        @user.update_mailman
-        flash[:notice] = 'Profile updated'
-        format.html { redirect_to(root_url) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+    if @user.update_attributes(params[:user])
+      if params[:user][:active] && !@user.active?
+        @user.activate!
       end
+      @user.update_mailman
+
+      if params[:user][:photo].blank?
+        flash[:notice] = 'Profile updated'
+        redirect_to edit_user_path('current')
+      else
+        render :action => "crop"
+      end
+    else
+      render :action => "edit"
     end
   end
   
+  def crop
+  end
+
   def password
     if request.post?
       @user = User.find_by_email(params[:email])

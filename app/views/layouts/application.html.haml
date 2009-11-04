@@ -9,6 +9,7 @@
     %meta{"http-equiv" => "Content-type", :content => "text/html;charset=UTF-8"}
     = javascript_include_tag :all, :cache => true
     = stylesheet_link_tag "bcmets", "forms", :cache => true
+    = yield(:head)
   %body
     #wrap
       #usernav

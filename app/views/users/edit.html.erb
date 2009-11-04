@@ -1,12 +1,13 @@
 <h1>Edit Profile</h1>
 
+<%= image_tag @user.photo.url(:medium), :class => 'profile' %>
 If you need to change your email address or password, please click on one of the following:
 <ul>
   <li><%= link_to 'Change email address', :action => 'edit_email' %></li>
   <li><%= link_to 'Change password', :action => 'edit_password' %></li>
 </ul>
 
-<% form_for(@user) do |f| %>
+  <% form_for(@user, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -37,7 +38,11 @@ If you need to change your email address or password, please click on one of the
       <strong>None</strong> - I just want to read and post on the web site.
     </label><br />
   </p>
-  
+  <p>
+    <%= f.label :photo, "Photo" %>  
+    <%= f.file_field :photo %>  
+  </p>
+
   <p>
     <%= f.submit 'Submit' %>
   </p>

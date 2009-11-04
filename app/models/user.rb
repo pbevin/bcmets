@@ -9,6 +9,17 @@ class User < ActiveRecord::Base
   
   validates_presence_of :name
   attr_protected :active
+  has_attached_file :photo, :processors => [:cropper], :styles => {
+    :small => "100x100#",
+    :medium => "300x300>",
+    :large => "500x500>"
+  }
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  after_update :reprocess_photo, :if => :cropping?
+
+  def cropping?
+    !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
+  end
 
   def has_no_credentials?
     self.crypted_password.blank?
@@ -48,5 +59,15 @@ class User < ActiveRecord::Base
 
   def update_mailman
     system("/home/mailman/delivery", "bcmets", email, email_delivery) if active? and email_delivery
+  end
+
+  def photo_geometry(style = :original)  
+    @geometry ||= {}  
+    @geometry[style] ||= Paperclip::Geometry.from_file(photo.path(style))  
+  end
+  
+  private  
+  def reprocess_photo
+    photo.reprocess!
   end
 end

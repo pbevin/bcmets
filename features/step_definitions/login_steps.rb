@@ -33,3 +33,12 @@ Given /^user "([^\"]*)" with password "([^\"]*)"$/ do |email, password|
   u.active = true
   u.save!
 end
+
+Given /^(.+) is logged in$/ do |who|
+  user = model(who)
+  user.activate!
+  visit "/login"
+  fill_in("Email", :with => user.email)
+  fill_in("Password", :with => "xyzzy")
+  click_button("Login")
+end
