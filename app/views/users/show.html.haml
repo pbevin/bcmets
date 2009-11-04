@@ -1,0 +1,29 @@
+%h1= @user.name
+- if @user == current_user
+  %p
+    = link_to "Edit profile", edit_user_path(@user)
+
+#profile
+  #picture
+    = profile_picture(@user)
+  #info
+    %strong Registered User
+    %br/
+    Member for
+    %strong= time_ago_in_words(@user.created_at)
+    %br/
+    - if @user.location
+      Location:
+      %strong= @user.location
+
+%br/
+
+- unless @articles.empty?
+  #history
+    %h2 Posting History
+    %ul.bydate
+      - @articles.each do |article|
+        %li
+          = link_to_article article
+          %small
+            = article.sent_at

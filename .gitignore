@@ -5,4 +5,5 @@ doc/app
 .DS_Store
 tmp
 db/sphinx
+public/system
 

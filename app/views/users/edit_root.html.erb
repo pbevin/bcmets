@@ -1,6 +1,6 @@
 <h1>Edit Profile (<%=h @user.email %>)</h1>
 
-<% form_for(@user) do |f| %>
+<% form_for(@user, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -52,6 +52,10 @@
   </p>
   <% end %>
     
+  <p>
+    <%= f.label :photo, "Photo" %>  
+    <%= f.file_field :photo %>  
+  </p>
   
   <p>
     <%= f.submit 'Submit' %>

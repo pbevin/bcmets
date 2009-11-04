@@ -1,14 +1,8 @@
 class UsersController < ApplicationController
   def new
     @user = User.new
-
     @admin = logged_in_as_admin
     @button_label = @admin ? "Submit" : "Sign up"
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @user }
-    end
   end
 
   def edit
@@ -28,24 +22,20 @@ class UsersController < ApplicationController
       p = params[:user].slice(:name, :email)
       @user = User.new(p)
       @user.email_delivery = "none"
-      respond_to do |format|
-        if @user.signup!
-          begin
-            @user.deliver_activation_instructions!
-          rescue
-            @user.destroy
-          end
-          if logged_in_as_admin
-            flash[:notice] = "User added"
-          else
-            flash[:notice] = 'Registration successful.  Please check your email for activation instructions.'
-          end
-          format.html { redirect_to(root_url) }
-          format.xml  { render :xml => @user, :status => :created, :location => @user }
-        else
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+      if @user.signup!
+        begin
+          @user.deliver_activation_instructions!
+        rescue
+          @user.destroy
         end
+        if logged_in_as_admin
+          flash[:notice] = "User added"
+        else
+          flash[:notice] = 'Registration successful.  Please check your email for activation instructions.'
+        end
+        redirect_to(root_url)
+      else
+        render :action => "new"
       end
     end
   end
@@ -54,16 +44,12 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     @user.activate!
 
-    respond_to do |format|
-      if @user.signup!
-        @user.update_mailman
-        flash[:notice] = "User added"
-        format.html { redirect_to(root_url) }
-        format.xml  { render :xml => @user, :status => :created, :location => @user }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-      end
+    if @user.signup!
+      @user.update_mailman
+      flash[:notice] = "User added"
+      redirect_to(root_url)
+    else
+      render :action => :new
     end
   end
 
@@ -82,7 +68,7 @@ class UsersController < ApplicationController
 
       if params[:user][:photo].blank?
         flash[:notice] = 'Profile updated'
-        redirect_to edit_user_path('current')
+        redirect_to user_path('current')
       else
         render :action => "crop"
       end
@@ -91,7 +77,13 @@ class UsersController < ApplicationController
     end
   end
   
-  def crop
+  def show
+    if params[:id] == 'current'
+      @user = current_user
+    else
+      @user = User.find(params[:id])
+    end
+    @articles = @articles = Article.find_all_by_email(@user.email, :order => "sent_at DESC")
   end
 
   def password
