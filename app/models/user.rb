@@ -34,6 +34,10 @@ class User < ActiveRecord::Base
     save
   end
   
+  def has_photo?
+    @photo.present?
+  end
+
   def guess_location(ip_addr)
     self.location = MaxMind::lookup(ip_addr) unless self.location && self.location != ""
   end
