@@ -17,3 +17,4 @@
         %td
           = link_to 'V', :controller => user_profile_path(user)
           = link_to 'E', edit_user_path(user)
+          = link_to 'D', user, :confirm => 'Sure?', :method => :delete

@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    if logged_in_as_admin
+    if !logged_in_as_admin
       flash[:notice] = "Login first please"
       redirect_to root_url
     end

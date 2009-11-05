@@ -1,12 +1,5 @@
 class AdminController < ApplicationController
-  before_filter :logged_in_as_admin
-
-  def index
-  end
-  
-  def users
-    @users = User.find(:all, :order => "created_at DESC")
-  end
+  before_filter :require_admin
 
   def mailman_import
     if request.post?

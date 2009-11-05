@@ -18,6 +18,14 @@ Feature: Admin interface
       | Anita <anita@example.com>       | 2009-08-11 | all      |
       | Pete Bevin <pete@petebevin.com> | 1969-12-30 | none     |
 
+  Scenario: Deleting a user
+    Given a user exists with email: "barbara@example.com"
+    When I go to View Users
+    And I follow "D" within "table#users tr:first-child > td:last-child"
+    Then I should be on View Users
+    And I should see "User deleted"
+    And a user should not exist with email: "barbara@example.com"
+
   Scenario: Change delivery mode
     Given a user exists with email_delivery: "all"
     When I go to Edit User for that user
@@ -67,7 +75,7 @@ Feature: Admin interface
   Scenario: Subscribe a user
     When I go to View Users
     And I follow "Add User"
-    And I fill in "Name" with "Mary Williams2"
+    And I fill in "Name" with "Mary Williams"
     And I fill in "Email" with "mary@example.com"
     And I press "Submit"
     Then I should see "User added"
@@ -85,4 +93,3 @@ Feature: Admin interface
     Then I should see "User added"
     And a user should exist with email: "mary@example.com"
     And that user should be active
-

@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
+  before_filter :require_admin, :only => [:index, :destroy]
+
+  def index
+    @users = User.find(:all, :order => "created_at DESC")
+  end
+  
   def new
     @user = User.new
     @admin = logged_in_as_admin
@@ -101,6 +107,13 @@ class UsersController < ApplicationController
   
   def profile
     @user = User.find(params[:id])
-    @articles = @articles = Article.find_all_by_email(@user.email, :order => "sent_at DESC")
+    @articles = Article.find_all_by_email(@user.email, :order => "sent_at DESC")
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    flash[:notice] = "User deleted"
+    redirect_to users_path
   end
 end
