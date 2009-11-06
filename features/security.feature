@@ -13,3 +13,7 @@ Feature: Admin security
   Scenario: User list
     When I go to path /users
     Then I should be on the front page
+
+  Scenario: Link editing
+    When I go to path /links
+    Then I should be on the front page

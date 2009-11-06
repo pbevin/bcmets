@@ -23,6 +23,9 @@ module NavigationHelpers
     when "View Users"
       "/users"
 
+    when "Show Links"
+      "/links"
+
     when /Edit User for (.+)/
       edit_user_path(model($1))
 

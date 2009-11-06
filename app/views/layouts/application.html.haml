@@ -49,28 +49,12 @@
                 = link_to('Join bcmets', new_user_path)
             %li
               = link_to('Login', login_path)
-          %li
-            %a{ :href => "/pages/howto" }
-              How to use the list
-          %li
-            %a{ :href => "http://www.advancedbc.org/" }
-              AdvancedBC.org
-          %li
-            %a{ :href => "http://www.brainmetsbc.org/" }
-              BrainMetsBC.org
-          %li
-            %a{ :href => "http://www.picturetrail.com/sfx/album/listing/user/bcbeauties" }
-              Picture Trail
-            (login: bcbeauties/bcmets)
-          %li
-            %a{ :href => "/archive/article/122736" }
-              Where we live
-          %li
-            %a{ :href => "http://advancedbc.org/content/pams-list-helpful-products-and-remedies"}
-              Pam's List
-          %li
-            %a{ :href => "http://darkwing.uoregon.edu/%7Ejbonine/abbrevs.html" }
-              Abbreviation list
+          #links
+            - for link in all_links
+              %li
+                = link_to link.title, link.url
+                - if link.text
+                  = link.text
           %li
             %a{ :href => "/post" }
               Post a new message
