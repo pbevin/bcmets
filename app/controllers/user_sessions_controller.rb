@@ -18,7 +18,7 @@ class UserSessionsController < ApplicationController
     respond_to do |format|
       if @user_session.save
         flash[:notice] = 'Logged in successfully.'
-        format.html { redirect_to(root_url) }
+        format.html { redirect_back_or_home }
         format.xml  { render :xml => @user_session, :status => :created, :location => @user_session }
       else
         format.html { render :action => "new" }

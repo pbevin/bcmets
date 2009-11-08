@@ -8,12 +8,14 @@ Feature: Admin security
 
   Scenario: Admin page
     When I go to path /admin
-    Then I should be on the front page
+    Then I should be on Login
+    When I login as administrator
+    Then I should be on path /admin
 
   Scenario: User list
     When I go to path /users
-    Then I should be on the front page
+    Then I should be on Login
 
   Scenario: Link editing
     When I go to path /links
-    Then I should be on the front page
+    Then I should be on Login

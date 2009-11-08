@@ -47,7 +47,13 @@ class ApplicationController < ActionController::Base
   def require_admin
     if !logged_in_as_admin
       flash[:notice] = "Login first please"
-      redirect_to root_url
+      session[:return_to] = request.request_uri
+      redirect_to login_url
     end
+  end
+
+  def redirect_back_or_home
+    redirect_to(session[:return_to] || root_path)
+    session[:return_to] = nil
   end
 end
