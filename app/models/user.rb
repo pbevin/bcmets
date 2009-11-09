@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   after_update :reprocess_photo, :if => :cropping?
 
+  has_many :events, :class_name => "EventLog"
+
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
   end
@@ -57,9 +59,9 @@ class User < ActiveRecord::Base
   end
   
   def log_activation
-    EventLog.create!(:email => self.email,
-                     :reason => "signup",
-                     :message => "Mode = #{self.email_delivery}, name = #{self.name}, id = #{self.id}")
+    events << EventLog.new(:email => self.email,
+                           :reason => "signup",
+                           :message => "Mode = #{self.email_delivery}, name = #{self.name}")
   end
 
   def reset_password!
