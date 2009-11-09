@@ -34,11 +34,28 @@ Given /^user "([^\"]*)" with password "([^\"]*)"$/ do |email, password|
   u.save!
 end
 
+Given /^I sign up as "([^\"]*)"$/ do |email|
+  visit "/users/new"
+  fill_in "Email", :with => email
+  fill_in "Name", :with => "test"
+  click_button "Sign up"
+end
+
 Given /^(.+) is logged in$/ do |who|
   user = model(who)
   user.activate!
   visit "/login"
-  fill_in("Email", :with => user.email)
-  fill_in("Password", :with => "xyzzy")
-  click_button("Login")
+  fill_in "Email", :with => user.email
+  fill_in "Password", :with => "xyzzy"
+  click_button "Login"
+end
+
+When /^I activate user "([^\"]*)"$/ do |email|
+  user = User.find_by_email(email)
+  token = user.perishable_token
+  visit "/register/#{token}"
+  fill_in "Password", :with => "xyzzy"
+  fill_in "Password Confirmation", :with => "xyzzy"
+  choose('user_email_delivery_full')
+  click_button "Sign me up"
 end

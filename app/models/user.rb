@@ -56,6 +56,12 @@ class User < ActiveRecord::Base
     Notifier.deliver_activation_confirmation(self)
   end
   
+  def log_activation
+    EventLog.create!(:email => self.email,
+                     :reason => "signup",
+                     :message => "Mode = #{self.email_delivery}, name = #{self.name}, id = #{self.id}")
+  end
+
   def reset_password!
     reset_perishable_token!
     Notifier.deliver_password_reset(self)
