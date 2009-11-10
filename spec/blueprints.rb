@@ -9,7 +9,7 @@ Sham.name  { Faker::Name.name }
 Sham.email { Faker::Internet.email }
 Sham.subject { Faker::Lorem.sentence }
 Sham.body  { Faker::Lorem.paragraph }
-Sham.date { Time.gm(2009, "Mar", rand(20) + 5, rand(24), rand(60), rand(60)) }
+Sham.date { Time.now }
 Sham.msgid { '<' + alnum(8) + "." + alnum(12) + "@" + Faker::Internet.domain_name + ">" }
 Sham.amount { rand(490) + 10 }
 

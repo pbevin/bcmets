@@ -26,6 +26,13 @@ module NavigationHelpers
     when "Show Links"
       "/links"
 
+    when "that article"
+      article_path(model('that article'))
+
+    when /article: "([^"]*)"/
+      article_path(model($&))
+      
+
     when /Edit User for (.+)/
       edit_user_path(model($1))
 

@@ -95,62 +95,8 @@ class ArchiveController < ApplicationController
     redirect_to url_for(:action => 'month', :year => Date.today.year, :month => Date.today.month)
   end
 
-  def post
-    if request.post?
-      if params[:article][:body] != '' && params[:article][:body] != nil
-        # spam attempt!
-        flash[:notice] = "Message sent."
-        redirect_to :action => "index"
-        return
-      end
-      
-      params[:article][:body] = params[:article][:qt]
-      
-      @article = Article.new(params[:article])
-      if @article.valid?
-        @article.user = current_user
-        @article.prepare_for_email
-        send_via_email(@article)
-        @article.save unless @article.reply_type == 'sender'
-        flash[:notice] = "Message sent."
-        flash[:links] = [['Home', url_for(:action => 'index')],
-                         ['Current Articles', url_for(:action => 'this_month')]]
-        cookies[:name] = { :value => @article.name, :expires => 3.months.from_now, :path => "/" }
-        cookies[:email] = { :value => @article.email, :expires => 3.months.from_now }
-        if @article.reply?
-          redirect_to(:action => "article", :id => @article.parent_id)
-        else
-          redirect_to :action => "index"
-        end
-      else
-        @article.body = nil
-      end
-    else
-      @title = "Post a new message"
-      @article = Article.new(:name => default_name, :email => default_email)
-    end
-  end
-  
-  def reply
-    @title = "Reply to message"
-    @article = Article.find_by_id(params[:id]).reply
-    @article.name = default_name
-    @article.email = default_email
-    @article.qt = @article.body
-    @article.body = nil
-    render :template => 'archive/post'
-  end
-  
   private
 
-  def default_name
-    cookies[:name] || (current_user && current_user.name)
-  end
-  
-  def default_email
-    cookies[:email] || (current_user && current_user.email)
-  end
-  
   def send_via_email(article)
     article.send_via_email
   end

@@ -135,16 +135,13 @@ class Article < ActiveRecord::Base
     from_line.sub(/.*?  /, '')
   end
   
-  def prepare_for_email
-    self.sent_at = self.received_at = Time.now
-    self.msgid = "<#{hex(16)}@bcmets.org>"
-  end
-  
   def hex(n)
     SecureRandom::hex(n/2)
   end
   
   def send_via_email
+    self.sent_at = self.received_at = Time.now
+    self.msgid = "<#{hex(16)}@bcmets.org>"
     email = TMail::Mail.new
     email.to = self.mail_to
     email.cc = self.mail_cc
@@ -160,7 +157,7 @@ class Article < ActiveRecord::Base
   end
   
   def self.send_via_smtp(msg, from, to)
-    raise "Can't send mail in test environment" if Rails.env.test?
+    return if Rails.env.test?
     Net::SMTP::start('feste.bestiary.com', 2025) do |smtp|
       smtp.send_message msg, from, to
     end

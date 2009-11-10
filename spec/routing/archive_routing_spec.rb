@@ -18,6 +18,7 @@ describe ArchiveController, "route generation" do
   end
   
   it "responds to /archive/:article_id" do
+    # Important for bookmarked articles
     params_from(:get, "/archive/article/14").should == { 
       :controller => "archive",
       :action => "article",
@@ -26,8 +27,8 @@ describe ArchiveController, "route generation" do
   
   it "recognizes some old URLs" do
     params_from(:get, '/post.pl').should == {
-      :controller => 'archive',
-      :action => 'post'
+      :controller => 'articles',
+      :action => 'new'
     }
     
     params_from(:get, '/archive/2006-05').should == {

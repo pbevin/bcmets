@@ -14,6 +14,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :user_sessions
   map.resources :users
+  map.resources :articles
 
   # The priority is based upon order of creation: first created -> highest priority.
   map.connect 'donations/stats',
@@ -24,14 +25,6 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'pages',
     :action => 'donate'
 
-  # map.resources :donations
-
-  map.articles 'archive',
-    :controller => 'archive',
-    :action => 'index'
-  map.article 'archive/article/:id',
-    :controller => 'archive',
-    :action => 'article'
   map.connect 'archive/:old_year_month/:article_number.html',
     :controller => 'archive',
     :action => 'old_article',
@@ -40,22 +33,26 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'archive',
     :action => 'month',
     :requirements => { :old_year_month => /\d{4}-\d{2}/ }
+  map.bookmarked_article 'archive/article/:id',
+    :controller => 'archive',
+    :action => 'article',
+    :requirements => { :id => /\d+/ }
   map.archive_month_by_date '/archive/:year/:month/date',
     :controller => 'archive',
     :action => 'month_by_date'
-  map.article_reply '/archive/article/:id/reply',
-    :controller => 'archive',
+  map.article_reply '/article/:id/reply/',
+    :controller => 'articles',
     :action => 'reply'
   map.archive_month 'archive/:year/:month',
     :controller => 'archive',
     :action => 'month'
     
-  map.connect 'post',
-    :controller => "archive",
-    :action => "post"
+  map.post 'post',
+    :controller => "articles",
+    :action => "new"
   map.connect 'post.pl',
-    :controller => "archive",
-    :action => "post"
+    :controller => "articles",
+    :action => "new"
   map.connect 'donate',
     :controller => 'pages',
     :action => 'donate'

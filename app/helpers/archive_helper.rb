@@ -115,7 +115,6 @@ module ArchiveHelper
   end
   
   def link_to_article(article)
-    "<a href=\"/archive/article/#{article.id}\" class=\"subject\">#{h article.subject}</a>"
+    "<a href=\"/articles/#{article.id}\" class=\"subject\">#{h article.subject}</a>"
   end
 end
-

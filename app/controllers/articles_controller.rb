@@ -1,0 +1,103 @@
+class ArticlesController < ApplicationController
+  # GET /articles
+  # GET /articles.xml
+  def index
+    redirect_to root_url
+  end
+
+  # GET /articles/1
+  # GET /articles/1.xml
+  def show
+    @article = Article.find(params[:id])
+    @heading = @article.subject
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @article }
+    end
+  end
+
+  # GET /articles/new
+  # GET /articles/new.xml
+  def new
+    @article = Article.new
+
+    @article.name = default_name
+    @article.email = default_email
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @article }
+    end
+  end
+
+  def reply
+    @title = "Reply to message"
+    @article = Article.find_by_id(params[:id]).reply
+    @article.name = default_name
+    @article.email = default_email
+    @article.qt = @article.body
+    @article.body = nil
+    render :new
+  end
+  
+  # GET /articles/1/edit
+  def edit
+    @article = Article.find(params[:id])
+  end
+
+  # POST /articles
+  # POST /articles.xml
+  def create
+    if params[:article][:body] != '' && params[:article][:body] != nil
+      # spam attempt!
+      flash[:notice] = "Message sent."
+      redirect_to :action => "index"
+      return
+    end
+    
+    params[:article][:body] = params[:article][:qt]
+    
+    @article = Article.new(params[:article])
+    if @article.valid?
+      @article.user = current_user
+      @article.send_via_email
+      @article.save unless @article.reply_type == 'sender'
+      flash[:notice] = "Message sent."
+      flash[:links] = [['Home', url_for(:action => 'index')],
+                       ['Current Articles', url_for(:action => 'this_month')]]
+      cookies[:name] = { :value => @article.name, :expires => 3.months.from_now, :path => "/" }
+      cookies[:email] = { :value => @article.email, :expires => 3.months.from_now }
+      if @article.reply?
+        redirect_to(article_path(@article.parent_id))
+      else
+        redirect_to :action => "index"
+      end
+    else
+      @article.body = nil
+      render :new
+    end
+  end
+
+  # DELETE /articles/1
+  # DELETE /articles/1.xml
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    respond_to do |format|
+      format.html { redirect_to(articles_url) }
+      format.xml  { head :ok }
+    end
+  end
+
+  private
+
+  def default_name
+    cookies[:name] || (current_user && current_user.name)
+  end
+  
+  def default_email
+    cookies[:email] || (current_user && current_user.email)
+  end
+end

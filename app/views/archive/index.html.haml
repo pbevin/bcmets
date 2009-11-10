@@ -1,5 +1,5 @@
 %p
-  = link_to "Post a message to the list", :controller => "archive", :action => "post"
+  = link_to "Post a message to the list", post_path
 - for year in @year.downto(2000)
   %h2
     = year
