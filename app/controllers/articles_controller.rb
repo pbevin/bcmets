@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
   end
 
   def reply
-    @title = "Reply to message"
+    @title = "Reply to Message"
     @article = Article.find_by_id(params[:id]).reply
     @article.name = default_name
     @article.email = default_email

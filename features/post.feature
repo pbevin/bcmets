@@ -55,3 +55,13 @@ Feature: Posting Articles
     And I press "Post"
     Then I should see "Message sent"
     But an article should not exist
+
+  Scenario: Page title for Post page
+    When I go to path /post
+    Then I should see "Post a Message" within "h1"
+
+  Scenario: Page title for Reply page
+    Given an article exists
+    When I go to that article
+    And I follow "Reply to this message"
+    Then I should see "Reply to Message" within "h1"

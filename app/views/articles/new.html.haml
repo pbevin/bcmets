@@ -1,5 +1,5 @@
 %h1
-  Post a Message
+  = @title || "Post a Message"
 - form_for(@article) do |f|
   %fieldset
     = f.error_messages
