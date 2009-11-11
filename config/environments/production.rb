@@ -37,3 +37,5 @@ config.action_mailer.smtp_settings = {
   :domain => "bcmets.org"
 }
 config.action_mailer.raise_delivery_errors = true
+
+ExceptionNotifier.exception_recipients = %w(pete@petebevin.com)
