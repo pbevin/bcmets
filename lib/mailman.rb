@@ -10,7 +10,7 @@ module Mailman
   end
 
   class Parser
-    @@sections = {
+    SECTIONS = {
       :members => :email,
       :usernames => :name,
       :passwords => :password,
@@ -31,7 +31,7 @@ module Mailman
     def accept(line)
       if line =~ SECTION_START
         key = $1.to_sym
-        if @@sections.has_key?(key)
+        if SECTIONS.has_key?(key)
           @section = key
         end
         line = $'
@@ -75,7 +75,7 @@ module Mailman
     end
   
     def key_for_current_section
-      @@sections[@section]
+      SECTIONS[@section]
     end
   end
 end
