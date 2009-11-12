@@ -95,7 +95,7 @@ module ArchiveHelper
   end
   
   def donations_this_year
-    donations Donation.total_this_year, "year (target: $500)"
+    donations Donation.total_this_year, "year (target: $6,000)"
   end
   
   def last_donation
