@@ -93,7 +93,7 @@ class Article < ActiveRecord::Base
     hash = unthreaded.index_by(&:id)
     
     retval = []
-    for article in unthreaded
+    unthreaded.each do |article|
       if article.parent_id.nil? || !hash.has_key?(article.parent_id)
         retval << article
       else

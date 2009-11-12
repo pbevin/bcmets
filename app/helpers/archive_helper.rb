@@ -14,13 +14,12 @@ module ArchiveHelper
   end
   
   def threaded_articles(articles)
-    html = ''
-    
-    for article in articles
-      html += wrap('li', link_to(article.subject, article, :class => 'subject'))
+    links = articles.map do |article|
+      link = link_to(article.subject, article, :class => 'subject')
+      wrap('li', link)
     end
     
-    return wrap('ul', html)
+    return wrap('ul', links.join)
   end
   
   
@@ -72,10 +71,9 @@ module ArchiveHelper
   end
   
   def th(articles, x)
-    for article in articles
+    articles.each do |article|
       x << "<li>"
       x << link_to_article(article) << " "
-      #x << "<small>#{link_to_author(article)}, #{article.sent_at.to_s(:short)}</small>"
       x << "<small>#{from_linked(article)}, #{article.sent_at.to_s(:short)}</small>"
       children = article.children
       if !children.nil? && !children.empty?
