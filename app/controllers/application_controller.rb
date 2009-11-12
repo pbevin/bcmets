@@ -26,22 +26,6 @@ class ApplicationController < ActionController::Base
     @current_user_session = UserSession.find
   end
   
-  def require_user
-    unless current_user
-      flash[:notice] = "You must be logged in to access this page"
-      redirect_to login_path
-      return false
-    end
-  end
-
-  def require_no_user
-    if current_user
-      flash[:notice] = "You must be logged out to access this page"
-      redirect_to root_url
-      return false
-    end
-  end
-
   def logged_in_as_admin
     current_user && current_user.email == 'pete@petebevin.com'
   end

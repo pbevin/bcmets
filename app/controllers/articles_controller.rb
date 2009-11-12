@@ -93,11 +93,15 @@ class ArticlesController < ApplicationController
 
   private
 
+  def cookie_or_user(attr)
+    cookies[attr] || (current_user && current_user.send(attr))
+  end
+
   def default_name
-    cookies[:name] || (current_user && current_user.name)
+    cookie_or_user(:name)
   end
   
   def default_email
-    cookies[:email] || (current_user && current_user.email)
+    cookie_or_user(:email)
   end
 end
