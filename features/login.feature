@@ -56,3 +56,34 @@ Feature: Becoming a user
     And I fill in "email" with "mary@example.com"
     And I press "Help!"
     Then I should see "Instructions sent to mary@example.com"
+
+  Scenario: Change Password
+    Given a user: "Pam" exists with password: "xyzzy", email: "pam@example.com"
+    And that user is logged in
+    When I go to my profile
+    And I follow "Change password"
+    And I fill in "Old Password" with "xyzzy"
+    And I fill in "New Password" with "clever"
+    And I fill in "New Password Confirmation" with "clever"
+    And I press "Submit"
+    Then I should see "Password changed."
+    When I go to the front page
+    And I follow "Logout"
+    Then I should be logged out
+    When I go to path /login
+    And I fill in "Email" with "pam@example.com"
+    And I fill in "Password" with "clever"
+    And I press "Login"
+    Then I should be logged in
+
+  Scenario: Change password, confirmation doesn't match
+    Given a user: "Pam" exists with password: "xyzzy", email: "pam@example.com"
+    And that user is logged in
+    When I go to my profile
+    And I follow "Change password"
+    And I fill in "Old Password" with "xyzzy"
+    And I fill in "New Password" with "clever"
+    And I fill in "New Password Confirmation" with "does-not-match"
+    And I press "Submit"
+    Then I should see "doesn't match"
+

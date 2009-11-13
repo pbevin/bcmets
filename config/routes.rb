@@ -9,8 +9,9 @@ ActionController::Routing::Routes.draw do |map|
   map.reset_password "/password_reset/:activation_code", :controller => 'activations', :action => 'reset_password'
   
   map.user_profile "/user_profile/:id", :controller => "users", :action => "profile"
-  
   map.forgot_password "/users/password", :controller => "users", :action => "password"
+  map.edit_password "/users/edit_password", :controller => "users", :action => "edit_password"
+  map.save_password "/users/edit_password", :controller => "users", :action => "edit_password"
 
   map.resources :user_sessions
   map.resources :users

@@ -84,6 +84,23 @@ class UsersController < ApplicationController
     end
   end
   
+  def edit_password
+    @password_change = PasswordChange.new
+    logger.debug @password_change
+  end
+
+  def save_password
+    @password_change = PasswordChange.new(params[:password_change])
+    if @password_change.valid? && @password_change.old_password_correct?(current_user)
+      current_user.password = @password_change.new_password
+      current_user.save!
+      flash[:notice] = 'Password changed.'
+      redirect_to current_user
+    else
+      render :action => 'edit_password'
+    end
+  end
+
   def show
     if params[:id] == 'current'
       @user = current_user

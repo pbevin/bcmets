@@ -10,6 +10,10 @@ Then /^I should be logged in$/ do
   UserSession.find.should_not be_nil
 end
 
+Then /^I should be logged out$/ do
+  UserSession.find.should be_nil
+end
+
 Then /^I should not be logged in$/ do
   UserSession.find.should be_nil
 end
