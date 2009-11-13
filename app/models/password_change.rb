@@ -8,7 +8,6 @@ class PasswordChange < ActiveRecord::Base
   column :id, :integer
   column :old_password, :string
   column :new_password, :string
-  attr_accessor :new_password_confirmation
 
   validates_presence_of :old_password, :new_password
   validates_confirmation_of :new_password
