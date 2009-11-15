@@ -21,3 +21,10 @@ Feature: Browsing the archive
     Then I should see "xyzzy" within "h1"
     Then I should see "ubiquitous gazelles"
     
+  Scenario: Author profile
+    Given an article exists with received_at: "2009-11-05", subject: "xyzzy", email: "test@example.com", body: "squeamish ossifrage"
+    When I go to the front page
+    And I follow "November 2009"
+    And I follow "test@example.com"
+    And I follow "xyzzy"
+    Then I should see "squeamish ossifrage"
