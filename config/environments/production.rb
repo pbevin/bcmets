@@ -40,6 +40,6 @@ config.action_mailer.raise_delivery_errors = true
 
 config.after_initialize do
   ExceptionNotifier.exception_recipients = %w(pete@petebevin.com)
-  ExceptionNotifier.sender_address = %("App Error <pete@bcmets.org>" )
+  ExceptionNotifier.sender_address = "pete@bcmets.org"
   ExceptionNotifier.email_prefix = "[BCM] "
 end
