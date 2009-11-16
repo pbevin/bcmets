@@ -107,6 +107,12 @@ describe ArchiveController do
       response.should redirect_to(:controller => "archive", :action => "index")
       flash[:notice].should =~ /bookmark/
     end
+
+    it "supports /archive/article/:id in place of /article/:id" do
+      article = Article.make
+      get 'article', :id => article.id
+        response.should redirect_to(:controller => "articles", :action => "show", :id => article.id)
+    end
   end
       
   
@@ -125,24 +131,4 @@ describe ArchiveController do
       assigns(:article_count).should == 3
     end
   end
-  
-  describe "GET 'article'" do
-    before(:each) do
-      @article = Article.make(:body => "body")
-      get 'article', :id => @article.id
-    end
-
-    it "should be successful" do
-      response.should be_success
-    end
-    
-    it "should assign @article" do
-      assigns(:article).should == @article
-    end
-    
-    it "should have a title" do
-      assigns(:title).should == @article.subject
-    end
-  end
-  
 end
