@@ -67,14 +67,7 @@ Feature: Becoming a user
     And I fill in "New Password Confirmation" with "clever"
     And I press "Submit"
     Then I should see "Password changed."
-    When I go to the front page
-    And I follow "Logout"
-    Then I should be logged out
-    When I go to path /login
-    And I fill in "Email" with "pam@example.com"
-    And I fill in "Password" with "clever"
-    And I press "Login"
-    Then I should be logged in
+    And user: "Pam" should have password: "clever"
 
   Scenario: Change password, confirmation doesn't match
     Given a user: "Pam" exists with password: "xyzzy", email: "pam@example.com"

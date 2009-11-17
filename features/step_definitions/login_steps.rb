@@ -63,3 +63,8 @@ When /^I activate user "([^\"]*)"$/ do |email|
   choose('user_email_delivery_full')
   click_button "Sign me up"
 end
+
+Then /^(.+) should have password: "([^\"]*)"$/ do |who, password|
+  user = model(who)
+  user.valid_password?(password).should be_true
+end
