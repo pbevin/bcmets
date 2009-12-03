@@ -3,8 +3,9 @@ class ArchiveController < ApplicationController
   
   def index
     @heading = "Archives"
-    @year = Time.now.year
-    @month = Time.now.month
+    now = Time.now
+    @year = now.year
+    @month = now.month
   end
 
   def month
