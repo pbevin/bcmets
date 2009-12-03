@@ -7,10 +7,9 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-    
     when /the front\s?page/
       '/'
-      
+
     when /Login/
       '/login'
 
@@ -18,7 +17,11 @@ module NavigationHelpers
       "/archive/#{$1}"
 
     when /path (.+)$/
-      $1
+      path = $1
+      if path =~ /"(.+)"/
+        path = $1
+      end
+      path
 
     when "View Users"
       "/users"
@@ -31,14 +34,13 @@ module NavigationHelpers
 
     when /article: "([^"]*)"/
       article_path(model($&))
-      
 
     when /Edit User for (.+)/
       edit_user_path(model($1))
 
     when "my profile"
       "/users/current/edit"
-    
+
     # Add more mappings here.
     # Here is a more fancy example:
     #

@@ -2,114 +2,38 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Article do
   before(:each) do
-    @article = Article.make
+    @attrs = {
+      :name => "Fred",
+      :email => "fred@example.com",
+      :body => "lorem ipsum",
+      :subject => "my title",
+      :msgid => "12345@bcmets.org"
+    }
+    @article = Article.new(@attrs)
+  end
+
+  it "recognizes valid attributes" do
+    Article.new(@attrs).should be_valid
   end
 
   it "enforces msgid uniqueness" do
-    duplicate = Article.new(:msgid => @article.msgid)
-    duplicate.should_not be_valid
+    lambda {
+      Article.create(@attrs)
+      Article.create(@attrs)
+    }.should change(Article, :count).by(1)
   end
-  
+
   it "has a definition of 'recent'" do
     @article.received_at = 1.day.ago
     @article.should be_recent
-    
+
     @article.received_at = 3.months.ago
     @article.should_not be_recent
   end
-  
-  it "can have a legacy ID" do
-    id = "2009-04/0479"
-    @article.legacy_id = id
-    @article.save
-    Article.find_by_legacy_id(id).should == @article
-  end
 
-  describe "validation" do
-    it "requires a full email address" do
-      @article.email = "invalid"
-      @article.should_not be_valid
-    end
-  end
-  
-  describe ".from_headers" do
-    before(:each) do
-      text = File.read(File.dirname(__FILE__) + "/../fixtures/article.txt")
-      @article = Article.parse(text)
-    end
-
-    it "sets the received_at time from the first line" do
-      @article.received_at.utc.to_s(:db).should eql("2009-03-13 01:33:32")
-    end
-
-    it "sets the sent date from the Date: header" do
-      @article.sent_at.utc.to_s(:db).should eql("2009-03-13 01:33:26")
-    end
-
-    it "sets the name and email from the From: line" do
-      @article.name.should eql("Pete Bevin")
-      @article.email.should eql("pete@petebevin.com")
-    end
-
-    it "sets the subject from the subject line" do
-      @article.subject.should eql("Re: Confidentiality &amp; bcmets.org")
-    end
-
-    it "sets the body" do
-      @article.body.should match(/^Stephanie writes:/m)
-      @article.body.should match(/Pete.$/s)
-    end
-
-    it "sets the message ID" do
-      @article.msgid.should eql("<20090313013326.5C4251F30EF@feste.bestiary.com>")
-    end
-
-    it "sets the parent message ID (from In-Reply-To:)" do
-      @article.parent_msgid.should eql("<20090311232013.12AD51F317D@feste.bestiary.com>")
-    end
-  end
-
-  describe "parsing edge cases" do
-    def parse(partial)
-      text = "From bcmets-bounces@bcmets.org  Thu Mar 12 21:33:32 2009\n" + partial + "\n\nbody\n"
-      Article.parse(text)
-    end
-
-    it "sets name to email if only email is given" do
-      article = parse("From: pete@petebevin.com")
-      article.name.should eql('pete@petebevin.com')
-      article.email.should eql('pete@petebevin.com')
-    end
-
-    it "strips angle brackets out of a lone email" do
-      article = parse("From: <pete@petebevin.com>")
-      article.name.should eql('pete@petebevin.com')
-      article.email.should eql('pete@petebevin.com')
-    end
-
-    it "parses From lines reasonably" do
-      Article.parse_from_line("From bcmets-bounces@bcmets.org  Sun Mar  1 02:15:40 2009").should \
-        eql("Sun Mar  1 02:15:40 2009")
-    end
-
-    it "recognizes case variants of Message-Id:" do
-      parse("Message-ID: xxx").msgid.should eql("xxx")
-      parse("Message-id: yyy").msgid.should eql("yyy")
-    end
-
-    it "does not allow parent_msgid = <>" do
-      parse("In-Reply-To: <>").parent_msgid.should be_nil
-    end
-
-    it "strips [...] from the subject line" do
-      parse("Subject: [bcmets] Grommets").subject.should == "Grommets"
-      parse("Subject: Re: [bcmets] Grommets").subject.should == "Re: Grommets"
-    end
-
-    it "can reconstruct the From line" do
-      parse("From: Pete Bevin <pete@petebevin.com>").from.should == "Pete Bevin <pete@petebevin.com>"
-      parse("From: pete@petebevin.com").from.should == "pete@petebevin.com"
-    end
+  it "requires a full email address" do
+    @article.email = "invalid"
+    @article.should_not be_valid
   end
 
   describe ".link_threads" do
@@ -122,7 +46,7 @@ describe Article do
       art2.reload
       art2.parent_id.should eql(art1.id)
     end
-  end  
+  end
 
   describe ".thread_tree" do
     before(:each) do
@@ -145,7 +69,7 @@ describe Article do
       @art5.children.should be_nil  # not sure - maybe should be []
       @art2.children.should == [@art3]
     end
-    
+
     it "can iterate over all the children" do
       children = []
       @art1.each_child { |child| children << child }

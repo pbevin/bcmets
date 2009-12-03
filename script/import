@@ -5,6 +5,8 @@ ENV['RAILS_ENV'] = ARGV.first || ENV['RAILS_ENV'] || 'development'
 require File.dirname(__FILE__) + '/../config/boot'
 require "#{RAILS_ROOT}/config/environment"
 
+require 'article_parser'
+
 
 def each_message(mbox_filename)
   starting = true
@@ -29,10 +31,20 @@ if ARGV.blank?
   exit
 end
 
+
+def parse(text)
+  returning Article.new do |article|
+    parser = ArticleParser.new(article)
+    for line in text.lines
+      parser << line.strip
+    end
+  end
+end
+
 ARGV.shift
 for file in ARGV
   each_message(file) do |message|
-    article = Article.parse(message)
+    article = parse(message)
     article.save
   end
 end

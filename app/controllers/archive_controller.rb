@@ -87,7 +87,8 @@ class ArchiveController < ApplicationController
   end
   
   def this_month
-    redirect_to url_for(:action => 'month', :year => Date.today.year, :month => Date.today.month)
+    date = Date.today
+    redirect_to url_for(:action => 'month', :year => date.year, :month => date.month)
   end
 
   private
