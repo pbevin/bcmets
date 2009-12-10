@@ -19,3 +19,7 @@ Feature: Admin security
   Scenario: Link editing
     When I go to path /links
     Then I should be on Login
+
+  Scenario: Blog feeds
+    When I go to path /feeds
+    Then I should be on Login

@@ -1,4 +1,6 @@
 class FeedsController < ApplicationController
+  before_filter :require_admin
+
   def index
     @feeds = Feed.all
   end
