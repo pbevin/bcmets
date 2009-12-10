@@ -4,4 +4,4 @@
       = link_to entry.name, entry.url
       %small
         = entry.published_at
-        = "(via #{link_to entry.feed.name, entry.feed.url})"
+        = "(from #{link_to entry.feed.name, entry.feed.url})"
