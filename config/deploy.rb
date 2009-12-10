@@ -30,12 +30,21 @@ namespace :deploy do
   task :restart, :roles => :app do
     run "touch #{current_release}/tmp/restart.txt"
   end
-  
+
   desc "Re-establish symlinks"
   task :after_symlink do
     run <<-CMD
       rm -fr #{release_path}/db/sphinx &&
       ln -nfs #{shared_path}/db/sphinx #{release_path}/db/sphinx
     CMD
+  end
+
+  after "deploy:symlink", "deploy:update_crontab"
+
+  namespace :deploy do
+    desc "Update the crontab file"
+    task :update_crontab, :roles => :db do
+      run "cd #{release_path} && whenever --update-crontab #{application}"
+    end
   end
 end
