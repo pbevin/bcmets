@@ -68,6 +68,7 @@
               = link_to entry.name, entry.url
               %small
                 = "(from #{link_to entry.feed.name, entry.feed.url})"
+          = link_to "More »", feed_entries_path
         
         %h3 Donations
         %ul
