@@ -61,11 +61,13 @@
               %a{ :href => "/post" }
                 Post a new message
                 
-        %h3 Blogs
+        %h3 Latest Blog Entries
         %ul.blogs
           - blog_entries.each do |entry|
             %li
               = link_to entry.name, entry.url
+              %small
+                = "(from #{link_to entry.feed.name, entry.feed.url})"
         
         %h3 Donations
         %ul

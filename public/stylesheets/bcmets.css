@@ -17,12 +17,12 @@ a:hover, a:focus, a:active {
 	color : #fff;
 	text-decoration: none;
 }
-small a:link, small a:visited {
+#main small a:link, #main small a:visited {
   color: #222;
   text-decoration: none;
 }
 
-small a:hover, small a:focus, small a:active {
+#main small a:hover, #main small a:focus, #main small a:active {
   background: none;
 	color: #000;
 	text-decoration: underline;
