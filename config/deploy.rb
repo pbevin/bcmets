@@ -39,8 +39,6 @@ namespace :deploy do
     CMD
   end
 
-  after "deploy:symlink", "deploy:update_crontab"
-
   namespace :deploy do
     desc "Update the crontab file"
     task :update_crontab, :roles => :db do
@@ -48,3 +46,5 @@ namespace :deploy do
     end
   end
 end
+
+after "deploy:symlink", "deploy:update_crontab"
