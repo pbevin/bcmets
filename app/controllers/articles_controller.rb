@@ -10,6 +10,11 @@ class ArticlesController < ApplicationController
   def show
     @article = Article.find(params[:id])
     @heading = @article.subject
+    begin
+      @conversation_roots = Article.thread_tree(@article.conversation.articles)
+    rescue
+      @conversation_roots = nil
+    end
 
     respond_to do |format|
       format.html # show.html.erb

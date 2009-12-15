@@ -19,6 +19,17 @@ describe ArticlesController do
       get :show, :id => "37"
       assigns[:article].should equal(article)
     end
+
+    it "retrieves the conversation thread" do
+      article = Article.new
+      conversation = Conversation.new()
+      3.times { conversation.articles << Article.new }
+
+      Article.should_receive(:find).once().with("37").and_return(article)
+      article.should_receive(:conversation).once().and_return(conversation)
+      get :show, :id => "37"
+      assigns[:article].should equal(article)
+    end
   end
 
   describe "GET new" do
