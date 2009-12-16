@@ -7,6 +7,7 @@
     - if not @indexable
       %meta{ :name => "robots", :content => "noindex, nofollow" }
     %meta{"http-equiv" => "Content-type", :content => "text/html;charset=UTF-8"}
+    %meta{:name => "google-site-verification", :content => "Nh_V66O4LMXYYoR_X1YUAdtdSrMZEfwLDwP_Oo1JaXk"}
     = javascript_include_tag :all, :cache => true
     = stylesheet_link_tag "bcmets", "forms", :cache => true
     = yield(:head)
