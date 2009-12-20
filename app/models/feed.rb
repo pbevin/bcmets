@@ -18,7 +18,7 @@ class Feed < ActiveRecord::Base
 
   def update_entries(feed_url = self.xml_url)
     feed = Feedzirra::Feed.fetch_and_parse(feed_url)
-    return unless feed
+    return unless feed || feed.is_a?(Fixnum)
     feed.entries.each do |entry|
       unless FeedEntry.exists? :guid => entry.id
         entries << FeedEntry.create!(
