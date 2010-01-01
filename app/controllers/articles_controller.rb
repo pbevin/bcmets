@@ -70,7 +70,7 @@ class ArticlesController < ApplicationController
       @article.save unless @article.reply_type == 'sender'
       flash[:notice] = "Message sent."
       flash[:links] = [['Home', url_for(:action => 'index')],
-                       ['Current Articles', url_for(:action => 'this_month')]]
+                       ['Current Articles', url_for(:controller => 'archive', :action => 'this_month')]]
       cookies[:name] = { :value => @article.name, :expires => 3.months.from_now, :path => "/" }
       cookies[:email] = { :value => @article.email, :expires => 3.months.from_now }
       if @article.reply?

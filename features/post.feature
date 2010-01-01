@@ -65,3 +65,17 @@ Feature: Posting Articles
     When I go to that article
     And I follow "Reply to this message"
     Then I should see "Reply to Message" within "h1"
+
+  Scenario: Back to "this month"
+    Given an article: "parent" exists with msgid: "xyzzy"
+    When I go to that article
+    And I follow "Reply to this message"
+    And I fill in "Name" with "Reply Name"
+    And I fill in "Email" with "test@example.com"
+    And I fill in "article_qt" with "blah blah"
+    And I fill in "Subject" with "Homefries"
+    And I fill in "Reply To:" with "List only"
+    And I press "Post"
+    Then I should see "Message sent"
+    When I follow "Current Articles"
+    Then I should see "Homefries"
