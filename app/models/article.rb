@@ -31,7 +31,7 @@ class Article < ActiveRecord::Base
   end
 
   def recent?
-    received_at > 1.month.ago
+    (received_at || created_at) > 1.month.ago
   end
 
   def self.for_month(year, month)
