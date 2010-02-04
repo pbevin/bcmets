@@ -28,7 +28,7 @@ class ArticleParser
 
   def first_line(line)
     case line
-    when /^From (.*)  (.*)$/
+    when /^From (.*?)  (.*)$/
       article.received_at = $2
     end
   end
