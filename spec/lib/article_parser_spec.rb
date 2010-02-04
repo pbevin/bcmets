@@ -57,6 +57,12 @@ describe "Article Parser" do
     end
   end
 
+  it "is not fooled by two double spaces in dates before the 10th" do
+    with_lines ["From bcmets-bounces@bcmets.org  Thu Mar  5 21:33:32 2009"] do
+      article.should_receive(:received_at=).with("Thu Mar  5 21:33:32 2009")
+    end
+  end
+
   it "sets the sent_at field based on the Date: header" do
     with_header "Date: Thu, 12 Mar 2009 21:33:26 -0400 (EDT)" do
       article.should_receive(:sent_at=).with("Thu, 12 Mar 2009 21:33:26 -0400 (EDT)")
