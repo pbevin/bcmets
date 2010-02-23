@@ -13,19 +13,15 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
-
-  # Specify gems that this application depends on and have them installed with rake gems:install
-  config.gem "faker"
-  config.gem "haml"
-  config.gem 'mislav-will_paginate', :version => '~> 2.3.4', :lib => 'will_paginate', :source => 'http://gems.github.com'
-  config.gem 'authlogic'
-  config.gem "pauldix-feedzirra", :lib => "feedzirra", :source => "http://gems.github.com"
-  config.gem 'mocha'
-  # config.gem 'whenever'
-  #require 'will_paginate'
-  # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
-  # config.gem "sqlite3-ruby", :lib => "sqlite3"
-  # config.gem "aws-s3", :lib => "aws/s3"
+  begin
+    # Try to require the preresolved locked set of gems.
+    require File.expand_path('../.bundle/environment', __FILE__)
+  rescue LoadError
+    # Fall back on doing an unlocked resolve at runtime.
+    require "rubygems"
+    require "bundler"
+    Bundler.setup
+  end
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
