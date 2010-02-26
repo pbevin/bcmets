@@ -13,11 +13,9 @@ gem 'mocha'
 gem 'mysql'
 gem 'thinking-sphinx'
 gem 'sqlite3-ruby'
-group :test do
   gem 'cucumber', "=0.4.3"
   gem 'webrat'
   gem 'pickle'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'database_cleaner'
-end
