@@ -13,16 +13,19 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
-  begin
-    # Try to require the preresolved locked set of gems.
-    require File.expand_path('../.bundle/environment', __FILE__)
-  rescue LoadError
-    # Fall back on doing an unlocked resolve at runtime.
-    require "rubygems"
-    require "bundler"
-    Bundler.setup
+  config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir|
+    File.directory?(lib = "#{dir}/lib") ? lib : dir
   end
+
+
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
+  config.gem 'faker'
+  config.gem 'haml'
+  config.gem 'authlogic'
+  config.gem 'pauldix-feedzirra', :lib => 'feedzirra'
+  config.gem 'mysql'
+  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx'
+  config.gem 'sqlite3-ruby', :lib => 'sqlite3'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
