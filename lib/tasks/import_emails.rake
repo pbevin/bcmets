@@ -43,7 +43,7 @@ end
 
 
 desc "Import new emails from mailing list"
-task :import_emails do
+task :import_emails => [:environment] do
   for file in recent_files
     each_message(file) do |message|
       article = parse(message)
