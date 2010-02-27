@@ -45,26 +45,3 @@ namespace :deploy do
   end
 end
 after "deploy:symlink", "deploy:update_crontab"
-
-namespace :bundler do
-  task :install do
-    run("gem install bundler --source=http://gemcutter.org")
-  end
-
-  task :symlink_vendor do
-    shared_gems = File.join(shared_path, 'vendor/bundler_gems')
-    release_gems = "#{release_path}/vendor/bundler_gems"
-    %w(cache gems specifications).each do |sub_dir|
-      shared_sub_dir = File.join(shared_gems, sub_dir)
-      run("mkdir -p #{shared_sub_dir} && mkdir -p #{release_gems} && ln -s #{shared_sub_dir} #{release_gems}/#{sub_dir}")
-    end
-  end
-
-  task :bundle_new_release do
-    bundler.symlink_vendor
-    run("cd #{release_path} && bundle install --without=test")
-  end
-end
-
-# hook into capistrano's deploy task
-after 'deploy:update_code', 'bundler:bundle_new_release'
