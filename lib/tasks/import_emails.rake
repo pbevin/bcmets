@@ -1,9 +1,3 @@
-#!/usr/bin/env ruby
-
-ENV['RAILS_ENV'] = ARGV.first || ENV['RAILS_ENV'] || 'development'
-
-require File.dirname(__FILE__) + '/../config/boot'
-require "#{RAILS_ROOT}/config/environment"
 
 require 'article_parser'
 
@@ -26,12 +20,6 @@ def each_message(mbox_filename)
   yield article unless starting
 end
 
-if ARGV.blank?
-  puts "Usage: #{$0} file..."
-  exit
-end
-
-
 def parse(text)
   returning Article.new do |article|
     parser = ArticleParser.new(article)
@@ -41,11 +29,26 @@ def parse(text)
   end
 end
 
-ARGV.shift
-for file in ARGV
-  each_message(file) do |message|
-    article = parse(message)
-    article.save
+def recent_files
+  dir = "/home/mets/arch"
+  t = 30.minutes.ago
+  files = []
+  Dir.entries(dir).each do |f|
+    next unless f =~ /^[12]/
+    path = File.join(dir, f)
+    files << path if File.mtime(path) > t
   end
+  files
 end
-Article.link_threads
+
+
+desc "Import new emails from mailing list"
+task :import_emails do
+  for file in recent_files
+    each_message(file) do |message|
+      article = parse(message)
+      article.save
+    end
+  end
+  Article.link_threads
+end
