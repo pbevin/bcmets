@@ -122,7 +122,7 @@ class UsersController < ApplicationController
       redirect_to login_path
     end
   end
-  
+
   def profile
     @user = User.find(params[:id])
     @articles = Article.find_all_by_email(@user.email, :order => "sent_at DESC")

@@ -1,3 +1,4 @@
+= will_paginate @entries
 %ul
   - @entries.each do |entry|
     %li
@@ -5,3 +6,4 @@
       %small
         = entry.published_at
         = "(from #{link_to entry.feed.name, entry.feed.url})"
+= will_paginate @entries
