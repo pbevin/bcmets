@@ -17,17 +17,19 @@ class Feed < ActiveRecord::Base
   end
 
   def update_entries(feed_url = self.xml_url)
-    feed = Feedzirra::Feed.fetch_and_parse(feed_url)
-    return unless feed || feed.is_a?(Fixnum)
-    feed.entries.each do |entry|
-      unless FeedEntry.exists? :guid => entry.id
-        entries << FeedEntry.create!(
-          :name         => entry.title,
-          :summary      => entry.summary,
-          :url          => entry.url,
-          :published_at => entry.published,
-          :guid         => entry.id
-        )
+    Feed.transaction do
+      feed = Feedzirra::Feed.fetch_and_parse(feed_url)
+      return unless feed || feed.is_a?(Fixnum)
+      feed.entries.each do |entry|
+        unless FeedEntry.exists? :guid => entry.id
+          entries << FeedEntry.create!(
+            :name         => entry.title,
+            :summary      => entry.summary,
+            :url          => entry.url,
+            :published_at => entry.published,
+            :guid         => entry.id
+          )
+        end
       end
     end
   end
