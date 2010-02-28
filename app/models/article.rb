@@ -38,13 +38,12 @@ class Article < ActiveRecord::Base
     earliest = Time.local(year, month, 1, 0, 0, 0)
     latest = 1.month.since(earliest)
 
-    self.find(:all,
-              :conditions => ["received_at >= ? and received_at < ?", earliest, latest],
-              :order => "received_at DESC")
+    self.all(:conditions => ["received_at >= ? and received_at < ?", earliest, latest],
+             :order => "received_at DESC")
   end
 
   def self.link_threads
-    articles_to_link = Article.find(:all, :conditions => "parent_msgid != '' and parent_id is null")
+    articles_to_link = Article.all(:conditions => "parent_msgid != '' and parent_id is null")
     articles_to_link.each do |article|
       parent = Article.find_by_msgid(article.parent_msgid)
       if parent != nil

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_filter :require_admin, :only => [:index, :destroy]
 
   def index
-    @users = User.find(:all, :order => "created_at DESC")
+    @users = User.all(:order => "created_at DESC")
     render :index, :layout => "admin"
   end
   
