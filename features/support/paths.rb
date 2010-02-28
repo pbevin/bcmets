@@ -29,6 +29,9 @@ module NavigationHelpers
     when "Show Links"
       "/links"
 
+    when "Donations"
+      donations_path
+
     when "that article"
       article_path(model('that article'))
 

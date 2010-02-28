@@ -11,15 +11,16 @@ Feature: Admin security
     Then I should be on Login
     When I login as administrator
     Then I should be on path /admin
-
-  Scenario: User list
-    When I go to path /users
+    
+  Scenario Outline: Admin Only
+    Given I am not logged in
+    When I go to path <path>
     Then I should be on Login
-
-  Scenario: Link editing
-    When I go to path /links
-    Then I should be on Login
-
-  Scenario: Blog feeds
-    When I go to path /feeds
-    Then I should be on Login
+    When I login as administrator
+    Then I should be on path <path>
+    Examples:
+      | path       |
+      | /admin     |
+      | /users     |
+      | /feeds     |
+      | /donations |

@@ -2,7 +2,8 @@ class Donation < ActiveRecord::Base
   validates_presence_of :amount
   validates_presence_of :email
   validates_presence_of :date
-  
+  validates_numericality_of :amount
+
   def self.total_this_month(date = Date.today)
     start_of_month = Date.new(date.year, date.month, 1)
     end_of_month = 1.month.since(start_of_month)
@@ -14,7 +15,7 @@ class Donation < ActiveRecord::Base
     end_of_year = 1.year.since(start_of_year)
     self.sum(:amount, :conditions => ["date >= ? and date < ?", start_of_year, end_of_year])
   end
-  
+
   def self.last_donation_on
     self.maximum(:date)
   end
