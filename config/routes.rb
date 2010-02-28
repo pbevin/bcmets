@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :feeds
-
   map.resources :links
+  map.resources :donations, :collection => { :stats => :get }
 
   map.login "login", :controller => "user_sessions", :action => "new"
   map.logout "logout", :controller => "user_sessions", :action => "destroy"
@@ -9,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.register '/register/:activation_code', :controller => 'activations', :action => 'new'
   map.activate '/activate/:id', :controller => 'activations', :action => 'create'
   map.reset_password "/password_reset/:activation_code", :controller => 'activations', :action => 'reset_password'
-  
+
   map.user_profile "/user_profile/:id", :controller => "users", :action => "profile"
   map.forgot_password "/users/password", :controller => "users", :action => "password"
   map.edit_password "/users/edit_password", :controller => "users", :action => "edit_password"
@@ -20,10 +20,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :articles
 
   # The priority is based upon order of creation: first created -> highest priority.
-  map.connect 'donations/stats',
-    :controller => 'donations',
-    :action => 'stats'
-    
   map.connect 'donations.html',
     :controller => 'pages',
     :action => 'donate'

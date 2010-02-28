@@ -1,0 +1,20 @@
+<% title "Donation" %>
+
+<p>
+  <strong>Email:</strong>
+  <%=h @donation.email %>
+</p>
+<p>
+  <strong>Amount:</strong>
+  <%=h @donation.amount %>
+</p>
+<p>
+  <strong>Date:</strong>
+  <%=h @donation.date %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_donation_path(@donation) %> |
+  <%= link_to "Destroy", @donation, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", donations_path %>
+</p>

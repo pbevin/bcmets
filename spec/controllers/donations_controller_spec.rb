@@ -9,4 +9,19 @@ describe DonationsController do
       response.body.should == "monthly yearly"
     end
   end
+
+  context "admin functions" do
+    before(:each) do
+      controller.stub!(:logged_in_as_admin).and_return(true)
+    end
+
+    describe "GET index" do
+      it "returns the donations list" do
+        list = [Donation.new]
+        Donation.should_receive(:all).and_return(list)
+        get :index
+        assigns(:donations).should == list
+      end
+    end
+  end
 end

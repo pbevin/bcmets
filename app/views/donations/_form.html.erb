@@ -1,0 +1,16 @@
+<% form_for @donation do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </p>
+  <p>
+    <%= f.label :date %><br />
+    <%= f.date_select :date %>
+  </p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>
