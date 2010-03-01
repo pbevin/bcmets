@@ -37,7 +37,7 @@ END
     end
     
     it "should special case today" do
-      Donation.should_receive(:last_donation_on).and_return(3.hours.ago)
+      Donation.should_receive(:last_donation_on).and_return(1.second.ago)
       helper.last_donation.should == "Last donation: today"
     end      
   end

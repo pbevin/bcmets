@@ -3,7 +3,7 @@ class ArchiveController < ApplicationController
 
   def index
     @heading = "Archives"
-    now = Time.now
+    now = Time.zone.now
     @year = now.year
     @month = now.month
   end
@@ -90,7 +90,7 @@ class ArchiveController < ApplicationController
   end
 
   def this_month
-    date = Date.today
+    date = Time.zone.today
     redirect_to url_for(:action => 'month', :year => date.year, :month => date.month)
   end
 

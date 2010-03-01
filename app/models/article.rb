@@ -90,7 +90,7 @@ class Article < ActiveRecord::Base
   end
 
   def send_via_email
-    self.sent_at = self.received_at = Time.now
+    self.sent_at = self.received_at = Time.zone.now
     self.msgid = "<#{hex(16)}@bcmets.org>"
     email = TMail::Mail.new
     email.to = self.mail_to

@@ -102,7 +102,7 @@ module ArchiveHelper
     date = Donation.last_donation_on
     if date == nil
       last_donation = "never"
-    elsif date.to_date == Date.today
+    elsif date.to_date == Time.zone.today
       last_donation = "today"
     else
       last_donation = "#{time_ago_in_words(date)} ago"
