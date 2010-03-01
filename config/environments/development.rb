@@ -30,3 +30,7 @@ config.action_mailer.smtp_settings = {
   :domain => "petebevin.com"
 }
 config.action_mailer.raise_delivery_errors = true
+
+# ImageMagick magic for my Mac
+Paperclip.options[:command_path] = "/usr/local/magick/bin"
+ENV['DYLD_LIBRARY_PATH'] = "/usr/local/magick/lib"

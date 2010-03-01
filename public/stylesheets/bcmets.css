@@ -298,4 +298,5 @@ table.admin .admin-odd {
 
 img.profile {
   float: right;
+  border: none;
 }

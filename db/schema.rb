@@ -9,7 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091210170929) do
+ActiveRecord::Schema.define(:version => 20100301021945) do
+
+  create_table "albums", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "articles", :force => true do |t|
     t.datetime "sent_at"
@@ -74,6 +81,16 @@ ActiveRecord::Schema.define(:version => 20091210170929) do
     t.datetime "updated_at"
     t.string   "name"
     t.string   "xml_url"
+    t.string   "type"
+    t.string   "feed_type"
+  end
+
+  create_table "holds", :force => true do |t|
+    t.integer  "subscription_id"
+    t.date     "leave"
+    t.date     "return"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "links", :force => true do |t|
@@ -81,6 +98,33 @@ ActiveRecord::Schema.define(:version => 20091210170929) do
     t.string   "url"
     t.string   "text"
     t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "photos", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "album_id"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "subscriptions", :force => true do |t|
+    t.string   "email"
+    t.string   "name"
+    t.string   "password"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "thumbnails", :force => true do |t|
+    t.binary   "data",       :limit => 16777215
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "photo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
