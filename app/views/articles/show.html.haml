@@ -1,6 +1,7 @@
 - if @article.recent?
   = link_to "Reply to this message", article_reply_path(@article), :id => "reply"
 #header
+  = profile_picture(@article.user) if @article.user
   %ul
     %li#from
       From:

@@ -77,5 +77,6 @@ Feature: Posting Articles
     And I fill in "Reply To:" with "List only"
     And I press "Post"
     Then I should see "Message sent"
+    And an article should exist with subject: "Homefries"
     When I follow "Current Articles"
     Then I should see "Homefries"

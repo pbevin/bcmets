@@ -65,7 +65,7 @@ class ArticlesController < ApplicationController
     
     @article = Article.new(params[:article])
     if @article.valid?
-      @article.user = current_user
+      @article.user = current_user || User.find_by_email(@article.email)
       @article.send_via_email
       @article.save unless @article.reply_type == 'sender'
       flash[:notice] = "Message sent."

@@ -5,6 +5,7 @@ class Article < ActiveRecord::Base
   belongs_to :user
   belongs_to :conversation
   before_create :start_conversation
+  before_create :determine_user
   attr_accessor :reply_type # list, sender, or both
   attr_accessor :to
   validates_presence_of :name
@@ -159,12 +160,16 @@ class Article < ActiveRecord::Base
   end
 
   def start_conversation
-    if self.parent
+    if parent
       self.conversation = parent.conversation
-    elsif self.parent_id
+    elsif parent_id
       self.conversation = Article.find_by_id(self.parent_id).conversation
     else
       self.conversation ||= Conversation.create(:title => self.subject)
     end
+  end
+
+  def determine_user
+    self.user ||= User.find_by_email(email)
   end
 end
