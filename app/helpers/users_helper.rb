@@ -3,7 +3,8 @@ module UsersHelper
     if user.photo.file?
       image_tag user.photo.url(size), :class => 'profile'
     else
-      gravatar_for user, :default => 'identicon', :size => 50, :class => 'profile'
+      pixel_size = 100 # always for gravatar - they look silly at larger sizes.
+      gravatar_for user, :default => 'identicon', :size => pixel_size, :class => 'profile'
     end
   end
 
