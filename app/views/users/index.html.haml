@@ -2,6 +2,9 @@
 
 = link_to("Add User", new_user_path)
 
+%p
+  = "#{@users.size} users"
+
 %table#users.admin
   %thead
     %tr
