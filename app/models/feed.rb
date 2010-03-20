@@ -17,20 +17,24 @@ class Feed < ActiveRecord::Base
   end
 
   def update_entries(feed_url = self.xml_url)
-    Feed.transaction do
-      feed = Feedzirra::Feed.fetch_and_parse(feed_url)
-      return unless feed || feed.is_a?(Fixnum)
-      feed.entries.each do |entry|
-        unless FeedEntry.exists? :guid => entry.id
-          entries << FeedEntry.create!(
-            :name         => entry.title,
-            :summary      => entry.summary,
-            :url          => entry.url,
-            :published_at => entry.published,
-            :guid         => entry.id
-          )
+    begin
+      Feed.transaction do
+        feed = Feedzirra::Feed.parse(open(feed_url).read)
+        return unless feed || feed.is_a?(Fixnum)
+        feed.entries.each do |entry|
+          unless FeedEntry.exists? :guid => entry.id
+            entries << FeedEntry.create!(
+              :name         => entry.title,
+              :summary      => entry.summary,
+              :url          => entry.url,
+              :published_at => entry.published,
+              :guid         => entry.id
+            )
+          end
         end
       end
+    rescue Exception => e
+      puts "Failed to fetch #{feed_url}: #{e.inspect}"
     end
   end
 
