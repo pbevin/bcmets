@@ -14,8 +14,14 @@ class ArchiveController < ApplicationController
     else
       @year, @month = params[:year], params[:month]
     end
-    @title = "#{Date::MONTHNAMES[@month.to_i]} #{@year}"
+    month_year = "#{Date::MONTHNAMES[@month.to_i]} #{@year}"
+    @title = month_year
     @heading = @title
+
+    if @year.to_i > Date.today.year || @year.to_i < 2000 || @month.to_i < 1 || @month.to_i > 12
+      flash[:notice] = "No articles for #{@month}/#{@year}"
+      return redirect_to root_url
+    end
 
     candidates = Article.for_month(@year.to_i, @month.to_i)
     @articles = Article.thread_tree(candidates)
