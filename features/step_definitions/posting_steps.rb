@@ -33,6 +33,10 @@ When /^I post an article with email "([^\"]*)"$/ do |email|
   response.should contain("Message sent")
 end
 
+Then /^no article should exist$/ do
+  Article.count.should == 0
+end
+
 When /^an article arrives with email "([^\"]*)"$/ do |email|
   Article.create!(
     :email => email,
