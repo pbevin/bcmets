@@ -67,7 +67,11 @@ class ArticlesController < ApplicationController
     if @article.valid?
       @article.user = current_user || User.find_by_email(@article.email)
       @article.send_via_email
-      @article.save unless @article.reply_type == 'sender'
+      
+      if (@article.reply_type != 'sender' && @article.user)
+        @article.save
+      end
+
       flash[:notice] = "Message sent."
       flash[:links] = [['Home', url_for(:action => 'index')],
                        ['Current Articles', url_for(:controller => 'archive', :action => 'this_month')]]
