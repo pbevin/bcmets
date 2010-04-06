@@ -69,7 +69,7 @@ class ArticlesController < ApplicationController
       @article.send_via_email
       
       if (@article.reply_type != 'sender' && @article.user)
-        @article.save
+        #@article.save
       end
 
       flash[:notice] = "Message sent."
