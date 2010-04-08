@@ -22,3 +22,4 @@
           = link_to 'V', :controller => user_profile_path(user)
           = link_to 'E', edit_user_path(user)
           = link_to 'D', user, :confirm => 'Sure?', :method => :delete
+          = link_to 'M', "http://www.bcmets.org/mailman/admin/bcmets/members?findmember=#{user.email}"
