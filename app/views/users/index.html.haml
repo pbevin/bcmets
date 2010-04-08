@@ -3,7 +3,8 @@
 = link_to("Add User", new_user_path)
 
 %p
-  = "#{@users.size} users"
+  = "#{@users.size} users."
+  = link_to "Mailman", 'http://www.bcmets.org/mailman/admin/bcmets/members'
 
 %table#users.admin
   %thead
