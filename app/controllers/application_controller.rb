@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
   
   def logged_in_as_admin
-    current_user && current_user.email == 'pete@petebevin.com'
+    current_user && current_user.admin?
   end
 
   def require_admin

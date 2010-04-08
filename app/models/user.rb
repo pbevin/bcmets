@@ -36,6 +36,10 @@ class User < ActiveRecord::Base
     save
   end
   
+  def admin?
+    email == 'pete@petebevin.com'
+  end
+
   def has_photo?
     @photo.present?
   end

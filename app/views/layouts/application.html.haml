@@ -20,6 +20,9 @@
           |
           = link_to("Options", user_path(:current))
           |
+          - if current_user.admin?
+            = link_to('Admin', '/admin')
+            |
           = link_to('Logout', logout_path)
       #pageheader
         #banner
