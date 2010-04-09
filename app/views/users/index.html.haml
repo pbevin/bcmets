@@ -4,6 +4,7 @@
 
 %p
   = "#{@users.size} users."
+  Users in red are moderated.
   = link_to "Mailman", 'http://www.bcmets.org/mailman/admin/bcmets/members'
 
 %table#users.admin
@@ -14,7 +15,7 @@
       %th Delivery
   %tbody
     - for user in @users do
-      %tr{:class => cycle('admin-odd', 'admin-even')}
+      %tr{:class => [cycle('admin-odd', 'admin-even'), user.moderated ? ' moderated' : nil]}
         %td=h "#{user.name} <#{user.email}>"
         %td= user.created_at.to_date.to_s(:db)
         %td= user.email_delivery

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100301021945) do
+ActiveRecord::Schema.define(:version => 20100409001722) do
 
   create_table "articles", :force => true do |t|
     t.datetime "sent_at"
@@ -85,6 +85,17 @@ ActiveRecord::Schema.define(:version => 20100301021945) do
     t.datetime "updated_at"
   end
 
+  create_table "outgoing_emails", :force => true do |t|
+    t.string   "sender"
+    t.string   "recipient"
+    t.text     "message"
+    t.boolean  "delivered"
+    t.integer  "attempts",   :default => 0
+    t.string   "last_error"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "crypted_password"
@@ -101,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20100301021945) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.boolean  "moderated"
   end
 
 end

@@ -53,9 +53,25 @@ describe "Config file parser" do
     @parser.members.should == [ { :password => 'secret' }]
   end
   
+  it "adds :moderated => true to moderated users" do
+    @parser.accept("'user_options': { 'test@example.com': 128,")  # 128 is Mailman's "moderated" flag
+    @parser.members.should == [ { :email => 'test@example.com', :moderated => true }]
+  end
+  
+  it "does not add :moderated for unmoderated users" do
+    @parser.accept("'user_options': { 'test@example.com': 0,")
+    @parser.members.should == [ { :email => 'test@example.com' }]
+  end
+  
   it "adds :digest => true to digest members" do
     @parser.accept("'digest_members': { 'test@example.com': 0,")
     @parser.members.should == [ { :email => 'test@example.com', :digest => true }]
+  end
+  
+  it "copes with both :digest and :moderated options" do
+    @parser.accept("'user_options': { 'test@example.com': 128,")
+    @parser.accept("'digest_members': { 'test@example.com': 0,")
+    @parser.members.should == [ { :email => 'test@example.com', :digest => true, :moderated => true }]
   end
   
   it "adds :nomail => true when needed" do

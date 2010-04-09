@@ -1,4 +1,6 @@
 module Mailman
+  MM_MODERATED = 0x80
+
   def self.parse(filename)
     parser = Parser.new
     open(filename) do |f|
@@ -16,6 +18,7 @@ module Mailman
       :passwords => :password,
       :digest_members => :email,
       :delivery_status => :status,
+      :user_options => :email
     }
     
     SECTION_START = %r#^\s*'(.*)':\s+\{#
@@ -43,6 +46,9 @@ module Mailman
           if @section == :delivery_status
             # Anyone listed in delivery_status is NOMAIL.
             add(email, :nomail, true)
+          elsif @section == :user_options
+            add(email, :email, email)
+            add(email, :moderated, true) if value.to_i & MM_MODERATED != 0
           else
             if value =~ /'(.*)'/
               value = $1

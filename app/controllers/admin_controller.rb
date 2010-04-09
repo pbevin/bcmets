@@ -35,6 +35,7 @@ class AdminController < ApplicationController
         user.password = u[:password]
         user.email_delivery = delivery_type
         user.active = true
+        user.moderated = u[:moderated]
         user.save || errors << u[:email]
       end
       logger.warn "Errors for #{errors.inspect}" if !errors.empty?

@@ -300,3 +300,7 @@ img.profile {
   float: right;
   border: 5px solid white;
 }
+
+#users tr.moderated {
+  color: red;
+}
