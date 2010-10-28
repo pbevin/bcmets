@@ -6,4 +6,4 @@ doc/app
 tmp
 db/sphinx
 public/system
-
+*.swp
