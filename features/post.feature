@@ -2,7 +2,7 @@ Feature: Posting Articles
   As a patient
   In order to get better treatment
   I want to ask a question
-  
+
   Background:
     Given a user exists with email: "member@example.com"
     And there are no articles
@@ -16,13 +16,13 @@ Feature: Posting Articles
     And I fill in "article_qt" with "blah blah"
     And I press "Post"
     Then I should see "Message sent"
-    And an article should exist with subject: "What is Taxol?"
+    And an article should be queued with subject: "What is Taxol?"
     And I should be on the front page  # debatable
 
   Scenario: Post from front page when article requires moderation
     When I post an article with email "invalid@example.com"
     Then I should see "Message sent"
-    And no article should exist
+    And no article should be queued
 
   Scenario: Missing Fields
     When I go to the front page
@@ -31,7 +31,7 @@ Feature: Posting Articles
     And I press "Post"
     Then I should see "There were problems"
     And the "Email" field should contain "me@example.com"
-    And an article should not exist with email: "me@example.com"
+    And no article should be queued
 
   Scenario: Reply to an article
     Given an article: "parent" exists with msgid: "xyzzy"
@@ -43,9 +43,9 @@ Feature: Posting Articles
     And I fill in "Reply To:" with "Sender only"
     And I press "Post"
     Then I should see "Message sent"
-    And an article should exist with email: "member@example.com", parent_msgid: "xyzzy"
+    And an article should queued with email: "member@example.com", parent_msgid: "xyzzy"
     And I should be on article: "parent"
-    
+
   Scenario: Reply to an article (invalid fields)
     Given an article exists
     When I go to that article
@@ -53,9 +53,9 @@ Feature: Posting Articles
     And I fill in "Email" with "invalid"
     And I press "Post"
     Then I should see "There were problems"
-    And an article should not exist with email: "invalid"
+    And no article should be queued
 
-  Scenario: Spam prevention
+  Scenario: Spam trap: mustn't fill in article_body
     When I go to path /post
     And I fill in "Name" with "A. Spammer"
     And I fill in "Email" with "member@example.com"
@@ -63,7 +63,7 @@ Feature: Posting Articles
     And I fill in "article_body" with "..."
     And I press "Post"
     Then I should see "Message sent"
-    But an article should not exist
+    But no article should be queued
 
   Scenario: Page title for Post page
     When I go to path /post
@@ -86,6 +86,4 @@ Feature: Posting Articles
     And I fill in "Reply To:" with "List only"
     And I press "Post"
     Then I should see "Message sent"
-    And an article should exist with subject: "Homefries"
-    When I follow "Current Articles"
-    Then I should see "Homefries"
+    And an article should be queued with subject: "Homefries"

@@ -44,3 +44,18 @@ When /^an article arrives with email "([^\"]*)"$/ do |email|
     :subject => Faker::Lorem.sentence,
     :body => Faker::Lorem.paragraph)
 end
+
+Then /^no article should be queued$/ do
+  pending
+end
+
+Then /^an article should be queued with subject: "([^\"]*)"$/ do |arg1|
+  pending
+end
+
+Then /^an article should queued with email: "([^\"]*)", parent_msgid: "([^\"]*)"$/ do |arg1, arg2|
+  pending
+end
+
+
+
