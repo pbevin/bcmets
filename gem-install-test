@@ -1,0 +1,9 @@
+gem install polyglot --ignore-dependencies --version 0.2.9 --no-ri --no-rdoc
+gem install --ignore-dependencies rspec --version 1.3.1 --no-ri --no-rdoc
+gem install --ignore-dependencies rspec-rails --version 1.3.3 --no-ri --no-rdoc
+gem install webrat --version 0.5.3 --no-ri --no-rdoc
+gem install cucumber --version 0.4.3 --no-ri --no-rdoc
+gem install --ignore-dependencies faker -v 0.3.1 --no-ri --no-rdoc
+gem install --ignore-dependencies --no-ri --no-rdoc pickle -v 0.3.4
+gem install ZenTest
+
