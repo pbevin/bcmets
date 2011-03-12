@@ -1,0 +1,19 @@
+%h2 Change your email address
+
+%p
+  %strong IMPORTANT!
+  Make sure you enter your new email address correctly.  If you
+  mess it up, then (a) it will stop you getting emails from the list,
+  and (b) your messages will get held for approval whenever you post
+  because the list won't know who you are any more.
+
+%p
+  Once you're sure, enter your new password below and press
+  "Change my email address".
+
+- form_for :email_change, :url => { :action => 'save_email' } do |f|
+  = f.error_messages
+  %p
+    = f.label(:new_email)
+    = f.text_field :new_email
+    = f.submit "Change my email address"

@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
     c.validates_length_of_password_field_options = {:on => :update, :minimum => 4, :if => :has_no_credentials?}
     c.validates_length_of_password_confirmation_field_options = {:on => :update, :minimum => 4, :if => :has_no_credentials?}
   end
-  
+
   validates_presence_of :name
   attr_protected :active
   has_attached_file :photo, :processors => [:cropper], :styles => {
@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
     self.active = true
     save
   end
-  
+
   def admin?
     email == 'pete@petebevin.com'
   end
@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   def guess_location(ip_addr)
     # self.location = MaxMind::lookup(ip_addr) unless self.location && self.location != ""
   end
-  
+
   def active?
     active
   end
@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
     reset_perishable_token!
     Notifier.deliver_activation_confirmation(self)
   end
-  
+
   def log_activation
     events << EventLog.new(:email => self.email,
                            :reason => "signup",
@@ -73,16 +73,27 @@ class User < ActiveRecord::Base
     Notifier.deliver_password_reset(self)
   end
 
+# alias :orig_system :system
+#
+# def system(*args)
+#   p args.join(" ")
+#   orig_system(*args)
+# end
+
   def update_mailman
     system("/home/mailman/delivery", "bcmets", email, email_delivery) if active? and email_delivery
   end
 
-  def photo_geometry(style = :original)  
-    @geometry ||= {}  
-    @geometry[style] ||= Paperclip::Geometry.from_file(photo.path(style))  
+  def delete_from_mailman
+    system("/home/mailman/bin/remove_members", "--nouserack", "--noadminack", "bcmets", email)
   end
-  
-  private  
+
+  def photo_geometry(style = :original)
+    @geometry ||= {}
+    @geometry[style] ||= Paperclip::Geometry.from_file(photo.path(style))
+  end
+
+  private
   def reprocess_photo
     photo.reprocess!
   end

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     @users = User.all(:order => "created_at DESC")
     render :index, :layout => "admin"
   end
-  
+
   def new
     @user = User.new
     @admin = logged_in_as_admin
@@ -83,7 +83,26 @@ class UsersController < ApplicationController
       render :action => "edit"
     end
   end
-  
+
+  def edit_email
+    @email_change = EmailChange.new(:new_email => current_user.email)
+  end
+
+  def save_email
+    @email_change = EmailChange.new(params[:email_change])
+    @email_change.old_email = current_user.email
+    if @email_change.valid?
+      current_user.delete_from_mailman
+      current_user.update_attributes(:email => @email_change.new_email)
+      current_user.update_mailman
+
+      flash[:notice] = "Email changed to #{@email_change.new_email}."
+      redirect_to edit_user_path(current_user)
+    else
+      render :action => "edit_email"
+    end
+  end
+
   def edit_password
     @password_change = PasswordChange.new
     logger.debug @password_change
@@ -130,6 +149,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
+    @user.delete_from_mailman
     @user.destroy
     flash[:notice] = "User deleted"
     redirect_to users_path

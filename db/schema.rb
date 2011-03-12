@@ -11,6 +11,13 @@
 
 ActiveRecord::Schema.define(:version => 20100409001722) do
 
+  create_table "albums", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "articles", :force => true do |t|
     t.datetime "sent_at"
     t.datetime "received_at"
@@ -76,6 +83,14 @@ ActiveRecord::Schema.define(:version => 20100409001722) do
     t.string   "xml_url"
   end
 
+  create_table "holds", :force => true do |t|
+    t.integer  "subscription_id"
+    t.date     "leave"
+    t.date     "return"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "links", :force => true do |t|
     t.string   "title"
     t.string   "url"
@@ -92,6 +107,33 @@ ActiveRecord::Schema.define(:version => 20100409001722) do
     t.boolean  "delivered"
     t.integer  "attempts",   :default => 0
     t.string   "last_error"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "photos", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "album_id"
+    t.binary   "data",        :limit => 16777215
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "subscriptions", :force => true do |t|
+    t.string   "email"
+    t.string   "name"
+    t.string   "password"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "thumbnails", :force => true do |t|
+    t.binary   "data",       :limit => 16777215
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "photo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -113,6 +155,15 @@ ActiveRecord::Schema.define(:version => 20100409001722) do
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.boolean  "moderated"
+  end
+
+  create_table "vacation_stops", :force => true do |t|
+    t.string   "email"
+    t.integer  "user_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

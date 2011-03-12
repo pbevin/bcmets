@@ -12,6 +12,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.user_profile "/user_profile/:id", :controller => "users", :action => "profile"
   map.forgot_password "/users/password", :controller => "users", :action => "password"
+  map.edit_email "/users/edit_email", :controller => "users", :action => "edit_email"
+  map.save_email "/users/edit_email", :controller => "users", :action => "edit_email"
   map.edit_password "/users/edit_password", :controller => "users", :action => "edit_password"
   map.save_password "/users/edit_password", :controller => "users", :action => "edit_password"
 
@@ -76,7 +78,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
+
   # Sample resource route with more complex sub-resources
   #   map.resources :products do |products|
   #     products.resources :comments
