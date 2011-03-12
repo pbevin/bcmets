@@ -16,6 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.save_email "/users/edit_email", :controller => "users", :action => "edit_email"
   map.edit_password "/users/edit_password", :controller => "users", :action => "edit_password"
   map.save_password "/users/edit_password", :controller => "users", :action => "edit_password"
+  map.unsubscribe "/users/unsubscribe", :controller => "users", :action => "unsubscribe"
 
   map.resources :user_sessions
   map.resources :users

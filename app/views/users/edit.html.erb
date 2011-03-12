@@ -7,6 +7,7 @@ If you need to change your email address or password, please click on one of the
 <ul>
   <li><%= link_to 'Change email address', :action => 'edit_email' %></li>
   <li><%= link_to 'Change password', :action => 'edit_password' %></li>
+  <li><%= link_to 'Unsubscribe from bcmets', { :action => 'unsubscribe', :key => current_user.secret_key }, :confirm => "Are you sure you want to unsubscribe?", :method => :post %></li>
 </ul>
 
   <% form_for(@user, :html => { :multipart => true }) do |f| %>
@@ -21,28 +22,28 @@ If you need to change your email address or password, please click on one of the
     <%= f.label :location %><br/>
     <%= f.text_field :location %>
   </p>
-  
+
   <p>
     Email Delivery Options:<br />
-    
+
     <%= f.radio_button :email_delivery, :full %>
     <label for="user_email_delivery_full">
       <strong>Full</strong> - I want to receive every message posted to the list (about 10-20 a day).
     </label><br />
-    
+
     <%= f.radio_button :email_delivery, :digest %>
     <label for="user_email_delivery_digest">
       <strong>Digest</strong> - I want to receive a couple of emails a day with batches of messages.
     </label><br />
-    
+
     <%= f.radio_button :email_delivery, :none %>
     <label for="user_email_delivery_none">
       <strong>None</strong> - I just want to read and post on the web site.
     </label><br />
   </p>
   <p>
-    <%= f.label :photo, "Photo" %>  
-    <%= f.file_field :photo %>  
+    <%= f.label :photo, "Photo" %>
+    <%= f.file_field :photo %>
   </p>
 
   <p>

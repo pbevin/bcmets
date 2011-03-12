@@ -31,8 +31,8 @@ class UserSessionsController < ApplicationController
   # DELETE /user_sessions/1.xml
   def destroy
     @user_session = UserSession.find
-    @user_session.destroy
-    
+    @user_session.destroy if @user_session
+
     flash[:notice] = "Logged out."
 
     respond_to do |format|

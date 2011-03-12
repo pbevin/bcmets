@@ -68,6 +68,10 @@ class User < ActiveRecord::Base
                            :message => "Mode = #{self.email_delivery}, name = #{self.name}")
   end
 
+  def secret_key
+    Digest::SHA1.hexdigest(crypted_password.to_s + email)
+  end
+
   def reset_password!
     reset_perishable_token!
     Notifier.deliver_password_reset(self)

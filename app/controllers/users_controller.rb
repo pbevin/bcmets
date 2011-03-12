@@ -17,6 +17,7 @@ class UsersController < ApplicationController
       @user = User.find_by_id(params[:id])
       render :template => "users/edit_root"
     else
+      return require_login if !current_user
       @user = current_user
       @user.guess_location(request.remote_ip)
     end
@@ -62,6 +63,7 @@ class UsersController < ApplicationController
 
   def update
     if params[:id] == 'current' || !logged_in_as_admin
+      return require_login if !current_user
       @user = current_user
     else
       @user = User.find(params[:id])
@@ -122,6 +124,7 @@ class UsersController < ApplicationController
 
   def show
     if params[:id] == 'current'
+      return require_login if !current_user
       @user = current_user
     else
       @user = User.find(params[:id])
@@ -145,6 +148,19 @@ class UsersController < ApplicationController
   def profile
     @user = User.find(params[:id])
     @articles = Article.find_all_by_email(@user.email, :order => "sent_at DESC")
+  end
+
+  def unsubscribe
+    secret = params[:key]
+    user = current_user
+    if secret != user.secret_key
+      flash[:notice] = "Something went wrong: please contact owner@bcmets.org if you want to unsubscribe."
+      return redirect_to current_user
+    end
+    user.delete_from_mailman
+    user.destroy
+    flash[:notice] = "Your account has been deleted."
+    redirect_to root_url
   end
 
   def destroy
