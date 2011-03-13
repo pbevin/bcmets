@@ -68,3 +68,11 @@ Then /^(.+) should have password: "([^\"]*)"$/ do |who, password|
   user = model(who)
   user.valid_password?(password).should be_true
 end
+
+Then /^(.+) should have been deleted/ do |who|
+  begin
+    user = model(who)
+    fail("User should have been deleted but wasn't")
+  rescue ActiveRecord::RecordNotFound
+  end
+end

@@ -1,3 +1,3 @@
-Then /^show me (.+)/ do |object|
+Then /^print (.+)/ do |object|
   p model(object)
 end

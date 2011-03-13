@@ -6,7 +6,6 @@
 # no regular words or you'll be exposed to dictionary attacks.
 ActionController::Base.session = {
   :key         => '_bcmets_session',
-  :domain      => 'bcmets.org',
   :secret      => '3f48631d6753e45e4a26ed3096558feabbc20e3216d2944cc297da769ffcc12118f2f034c4d64cccebb83ae6340c27f2ba6da61a651023bda263438cb59deb8b'
 }
 
