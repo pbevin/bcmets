@@ -95,7 +95,7 @@ class Article < ActiveRecord::Base
     email = TMail::Mail.new
     email.to = self.mail_to
     email.cc = self.mail_cc
-    email.from = TMail::Address.special_quote_address(self.from)
+    email.from = TMail::Parser.special_quote_address(self.from)
     email.message_id = self.msgid
     email.in_reply_to = self.parent_msgid
     email.subject = self.subject
@@ -130,7 +130,7 @@ class Article < ActiveRecord::Base
   end
 
   def reply
-    returning Article.new do |reply|
+    Article.new.tap do |reply|
       reply.reply_type = self.reply_type
       reply.subject = self.subject
       reply.subject = "Re: #{reply.subject}" unless reply.subject =~ /^Re:/i
@@ -147,7 +147,7 @@ class Article < ActiveRecord::Base
   end
 
   def quote(string)
-    returning "" do |body|
+    "".tap do |body|
       lines = wrap(string).collect{|line| line.split("\n")}.flatten
       lines.each { |line| body << "> #{line}\n" }
     end
