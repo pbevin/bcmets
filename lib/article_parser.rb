@@ -51,6 +51,8 @@ class ArticleParser
       article.sent_at = $1
     when /^In-Reply-To: (<.+>)$/i
       article.parent_msgid = $1
+    when /^References: (<.+?>).*$/i
+      article.parent_msgid = $1 if article.parent_msgid.blank?
     end
     self.current_line = line
   end

@@ -1,29 +1,14 @@
-require 'article_parser'
+require 'spec_helper'
 
 describe "Article Parser" do
   attr_accessor :article, :parser
 
   before(:each) do
-    @article = mock()
+    @article = Article.new
     @parser = ArticleParser.new(article)
   end
 
-  def accept(line)
-    parser << line
-  end
-
-  def with_header(line)
-    yield
-    parser.header line
-  end
-
-  def with_lines(lines)
-    yield
-    lines.each { |line| parser << line }
-  end
-
   it "keeps state based on where it is in the email" do
-    article.stub!(:subject=)
     parser.state.should == :empty
     parser << "From blah"
     parser.state.should == :header
@@ -34,84 +19,110 @@ describe "Article Parser" do
   end
 
   it "counts the article body as anything after the first blank line" do
-    with_lines ["From blah", "", "xyzzy"] do
-      parser.should_receive(:body).once().with("xyzzy")
-    end
+    parser.should_receive(:body).once().with("xyzzy")
+
+    parser << "From blah"
+    parser << ""
+    parser << "xyzzy"
   end
 
   it "parses the Subject line" do
-    with_header "Subject: squeamish ossifrage" do
-      article.should_receive(:subject=).with("squeamish ossifrage")
-    end
+    parser.header "Subject: squeamish ossifrage"
+    article.subject.should == "squeamish ossifrage"
   end
 
   it "strips mailing list names from the subject line" do
-    with_header "Subject: Re: [bcmets] Taxol" do
-      article.should_receive(:subject=).with("Re: Taxol")
+    parser.header "Subject: Re: [bcmets] Taxol" do
+      article.subject.should == "Re: Taxol"
     end
   end
 
   it "sets the received_at field based on the first line" do
-    with_lines ["From bcmets-bounces@bcmets.org  Thu Mar 12 21:33:32 2009"] do
-      article.should_receive(:received_at=).with("Thu Mar 12 21:33:32 2009")
-    end
+    parser << "From bcmets-bounces@bcmets.org  Thu Mar 12 21:33:32 2009"
+    article.received_at.should == "Thu Mar 12 21:33:32 2009".to_time
   end
 
   it "is not fooled by two double spaces in dates before the 10th" do
-    with_lines ["From bcmets-bounces@bcmets.org  Thu Mar  5 21:33:32 2009"] do
-      article.should_receive(:received_at=).with("Thu Mar  5 21:33:32 2009")
-    end
+    parser << "From bcmets-bounces@bcmets.org  Thu Mar  5 21:33:32 2009"
+    article.received_at.should == "Thu Mar  5 21:33:32 2009".to_time
   end
 
   it "sets the sent_at field based on the Date: header" do
-    with_header "Date: Thu, 12 Mar 2009 21:33:26 -0400 (EDT)" do
-      article.should_receive(:sent_at=).with("Thu, 12 Mar 2009 21:33:26 -0400 (EDT)")
-    end
+    parser.header "Date: Thu, 12 Mar 2009 21:33:26 -0400 (EDT)"
+    article.sent_at.should == Time.gm(2009, 3, 13, 1, 33, 26)
   end
 
   it "parses the Message ID" do
-    with_header("Message-ID: xxx") do
-      article.should_receive(:msgid=).with("xxx")
-    end
+    parser.header "Message-ID: xxx"
+    article.msgid.should =="xxx"
 
     # Common variant
-    with_header("Message-id: yyy") do
-      article.should_receive(:msgid=).with("yyy")
+    parser.header "Message-id: yyy"
+    article.msgid.should == "yyy"
+  end
+
+  it "ignores <> in In-Reply-To" do
+    # Some stupid MTA's set In-Reply-To: to <> meaning "nothing" - ignore them
+    parser.header "In-Reply-To: <>"
+    article.parent_msgid.should be_nil
+  end
+
+  context "With In-Reply-To but not References" do
+    it "sets the parent message ID" do
+      parser.header "In-Reply-To: <xyzzy@bcmets.org>"
+      article.parent_msgid.should == "<xyzzy@bcmets.org>"
     end
   end
 
-  it "sets the parent message ID" do
-    with_header("In-Reply-To: <xyzzy@bcmets.org>") do
-      article.should_receive(:parent_msgid=).with("<xyzzy@bcmets.org>")
+  context "With References but no In-Reply-To" do
+    it "sets the parent message ID" do
+      parser.header "References: <xyzzy@bcmets.org>"
+      article.parent_msgid.should == "<xyzzy@bcmets.org>"
+    end
+  end
+
+  context "With a multi-line References: header" do
+    it "takes the first message ID as the parent" do
+      parser.header "References: <xyzzy@bcmets.org>"
+      parser.header " <plugh@bcmets.org>"
+      article.parent_msgid.should == "<xyzzy@bcmets.org>"
+    end
+  end
+
+  context "With both References: and In-Reply-To" do
+    it "takes the parent Message ID from In-Reply-To" do
+      parser.header "In-Reply-To: <plover@bcmets.org>"
+      parser.header "References: <xyzzy@bcmets.org>"
+      parser.header " <plugh@bcmets.org>"
+      article.parent_msgid.should == "<plover@bcmets.org>"
     end
 
-    # Some stupid MTA's set In-Reply-To: to <> meaning "nothing" - ignore them
-    with_header("In-Reply-To: <>") do
-      article.should_not_receive(:parent_msgid=)
+    it "still works if References: comes first" do
+      parser.header "References: <xyzzy@bcmets.org>"
+      parser.header " <plugh@bcmets.org>"
+      parser.header "In-Reply-To: <plover@bcmets.org>"
+      article.parent_msgid.should == "<plover@bcmets.org>"
     end
   end
 
   it "sets the name and email of the sender" do
-    with_header "From: Mary Jones <mary@example.com>" do
-      article.should_receive(:name=).with("Mary Jones")
-      article.should_receive(:email=).with("mary@example.com")
-    end
+    parser.header "From: Mary Jones <mary@example.com>"
+    article.name.should == "Mary Jones"
+    article.email.should == "mary@example.com"
 
-    with_header "From: mary@example.com" do
-      article.should_receive(:name=).with("mary@example.com")
-      article.should_receive(:email=).with("mary@example.com")
-    end
+    parser.header "From: mary@example.com"
+    article.name.should == "mary@example.com"
+    article.email.should == "mary@example.com"
 
-    with_header "From: <mary@example.com>" do
-      article.should_receive(:name=).with("mary@example.com")
-      article.should_receive(:email=).with("mary@example.com")
-    end
+    parser.header "From: <mary@example.com>"
+    article.name.should == "mary@example.com"
+    article.email.should == "mary@example.com"
   end
 
   it "recognizes multi-part lines" do
-    article.should_receive(:subject=).with("a very")
     parser.header "Subject: a very"
-    article.should_receive(:subject=).with("a very long subject line")
+    article.subject.should == "a very"
     parser.header "   long subject line"
+    article.subject.should == "a very long subject line"
   end
 end
