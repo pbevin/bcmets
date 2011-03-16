@@ -46,15 +46,25 @@ When /^an article arrives with email "([^\"]*)"$/ do |email|
 end
 
 Then /^no article should be queued$/ do
-  pending
+  ActionMailer::Base.deliveries.length.should == 0
 end
 
-Then /^an article should be queued with subject: "([^\"]*)"$/ do |arg1|
-  pending
+Then /^an article should be queued with subject: "([^\"]*)"$/ do |subject|
+  ActionMailer::Base.deliveries.length.should == 1
+
+  msg = ActionMailer::Base.deliveries.first
+  msg.subject.should == subject
 end
 
-Then /^an article should queued with email: "([^\"]*)", parent_msgid: "([^\"]*)"$/ do |arg1, arg2|
-  pending
+Then /^an article should be queued with email: "([^\"]*)", parent_msgid: "([^\"]*)"$/ do |email, parent|
+  ActionMailer::Base.deliveries.length.should == 1
+
+  msg = ActionMailer::Base.deliveries.first
+  msg.from.should == [email]
+
+  if !parent.blank?
+    msg.header["in-reply-to"].refs.should == [parent]
+  end
 end
 
 

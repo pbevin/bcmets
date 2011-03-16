@@ -22,7 +22,7 @@ Feature: Posting Articles
   Scenario: Post from front page when article requires moderation
     When I post an article with email "invalid@example.com"
     Then I should see "Message sent"
-    And no article should be queued
+    And an article should be queued with email: "invalid@example.com", parent_msgid: ""
 
   Scenario: Missing Fields
     When I go to the front page
@@ -43,7 +43,7 @@ Feature: Posting Articles
     And I fill in "Reply To:" with "Sender only"
     And I press "Post"
     Then I should see "Message sent"
-    And an article should queued with email: "member@example.com", parent_msgid: "xyzzy"
+    And an article should be queued with email: "member@example.com", parent_msgid: "xyzzy"
     And I should be on article: "parent"
 
   Scenario: Reply to an article (invalid fields)

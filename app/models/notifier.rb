@@ -16,10 +16,22 @@ class Notifier < ActionMailer::Base
     subject       "Activation Complete"
     body          :root_url => root_url
   end
-  
+
   def password_reset(user)
     common(user)
     subject       "Password reset"
     body          :reset_url => reset_password_url(user.perishable_token)
+  end
+
+  def article(article)
+    subject    article.subject
+    recipients article.mail_to
+    cc         article.mail_cc
+    from       article.from
+
+    headers["In-Reply-To"] = article.parent_msgid
+    headers["Return-Path"] = 'bcmets@bcmets.org'
+
+    body       :article => article
   end
 end
