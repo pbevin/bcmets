@@ -24,7 +24,7 @@ class ArchiveController < ApplicationController
     end
 
     candidates = Article.for_month(@year.to_i, @month.to_i)
-    @articles = Article.thread_tree(candidates)
+    @articles = Article.thread_tree(candidates).reverse
     @article_count = candidates.count
 
     expires_in 2.minutes
@@ -34,7 +34,7 @@ class ArchiveController < ApplicationController
     @year, @month = params[:year], params[:month]
     @title = "#{Date::MONTHNAMES[@month.to_i]} #{@year}"
 
-    candidates = Article.for_month(@year.to_i, @month.to_i)
+    candidates = Article.for_month(@year.to_i, @month.to_i, "received_at DESC")
     @articles = candidates.group_by {|article| article.received_at.to_date}
     @dates = @articles.keys.sort { |a,b| b <=> a }
     @article_count = candidates.count

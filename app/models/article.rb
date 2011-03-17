@@ -35,12 +35,12 @@ class Article < ActiveRecord::Base
     (received_at || created_at) > 1.month.ago
   end
 
-  def self.for_month(year, month)
+  def self.for_month(year, month, order = "received_at ASC")
     earliest = Time.local(year, month, 1, 0, 0, 0)
     latest = 1.month.since(earliest)
 
     self.all(:conditions => ["received_at >= ? and received_at < ?", earliest, latest],
-             :order => "received_at DESC")
+             :order => order)
   end
 
   def self.link_threads
