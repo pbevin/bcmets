@@ -52,6 +52,11 @@ describe "Article Parser" do
     article.sent_at.should == Time.gm(2009, 3, 13, 1, 33, 26)
   end
 
+  it "sets the content_type field" do
+    parser.header "Content-Type: text/plain; charset=utf-8"
+    article.content_type.should == "text/plain; charset=utf-8"
+  end
+
   it "parses the Message ID" do
     parser.header "Message-ID: xxx"
     article.msgid.should =="xxx"
