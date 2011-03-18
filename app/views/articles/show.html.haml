@@ -11,7 +11,7 @@
       = @article.sent_at.to_s(:article)
       = "(#{time_ago_in_words(@article.sent_at)} ago)"
 #body
-  = @article.body_utf8
+  = to_html @article.body_utf8
   - if @conversation_roots
     %div.thread
       %h2 Articles in this thread

@@ -127,7 +127,11 @@ class Article < ActiveRecord::Base
   end
 
   def body_utf8
-    return Iconv.conv("utf-8", charset, body)
+    begin
+      Iconv.conv("utf-8", charset, body)
+    rescue
+      body
+    end
   end
 
   def reply
