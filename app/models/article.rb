@@ -147,7 +147,7 @@ class Article < ActiveRecord::Base
       reply.parent = self
       reply.parent_id = self.id
       reply.parent_msgid = self.msgid
-      reply.body = "#{self.name} writes:\n#{quote(self.body)}"
+      reply.body = "#{self.name} writes:\n#{quote(self.body_utf8)}"
     end
   end
 
