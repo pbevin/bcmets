@@ -1,3 +1,5 @@
+# Encoding: utf8
+
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Article do
@@ -145,6 +147,32 @@ describe Article do
 
     Article.new(:content_type => nil).charset.should == "utf-8"
     Article.new(:content_type => "").charset.should == "utf-8"
+  end
+
+  describe '#body_utf8' do
+    it "converts body to UTF8 when content type is UTF8" do
+      Article.new(
+        :content_type => 'text/plain; charset=utf-8',
+        :body => "Påté"
+      ).body_utf8.should ==
+        "Påté"
+    end
+
+    it "converts ISO-8859-1 to UTF8" do
+      Article.new(
+        :content_type => 'text/plain;charset="iso8859-1"',
+        :body => "sch\366n"
+      ).body_utf8.should ==
+        "sch\303\266n"
+    end
+
+    it "converts CP1252 to UTF8 when normal conversion fails" do
+      Article.new(
+        :content_type => 'text/plain',
+        :body => "\240Dear all,"
+      ).body_utf8.should ==
+        "\302\240Dear all,"
+    end
   end
 
   describe "bugs" do

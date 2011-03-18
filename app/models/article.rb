@@ -127,10 +127,14 @@ class Article < ActiveRecord::Base
   end
 
   def body_utf8
+    utf8_from(charset) || utf8_from("cp1252") || body
+  end
+
+  def utf8_from(charset)
     begin
       Iconv.conv("utf-8", charset, body)
     rescue
-      body
+      nil
     end
   end
 
