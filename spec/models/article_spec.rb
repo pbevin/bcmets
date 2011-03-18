@@ -114,7 +114,7 @@ describe Article do
     it "wraps long lines when quoting" do
       @article.body = (["asdf"] * 100).join(' ')
       @article.reply.body.lines.count.should > 5
-      @article.reply.body.lines.find_all {/^> /}.count.should > 5
+      @article.reply.body.lines.find_all { %r{^> } }.count.should > 5
     end
 
     it "sets mail_to and mail_cc based on reply_type" do
@@ -132,6 +132,19 @@ describe Article do
       @article.reply.mail_to.should == 'list@example.com'
       @article.reply.mail_cc.should == @article.from
     end
+  end
+
+  it "detects charset based on content type" do
+    Article.new(
+      :content_type => 'text/plain; charset=utf-8'
+    ).charset.should == "utf-8"
+
+    Article.new(
+      :content_type => 'text/plain; charset="us-ascii" ; format="flowed"'
+    ).charset.should == "us-ascii"
+
+    Article.new(:content_type => nil).charset.should == "utf-8"
+    Article.new(:content_type => "").charset.should == "utf-8"
   end
 
   describe "bugs" do
@@ -193,7 +206,7 @@ describe Article do
       end
     end
 
-    describe "link_threads()" do  
+    describe "link_threads()" do
       it "links up conversations" do
         a1 = Article.make
         a2 = Article.make(:parent_msgid => a1.msgid)

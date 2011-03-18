@@ -114,6 +114,22 @@ class Article < ActiveRecord::Base
     end
   end
 
+  def charset
+    return "utf-8" if content_type.blank?
+
+    if content_type =~ /charset="(.*?)"/
+      return $1
+    elsif content_type =~ /charset=(\S+)/
+      return $1
+    else
+      return "utf-8"
+    end
+  end
+
+  def body_utf8
+    return Iconv.conv("utf-8", charset, body)
+  end
+
   def reply
     Article.new.tap do |reply|
       reply.reply_type = self.reply_type
