@@ -3,6 +3,7 @@ class DonationsController < ApplicationController
 
   def index
     @donations = Donation.all(:order => 'date DESC')
+    @donation = Donation.new
   end
 
   def show

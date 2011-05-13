@@ -67,7 +67,7 @@ table.index td {
 #sidebar strong {
   text-decoration : none;
   border : solid 1px #f70f0f;
-  color : #f70f0f; 
+  color : #f70f0f;
 	background-color: #fff; /*ffff00*/
 	text-decoration : none;
 	padding : 5px;
@@ -303,4 +303,8 @@ img.profile {
 
 #users tr.moderated {
   color: red;
+}
+
+#new_donation_form {
+  display: none;
 }

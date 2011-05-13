@@ -1,6 +1,10 @@
 <% title "Donations" %>
 
-<p><%= link_to "New Donation", new_donation_path %></p>
+<p><%= link_to "New Donation", "javascript:;", :id => "new_donation_link" %></p>
+
+<div id="new_donation_form">
+  <%= render :partial => "form" %>
+</div>
 
 <table>
   <tr>
@@ -18,3 +22,11 @@
     </tr>
   <% end %>
 </table>
+
+<script type="text/javascript">
+  $(function() {
+    $('#new_donation_link').click(function() {
+      $('#new_donation_form').toggle("slow");
+    });
+  });
+</script>
