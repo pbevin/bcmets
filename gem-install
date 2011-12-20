@@ -1,4 +1,6 @@
-gem install --ignore-dependencies rails -v 2.3.11 --no-ri --no-rdoc
+gem sources -a http://gems.github.com
+
+gem install rails -v 2.3.11 --no-ri --no-rdoc
 gem install --ignore-dependencies after_commit -v 1.0.6 --no-ri --no-rdoc
 gem install --ignore-dependencies authlogic -v 2.1.2 --no-ri --no-rdoc
 gem install --ignore-dependencies builder -v 2.1.2 --no-ri --no-rdoc
