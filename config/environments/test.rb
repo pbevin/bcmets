@@ -24,11 +24,11 @@ config.action_mailer.delivery_method = :test
 config.action_mailer.default_url_options = { :host => 'bcmets.local' }
 
 config.gem "cucumber", :lib => false, :version => "=0.4.3"
-config.gem "rspec", :lib => false
-config.gem "rspec-rails", :lib => false
-config.gem "webrat", :lib => false
-config.gem "pickle", :lib => false
-config.gem "database_cleaner", :lib => false
+config.gem "rspec", :lib => false, :version => "1.3.1"
+config.gem "rspec-rails", :lib => false, :version => "1.3.3"
+config.gem "webrat", :lib => false, :version => "0.5.3"
+config.gem "pickle", :lib => false, :version => "0.3.4"
+config.gem "database_cleaner", :lib => false, :version => "0.6.5"
 
 
 # Use SQL instead of Active Record's schema dumper when creating the test database.
