@@ -37,3 +37,4 @@ gem install --ignore-dependencies database_cleaner -v 0.6.5 --no-ri --no-rdoc
 gem install --ignore-dependencies term-aniscolor -v 1.0.4 --no-ri --no-rdoc
 gem install --ignore-dependencies treetop -v 1.4.2 --no-ri --no-rdoc
 gem install --ignore-dependencies polyglot -v 0.2.9 --no-ri --no-rdoc
+gem install --ignore-dependencies diff-lcs -v 1.1.2 --no-ri --no-rdoc
