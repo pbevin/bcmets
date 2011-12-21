@@ -1,7 +1,3 @@
-
-require 'article_parser'
-
-
 def each_message(mbox_filename)
   starting = true
   article = ''
@@ -20,15 +16,6 @@ def each_message(mbox_filename)
   yield article unless starting
 end
 
-def parse(text)
-  returning Article.new do |article|
-    parser = ArticleParser.new(article)
-    for line in text.lines
-      parser << line.strip
-    end
-  end
-end
-
 def recent_files
   dir = "/home/mets/arch"
   t = 30.minutes.ago
@@ -41,12 +28,11 @@ def recent_files
   files
 end
 
-
 desc "Import new emails from mailing list"
 task :import_emails => [:environment] do
   for file in recent_files
     each_message(file) do |message|
-      article = parse(message)
+      article = Article.parse(message)
       article.save
     end
   end

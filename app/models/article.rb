@@ -1,3 +1,5 @@
+require 'article_parser'
+
 class Article < ActiveRecord::Base
   validates_uniqueness_of :msgid
   attr_accessor :children
@@ -43,8 +45,8 @@ class Article < ActiveRecord::Base
              :order => order)
   end
 
-  def self.link_threads
-    articles_to_link = Article.all(:conditions => "parent_msgid != '' and parent_id is null")
+  def self.link_threads(since=6.months.ago)
+    articles_to_link = Article.all(:conditions => ["parent_msgid != '' and parent_id is null and created_at > ?", since])
     articles_to_link.each do |article|
       parent = Article.find_by_msgid(article.parent_msgid)
       if parent != nil
@@ -180,5 +182,14 @@ class Article < ActiveRecord::Base
 
   def determine_user
     self.user ||= User.find_by_email(email)
+  end
+
+  def self.parse(text)
+    returning Article.new do |article|
+      parser = ArticleParser.new(article)
+      for line in text.lines
+        parser << line.strip
+      end
+    end
   end
 end
