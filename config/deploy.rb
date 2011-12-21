@@ -1,3 +1,4 @@
+
 set :application, "bcmets"
 set :repository,  "git://github.com/pbevin/bcmets.git"
 set :user, "pete"
@@ -12,9 +13,9 @@ set :deploy_to, "/home/www/#{application}-new"
 # your SCM below:
 set :scm, :git
 
-role :app, "petebevin.com"
-role :web, "petebevin.com"
-role :db,  "petebevin.com", :primary => true
+role :app, "www2.bcmets.org"
+role :web, "www2.bcmets.org"
+role :db,  "www2.bcmets.org", :primary => true
 
 
 namespace :deploy do
