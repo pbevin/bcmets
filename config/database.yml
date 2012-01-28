@@ -6,8 +6,10 @@ development:
   socket: /tmp/mysql.sock
 
 test: &TEST
-  adapter: sqlite3
-  database: /tmp/bcmets-test
+  adapter: mysql
+  database: bcmets_test
+  user: pete
+  socket: /tmp/mysql.sock
 
 production:
   adapter: mysql

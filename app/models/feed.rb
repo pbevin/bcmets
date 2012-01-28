@@ -53,6 +53,14 @@ class Feed < ActiveRecord::Base
     end
   end
 
+  def last_n_entries(n)
+    entries.all(:order => "created_at DESC", :limit => n)
+  end
+
+  def last_entry_date
+    entries.first(:order => "created_at DESC").created_at
+  end
+
   def parsed_feed
     @parsed ||= Feedzirra::Feed.fetch_and_parse(xml_url)
   end

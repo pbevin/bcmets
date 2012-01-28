@@ -3,10 +3,12 @@
 <table>
   <tr>
     <th>Url</th>
+    <th>Last Entry</th>
   </tr>
   <% for feed in @feeds %>
     <tr>
-      <td><%=h feed.url %></td>
+      <td style="overflow-x: hidden; max-width: 300px; padding-right: 20px;"><%=h feed.url %></td>
+      <td><%= time_ago_in_words(feed.last_entry_date) %> ago</td>
       <td><%= link_to "Show", feed %></td>
       <td><%= link_to "Edit", edit_feed_path(feed) %></td>
       <td><%= link_to "Destroy", feed, :confirm => 'Are you sure?', :method => :delete %></td>

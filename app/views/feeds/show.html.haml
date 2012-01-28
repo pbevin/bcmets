@@ -1,0 +1,20 @@
+- title "Feed"
+
+%p
+  %strong URL:
+  =h @feed.url
+
+- if @feed_entries.any?
+  %h2 Recent Entries
+  %ul
+    - @feed_entries.each do |entry|
+      %li
+        = link_to entry.name, entry.url
+        = "(#{time_ago_in_words(entry.created_at)} ago)"
+
+%p
+  = link_to "Edit", edit_feed_path(@feed)
+  |
+  = link_to "Destroy", @feed, :confirm => 'Are you sure?', :method => :delete
+  |
+  = link_to "View All", feeds_path

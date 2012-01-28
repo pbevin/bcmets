@@ -4,15 +4,16 @@ class FeedsController < ApplicationController
   def index
     @feeds = Feed.all
   end
-  
+
   def show
     @feed = Feed.find(params[:id])
+    @feed_entries = @feed ? @feed.last_n_entries(5) : []
   end
-  
+
   def new
     @feed = Feed.new
   end
-  
+
   def create
     @feed = Feed.new(params[:feed])
     if @feed.save
@@ -22,11 +23,11 @@ class FeedsController < ApplicationController
       render :action => 'new'
     end
   end
-  
+
   def edit
     @feed = Feed.find(params[:id])
   end
-  
+
   def update
     @feed = Feed.find(params[:id])
     if @feed.update_attributes(params[:feed])
@@ -36,7 +37,7 @@ class FeedsController < ApplicationController
       render :action => 'edit'
     end
   end
-  
+
   def destroy
     @feed = Feed.find(params[:id])
     @feed.destroy
