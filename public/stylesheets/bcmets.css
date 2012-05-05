@@ -312,4 +312,5 @@ img.profile {
 .buttons {
   width: 447px;
 }
-.quote { float: right; }
+.quote, .quote_lecture { float: right; }
+.quote_lecture { display: none; color: #900; }

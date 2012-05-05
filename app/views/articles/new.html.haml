@@ -34,12 +34,15 @@
     %div.buttons
       = submit_tag "Post", :disable_with=>"Sending..."
       %button.quote Quote
+      %span.quote_lecture Please trim the quoted text before posting.
     %pre#quoted= @quoted
 
 :javascript
   $('.quote').click(function() {
     $('#article_qt').val($('#article_qt').val() + "\n\n" + $('#quoted').text());
     $('#quoted').empty();
+    $('.quote').hide();
+    $('.quote_lecture').show();
 
     return false;
   });
