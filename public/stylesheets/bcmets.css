@@ -308,3 +308,8 @@ img.profile {
 #new_donation_form {
   display: none;
 }
+
+.buttons {
+  width: 447px;
+}
+.quote { float: right; }

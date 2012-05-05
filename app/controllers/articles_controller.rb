@@ -41,11 +41,12 @@ class ArticlesController < ApplicationController
     @article = Article.find_by_id(params[:id]).reply
     @article.name = default_name
     @article.email = default_email
-    @article.qt = @article.body
+    @article.qt = nil
+    @quoted = @article.body
     @article.body = nil
     render :new
   end
-  
+
   # GET /articles/1/edit
   def edit
     @article = Article.find(params[:id])
@@ -60,14 +61,14 @@ class ArticlesController < ApplicationController
       redirect_to :action => "index"
       return
     end
-    
+
     params[:article][:body] = params[:article][:qt]
-    
+
     @article = Article.new(params[:article])
     if @article.valid?
       @article.user = current_user || User.find_by_email(@article.email)
       @article.send_via_email
-      
+
       if (@article.reply_type != 'sender' && @article.user)
         #@article.save
       end
@@ -109,7 +110,7 @@ class ArticlesController < ApplicationController
   def default_name
     cookie_or_user(:name)
   end
-  
+
   def default_email
     cookie_or_user(:email)
   end
