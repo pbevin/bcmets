@@ -37,11 +37,9 @@
     %pre#quoted= @quoted
 
 :javascript
-  var didQuote = false;
   $('.quote').click(function() {
-    if (!didQuote) {
-      $('#article_qt').val($('#article_qt').val() + "\n\n" + $('#quoted').text());
-      didQuote = true;
-    }
+    $('#article_qt').val($('#article_qt').val() + "\n\n" + $('#quoted').text());
+    $('#quoted').empty();
+
     return false;
   });
