@@ -85,11 +85,15 @@ class User < ActiveRecord::Base
 # end
 
   def update_mailman
-    system("/home/mailman/delivery", "bcmets", email, email_delivery) if active? and email_delivery
+    as_mailman("/home/mailman/delivery", "bcmets", email, email_delivery) if active? and email_delivery
   end
 
   def delete_from_mailman
-    system("/home/mailman/bin/remove_members", "--nouserack", "--noadminack", "bcmets", email)
+    as_mailman("/home/mailman/bin/remove_members", "--nouserack", "--noadminack", "bcmets", email)
+  end
+
+  def as_mailman(args)
+    system("sudo", "-u", "mailman", *args)
   end
 
   def photo_geometry(style = :original)
