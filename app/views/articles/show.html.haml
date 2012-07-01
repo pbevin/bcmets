@@ -8,7 +8,7 @@
       = from_linked(@article)
     %li#date
       Date:
-      = @article.sent_at.to_s(:article)
+      = @article.sent_at_human
       = "(#{time_ago_in_words(@article.sent_at)} ago)"
 #body
   = to_html @article.body_utf8

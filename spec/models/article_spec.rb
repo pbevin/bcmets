@@ -260,5 +260,21 @@ describe Article do
       end
     end
   end
+
+  describe '#sent_at_human' do
+    it "shows a recent date as just the time" do
+      Timecop.freeze("2012-07-01 11:39:00".to_time) do
+        a = Article.new(:sent_at => "2012-07-01 09:41:18")
+        a.sent_at_human.should == "09:41 AM"
+      end
+    end
+
+    it "shows a date from yesterday as just the date" do
+      Timecop.freeze("2012-07-01 11:39:00".to_time) do
+        a = Article.new(:sent_at => "2012-06-30 23:52:39")
+        a.sent_at_human.should == "Jun 30, 2012"
+      end
+    end
+  end
 end
 

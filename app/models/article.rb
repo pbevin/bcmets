@@ -37,6 +37,17 @@ class Article < ActiveRecord::Base
     (received_at || created_at) > 1.month.ago
   end
 
+  def sent_at_human
+    sent_at_date = sent_at.strftime("%b %d, %Y")
+    today_date = Time.now.strftime("%b %d, %Y")
+
+    if sent_at_date == today_date
+      sent_at.strftime("%H:%M %p")
+    else
+      sent_at_date
+    end
+  end
+
   def self.for_month(year, month, order = "received_at ASC")
     earliest = Time.local(year, month, 1, 0, 0, 0)
     latest = 1.month.since(earliest)
