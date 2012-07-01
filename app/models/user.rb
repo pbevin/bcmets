@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
     as_mailman("/home/mailman/bin/remove_members", "--nouserack", "--noadminack", "bcmets", email)
   end
 
-  def as_mailman(args)
+  def as_mailman(*args)
     system("sudo", "-u", "mailman", *args)
   end
 
