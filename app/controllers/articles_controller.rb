@@ -101,6 +101,17 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def saved
+    user = current_user
+    article = Article.find(params[:id])
+    if params[:saved] == "true"
+      user.save_article(article)
+    else
+      user.unsave_article(article)
+    end
+    render :json => { :status => "OK" }
+  end
+
   private
 
   def cookie_or_user(attr)

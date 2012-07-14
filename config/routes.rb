@@ -45,6 +45,9 @@ ActionController::Routing::Routes.draw do |map|
   map.article_reply '/article/:id/reply/',
     :controller => 'articles',
     :action => 'reply'
+  map.article_saved '/articles/:id/saved',
+    :controller => 'articles',
+    :action => 'saved'
   map.archive_month 'archive/:year/:month',
     :controller => 'archive',
     :action => 'month'

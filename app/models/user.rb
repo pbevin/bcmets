@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   after_update :reprocess_photo, :if => :cropping?
 
   has_many :events, :class_name => "EventLog"
+  has_and_belongs_to_many :saved_articles,
+    :join_table => "saved_articles", :class_name => "Article"
 
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
@@ -99,6 +101,18 @@ class User < ActiveRecord::Base
   def photo_geometry(style = :original)
     @geometry ||= {}
     @geometry[style] ||= Paperclip::Geometry.from_file(photo.path(style))
+  end
+
+  def save_article(article)
+    saved_articles << article
+  end
+
+  def unsave_article(article)
+    saved_articles.delete(article)
+  end
+
+  def saved?(article)
+    saved_articles.include?(article)
   end
 
   private

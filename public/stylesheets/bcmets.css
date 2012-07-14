@@ -314,3 +314,29 @@ img.profile {
 }
 .quote, .quote_lecture { float: right; }
 .quote_lecture { display: none; color: #900; }
+
+#star a {
+  display: block;
+  width: 15px;
+  height: 15px;
+  background: url(/images/star.png) no-repeat;
+  background-position: 0 0;
+}
+#star a.selected {
+  background-position: -15px 0;
+}
+#star {
+  float: right;
+  margin: 5px 5px 0 0;
+}
+
+#header {
+  background: #f5f5ff;
+  position: relative;
+}
+#header li {
+  display: block;
+}
+#header ul {
+  padding-left: 3px;
+}
