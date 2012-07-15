@@ -5,6 +5,7 @@ require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_
 require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 require 'spec/autorun'
 require 'spec/rails'
+require 'authlogic/test_case'
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these

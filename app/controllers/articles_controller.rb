@@ -101,7 +101,7 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def saved
+  def set_saved
     user = current_user
     article = Article.find(params[:id])
     if params[:saved] == "true"
@@ -110,6 +110,13 @@ class ArticlesController < ApplicationController
       user.unsave_article(article)
     end
     render :json => { :status => "OK" }
+  end
+
+  def saved
+    if !current_user
+      return redirect_to root_url
+    end
+    @articles = current_user.saved_articles
   end
 
   private

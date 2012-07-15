@@ -1,7 +1,7 @@
 #header
   - if current_user
     #star
-      %a{:href => "javascript:void(0);", :class => show_star(@article)}
+      %a.star{:href => "javascript:void(0);", :class => show_star(@article)}
       %img{:src => "/images/spinner.gif", :style => "display:none;" }
   - if @article.recent?
     = link_to "Reply to this message", article_reply_path(@article), :id => "reply"
@@ -36,7 +36,7 @@
     star.hide(); spinner.show();
     $.ajax({
       type: "POST",
-      url: document.location.href + "/saved",
+      url: document.location.href + "/set_saved",
       data: { saved: saved },
       success: ajaxDone,
       error: ajaxDone

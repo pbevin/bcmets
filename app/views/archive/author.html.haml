@@ -6,7 +6,7 @@
 %ul.bydate
   - @articles.each do |article|
     %li
-      = link_to article.subject, article
+      = link_to_article article
       %small
         = article.sent_at_human
 

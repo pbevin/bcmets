@@ -2,7 +2,7 @@
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en" }
   %head
     %title
-      BCMets.org - 
+      BCMets.org -
       = @title || "Metastatic Breast Cancer"
     - if not @indexable
       %meta{ :name => "robots", :content => "noindex, nofollow" }
@@ -44,7 +44,7 @@
               %ul
               - for text, url in flash[:links]
                 %li
-                  = link_to(text, url) 
+                  = link_to(text, url)
         = yield
       #sidebar
         %h3 Links
@@ -61,10 +61,14 @@
                 = link_to link.title, link.url
                 - if link.text
                   = link.text
+            - if current_user
+              %li
+                %a{ :href => "/saved" }
+                  Saved Articles
             %li
               %a{ :href => "/post" }
                 Post a new message
-                
+
         %h3 Latest Blog Entries
         %ul.blogs
           - blog_entries.each do |entry|
@@ -73,7 +77,7 @@
               %small
                 = "(from #{link_to entry.feed.name, entry.feed.url})"
           = link_to "More »", feed_entries_path
-        
+
         %h3 Donations
         %ul
           %li

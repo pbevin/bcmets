@@ -27,6 +27,8 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'pages',
     :action => 'donate'
 
+  map.connect "saved", :controller => "articles", :action => "saved"
+
   map.connect 'archive/:old_year_month/:article_number.html',
     :controller => 'archive',
     :action => 'old_article',
@@ -45,9 +47,9 @@ ActionController::Routing::Routes.draw do |map|
   map.article_reply '/article/:id/reply/',
     :controller => 'articles',
     :action => 'reply'
-  map.article_saved '/articles/:id/saved',
+  map.article_set_saved '/articles/:id/set_saved',
     :controller => 'articles',
-    :action => 'saved'
+    :action => 'set_saved'
   map.archive_month 'archive/:year/:month',
     :controller => 'archive',
     :action => 'month'

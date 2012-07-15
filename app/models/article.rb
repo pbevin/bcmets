@@ -37,6 +37,11 @@ class Article < ActiveRecord::Base
     (received_at || created_at) > 1.month.ago
   end
 
+  def saved_by?(user)
+    return false if !user
+    user.saved?(self)
+  end
+
   def sent_at_human
     sent_at_date = sent_at.strftime("%b %d, %Y")
     today_date = Time.now.strftime("%b %d, %Y")

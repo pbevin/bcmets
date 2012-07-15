@@ -2,6 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/article/show" do
   before(:each) do
+    activate_authlogic
+
     @article = Article.make()
     assigns[:article] = @article
   end

@@ -1,0 +1,20 @@
+%h1
+  Saved Articles
+
+%p
+  You can click on the star at the
+  top right of any article to save it.
+
+- if @articles.count > 0
+  %p
+    = @articles.count
+    articles.
+  %ul.bydate
+    - @articles.each do |article|
+      %li
+        = link_to_article article
+        %small
+          = article.sent_at_human
+- else
+  You don't have any saved articles.
+
