@@ -7,8 +7,7 @@
 
 - if @articles.count > 0
   %p
-    = @articles.count
-    articles.
+    = pluralize(@articles.count, "article") + "."
   %ul.bydate
     - @articles.each do |article|
       %li
