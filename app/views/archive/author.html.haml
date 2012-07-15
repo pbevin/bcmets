@@ -1,7 +1,7 @@
 %h1
   = @email
-%p
-  - if @pagination
+- if @pagination
+  %p
     Showing articles
     = @articles.offset + 1
     to
@@ -9,7 +9,9 @@
     out of
     = @articles.total_entries
     = "(" + link_to("Show All", params.merge(:page => "all")) + ")"
-  - else
+  = will_paginate(@articles)
+- else
+  %p
     = @articles.size
     articles
 
