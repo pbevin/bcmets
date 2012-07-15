@@ -1,8 +1,17 @@
 %h1
   = @author.email
 %p
-  = @articles.count
-  articles.
+  - if @pagination
+    Showing
+    = @articles.size
+    out of
+    = @articles.total_entries
+    articles.
+    = "(" + link_to("Show All", params.merge(:page => "all")) + ")"
+  - else
+    = @articles.size
+    articles
+
 %ul.bydate
   - @articles.each do |article|
     %li
@@ -10,4 +19,5 @@
       %small
         = article.sent_at_human
 
-
+- if @pagination
+  = will_paginate(@articles)

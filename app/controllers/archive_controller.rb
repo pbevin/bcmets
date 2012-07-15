@@ -90,9 +90,12 @@ class ArchiveController < ApplicationController
   end
 
   def author
-    Struct.new("Author", :name, :email)
     @author = Struct::Author.new(params[:name], params[:email])
     @articles = Article.find_all_by_email(params[:email], :order => "sent_at DESC")
+    unless params[:page] == "all"
+      @articles = @articles.paginate(:page => params[:page])
+      @pagination = true
+    end
   end
 
   def this_month
