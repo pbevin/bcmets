@@ -2,11 +2,12 @@
   = @email
 %p
   - if @pagination
-    Showing
-    = @articles.size
+    Showing articles
+    = @articles.offset + 1
+    to
+    = @articles.offset + @articles.per_page
     out of
     = @articles.total_entries
-    articles.
     = "(" + link_to("Show All", params.merge(:page => "all")) + ")"
   - else
     = @articles.size
