@@ -112,6 +112,7 @@ class User < ActiveRecord::Base
   end
 
   def saved?(article)
+    saved_articles.inspect if !saved_articles.loaded? # get the association cached
     saved_articles.include?(article)
   end
 
