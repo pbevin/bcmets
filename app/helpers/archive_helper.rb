@@ -22,7 +22,8 @@ module ArchiveHelper
   end
 
   def email_linked(author)
-    link_to author.email, { :controller => "archive", :action => "author", :email => author.email }, :class => "pjax"
+    #link_to author.email, { :controller => "archive", :action => "author", :email => author.email }, :class => "pjax"
+    %Q{<a href="/archive/author?email=#{URI.escape author.email}" class="pjax">#{h author.email}</a>}
   end
 
   def wrap(tag, content)
@@ -39,25 +40,20 @@ module ArchiveHelper
     auto_link(simple_format(h(text)))
   end
 
-  def thread_as_html(articles)
-    # Rails.cache.fetch("thread.#{@year}.#{@month}", :expires_in => 1.minute) { th(articles, "") }
-    th(articles, "")
-  end
-
-  def th(articles, x)
+  def thread_as_html(articles, out="")
     articles.each do |article|
-      x << "<li>"
-      x << link_to_article(article) << " "
-      x << "<small>#{from_linked(article)}, #{article.sent_at_human}</small>"
+      out << "<li>"
+      out << link_to_article(article) << " "
+      out << "<small>#{from_linked(article)}, #{article.sent_at_human}</small>"
       children = article.children
       if !children.nil? && !children.empty?
-        x << "<ul>"
-        th(children, x)
-        x << "</ul>"
+        out << "<ul>"
+        thread_as_html(children, out)
+        out << "</ul>"
       end
-      x << "</li>"
+      out << "</li>"
     end
-    return x
+    return out
   end
 
   def donations(collected, message)
