@@ -45,7 +45,8 @@
               - for text, url in flash[:links]
                 %li
                   = link_to(text, url)
-        = yield
+        #content
+          = yield
       #sidebar
         %h3 Links
         #links
@@ -116,3 +117,6 @@
     pageTracker._trackPageview();
     } catch(err) {}
     </script>
+
+  :javascript
+    $("a.pjax").pjax("#content");

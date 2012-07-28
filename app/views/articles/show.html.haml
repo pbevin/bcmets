@@ -1,26 +1,28 @@
-#header
-  - if current_user
-    #star
-      %a.star{:href => "javascript:void(0);", :class => show_star(@article)}
-      %img{:src => "/images/spinner.gif", :style => "display:none;" }
-  - if @article.recent?
-    = link_to "Reply to this message", article_reply_path(@article), :id => "reply"
-  %ul
-    %li#from
-      From:
-      = from_linked(@article)
-    %li#date
-      Date:
-      = @article.sent_at_human
-      = "(#{time_ago_in_words(@article.sent_at)} ago)"
-#body
-  = profile_picture_linked(@article.user) if @article.user
-  = to_html @article.body_utf8
-  - if @conversation_roots
-    %div.thread
-      %h2 Articles in this thread
-      %ul.conversation
-        = thread_as_html(@conversation_roots)
+#article
+  #header
+    - if current_user
+      #star
+        %a.star{:href => "javascript:void(0);", :class => show_star(@article)}
+        %img{:src => "/images/spinner.gif", :style => "display:none;" }
+      .status
+    - if @article.recent?
+      = link_to "Reply to this message", article_reply_path(@article), :id => "reply"
+    %ul
+      %li#from
+        From:
+        = from_linked(@article)
+      %li#date
+        Date:
+        = @article.sent_at_human
+        = "(#{time_ago_in_words(@article.sent_at)} ago)"
+  #body
+    = profile_picture_linked(@article.user) if @article.user
+    = to_html @article.body_utf8
+    - if @conversation_roots
+      %div.thread
+        %h2 Articles in this thread
+        %ul.conversation
+          = thread_as_html(@conversation_roots)
 
 :javascript
   $("#star a").click( function() {
@@ -42,3 +44,25 @@
       error: ajaxDone
     });
   } );
+
+  function setStatus(message) {
+    var status = $("#header kstatus");
+    if (message != "") {
+      status.text(message).show();
+    } else {
+      status.text("").hide();
+    }
+  }
+  function clearStatus() {
+    setStatus("");
+  }
+  clearStatus();
+
+  $("#star a").hover(function() {
+    var star = $(this);
+    if (star.hasClass("selected")) {
+      setStatus("Article is in your saved list. Click again to remove it.");
+    } else {
+      setStatus("Click the star to add this article to your Saved Articles list.");
+    }
+  }, clearStatus);

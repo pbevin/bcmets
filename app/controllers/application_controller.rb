@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
   hide_action :current_user
-
+  layout :set_layout
 
   def current_user
     return @current_user if @current_user
@@ -50,4 +50,13 @@ class ApplicationController < ActionController::Base
     redirect_to(session[:return_to] || root_path)
     session[:return_to] = nil
   end
+
+  def set_layout
+    if request.headers['X-PJAX']
+      false
+    else
+      "application"
+    end
+  end
+
 end

@@ -344,6 +344,10 @@ span.star { margin-right: 6px; }
   padding-left: 3px;
 }
 
+#header .status {
+  float: right;
+}
+
 .pagination {
   background: white;
   cursor: default;
