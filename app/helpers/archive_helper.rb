@@ -10,18 +10,8 @@ module ArchiveHelper
       return text
     end
 
-    return link_to text, archive_month_path(year, month)
+    return link_to text, archive_month_path(year, month), :class => "pjax"
   end
-
-  def threaded_articles(articles)
-    links = articles.map do |article|
-      link = link_to(article.subject, article, :class => 'subject')
-      wrap('li', link)
-    end
-
-    return wrap('ul', links.join)
-  end
-
 
   def from_linked(author)
     if author.name == author.email
@@ -29,21 +19,10 @@ module ArchiveHelper
     else
       return author.name + " &lt;" + email_linked(author) + "&gt;"
     end
-    # if author.user
-    #   return user_linked(author.user)
-    # elsif author.name == author.email
-    #   return email_linked(author)
-    # else
-    #   return author.name + " &lt;" + email_linked(author) + "&gt;"
-    # end
   end
 
   def email_linked(author)
-    link_to author.email, :controller => "archive", :action => "author", :email => author.email
-  end
-
-  def user_linked(user)
-    link_to user.name, user_profile_path(user), :class => "user"
+    link_to author.email, { :controller => "archive", :action => "author", :email => author.email }, :class => "pjax"
   end
 
   def wrap(tag, content)
@@ -106,7 +85,13 @@ module ArchiveHelper
   end
 
   def link_to_author(article)
-    "<a href=\"/archive/author?email=#{URI.escape(article.email)}\">#{h article.from}</a>"
+    path = {
+      :controller => "archive",
+      :action => "author",
+      :email => article.email
+    }
+    link_to h(article.from), path, :class => "pjax"
+    #%Q{<a href="/archive/author?email=#{URI.escape(article.email)}" class="pjax">#{h article.from}</a>}
   end
 
   def link_to_article(article)
