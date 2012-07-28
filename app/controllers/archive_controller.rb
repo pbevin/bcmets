@@ -2,7 +2,6 @@ class ArchiveController < ApplicationController
   before_filter :enable_search_engines, :only => :index
 
   def index
-    @heading = "Archives"
     now = Time.zone.now
     @year = now.year
     @month = now.month
@@ -16,7 +15,6 @@ class ArchiveController < ApplicationController
     end
     month_year = "#{Date::MONTHNAMES[@month.to_i]} #{@year}"
     @title = month_year
-    @heading = @title
 
     if @year.to_i > Date.today.year || @year.to_i < 2000 || @month.to_i < 1 || @month.to_i > 12
       flash[:notice] = "No articles for #{@month}/#{@year}"

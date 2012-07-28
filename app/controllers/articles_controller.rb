@@ -9,7 +9,6 @@ class ArticlesController < ApplicationController
   # GET /articles/1.xml
   def show
     @article = Article.find(params[:id])
-    @heading = @article.subject
     begin
       @conversation_roots = Article.thread_tree(@article.conversation.articles)
     rescue

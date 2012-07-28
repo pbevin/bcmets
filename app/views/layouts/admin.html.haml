@@ -2,7 +2,7 @@
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en" }
   %head
     %title
-      BCMets.org - 
+      BCMets.org -
       = @title || "Metastatic Breast Cancer"
     - if not @indexable
       %meta{ :name => "robots", :content => "noindex, nofollow" }
@@ -29,8 +29,6 @@
               = submit_tag "Search"
       #main.admin
         %h1 Administration Interface
-        - if @heading
-          %h2= @heading
         - if flash[:notice]
           #notice
             = flash[:notice]
@@ -39,5 +37,5 @@
               %ul
               - for text, url in flash[:links]
                 %li
-                  = link_to(text, url) 
+                  = link_to(text, url)
         = yield
