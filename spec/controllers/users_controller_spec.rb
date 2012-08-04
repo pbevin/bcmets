@@ -5,18 +5,18 @@ describe UsersController do
     get :new
     response.should be_success
   end
-  
+
   it "requires email and name during signup" do
     post :create, :user => { }
-    assigns[:user].should be_new_record
-    
+    assigns[:user].id.should be_nil
+
     post :create, :user => { :name => "just a name" }
-    assigns[:user].should be_new_record
-    
+    assigns[:user].id.should be_nil
+
     post :create, :user => { :email => "email@example.com" }
-    assigns[:user].should be_new_record
-    
+    assigns[:user].id.should be_nil
+
     post :create, :user => { :name => "Joe", :email => "joe@example.com" }
-    assigns[:user].should_not be_new_record
+    assigns[:user].id.should_not be_nil
   end
 end

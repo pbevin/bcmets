@@ -40,8 +40,8 @@ describe Article do
 
   describe ".link_threads" do
     it "links articles together based on parent_msgid" do
-      art1 = Article.make(:msgid => "<abc>")
-      art2 = Article.make(:msgid => "<def>", :parent_msgid => "<abc>")
+      art1 = Article.make!(:msgid => "<abc>")
+      art2 = Article.make!(:msgid => "<def>", :parent_msgid => "<abc>")
 
       Article.link_threads
 
@@ -52,11 +52,11 @@ describe Article do
 
   describe ".thread_tree" do
     before(:each) do
-      @art1 = Article.make()
-      @art2 = Article.make(:parent_id => @art1.id)
-      @art3 = Article.make(:parent_id => @art2.id)
-      @art4 = Article.make(:parent_id => @art1.id)
-      @art5 = Article.make()
+      @art1 = Article.make!
+      @art2 = Article.make!(:parent_id => @art1.id)
+      @art3 = Article.make!(:parent_id => @art2.id)
+      @art4 = Article.make!(:parent_id => @art1.id)
+      @art5 = Article.make!
 
       @tree = Article.thread_tree([@art1, @art2, @art3, @art4, @art5])
     end
@@ -81,7 +81,7 @@ describe Article do
 
   describe ".reply" do
     before(:each) do
-      @article = Article.make
+      @article = Article.make!
     end
 
     it "returns a reply" do
@@ -201,13 +201,13 @@ describe Article do
   describe Article, "conversation handling" do
     describe "on creation" do
       it "creates a new conversation for a new article" do
-        article = Article.make
+        article = Article.make!
         article.conversation.should_not be_nil
         article.conversation.articles.should == [article]
       end
 
       it "adds a reply to its parent's conversation" do
-        article = Article.make
+        article = Article.make!
         reply = article.reply
         reply.name = Faker::Name.name
         reply.email = Faker::Internet.email
@@ -217,7 +217,7 @@ describe Article do
       end
 
       it "relies on parent_id, not just parent, for conversation handling" do
-        article = Article.make
+        article = Article.make!
         params = {
           "name"=>"Pete Bevin",
           "email" => "pete@petebevin.com",
@@ -234,22 +234,22 @@ describe Article do
       end
     end
 
-    describe "link_threads()" do
+    describe ".link_threads" do
       it "links up conversations" do
-        a1 = Article.make
-        a2 = Article.make(:parent_msgid => a1.msgid)
+        a1 = Article.make!
+        a2 = Article.make!(:parent_msgid => a1.msgid)
         Article.link_threads
         a1.reload.conversation.should === a2.reload.conversation
       end
 
       it "handles out of order message arrival" do
-        a1 = Article.make(:msgid => "3", :parent_msgid => "2")
+        a1 = Article.make!(:msgid => "3", :parent_msgid => "2")
         Article.link_threads
 
-        a2 = Article.make(:msgid => "2", :parent_msgid => "1")
+        a2 = Article.make!(:msgid => "2", :parent_msgid => "1")
         Article.link_threads
 
-        a3 = Article.make(:msgid => "1")
+        a3 = Article.make!(:msgid => "1")
         Article.link_threads
 
         a1.reload

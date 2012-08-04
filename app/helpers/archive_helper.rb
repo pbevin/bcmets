@@ -10,15 +10,16 @@ module ArchiveHelper
       return text
     end
 
-    return link_to text, archive_month_path(year, month), :class => "pjax"
+    return link_to text.html_safe, archive_month_path(year, month), :class => "pjax"
   end
 
   def from_linked(author)
     if author.name == author.email
-      return email_linked(author)
+      from = email_linked(author)
     else
-      return author.name + " &lt;" + email_linked(author) + "&gt;"
+      from = author.name + " &lt;" + email_linked(author) + "&gt;"
     end
+    return from.html_safe
   end
 
   def email_linked(author)
@@ -53,7 +54,7 @@ module ArchiveHelper
       end
       out << "</li>"
     end
-    return out
+    return out.html_safe
   end
 
   def donations(collected, message)
@@ -96,6 +97,6 @@ module ArchiveHelper
       link = %Q{<span class="star selected"></span>} + link
     end
 
-    return link
+    return link.html_safe
   end
 end

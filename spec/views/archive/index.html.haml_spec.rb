@@ -1,43 +1,43 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/archive/index" do
+describe "archive/index" do
   before(:each) do
-    assigns[:year] = 2009
-    assigns[:month] = 3
-    render 'archive/index'
+    assign(:year, 2009)
+    assign(:month, 3)
+    render
   end
-  
+
   it "should render years back to 2001" do
     (2000..2009).each do |year|
-      response.should have_tag('h2', year.to_s)
+      rendered.should have_selector('h2', :content => year.to_s)
     end
   end
 
   it "should have links for every month" do
     (2001..2008).each do |year|
-      response.should have_tag('td>a', "March #{year}")
-      response.should have_tag('td>a', "June #{year}")
-      response.should have_tag('td>a', "September #{year}")
-      response.should have_tag('td>a', "December #{year}")
+      rendered.should have_selector("td>a:contains('March #{year}')")
+      rendered.should have_selector("td>a:contains('June #{year}')")
+      rendered.should have_selector("td>a:contains('September #{year}')")
+      rendered.should have_selector("td>a:contains('December #{year}')")
     end
   end
-  
+
   it "should highlight the current month" do
-    response.should have_tag('td>a>strong', "March 2009")
+    rendered.should have_selector("td>a>strong:contains('March 2009')")
   end
-  
+
   it "should not link future months" do
-    response.should have_tag('td', "April 2009")
-    response.should_not have_tag('td>a', "April 2009")
+    rendered.should have_selector("td:contains('April 2009')")
+    rendered.should_not have_selector("td>a:contains('April 2009')")
   end
-  
-  it "should not render Jan 2001 as a link since it has no articles" do
-    response.should have_tag('td>a', "January 2001")
-    response.should have_tag('td', "January 2000")
-    response.should_not have_tag("td>a", "January 2000")
+
+  it "should not render Jan 2000 as a link since it has no articles" do
+    rendered.should have_selector("td>a:contains('January 2001')")
+    rendered.should have_selector("td:contains('January 2000')")
+    rendered.should_not have_selector("td>a:contains('January 2000')")
   end
-  
+
   it "should link to /post, not /post.pl" do
-    response.should have_tag("a[href=/post]", /Post a message/i)
+    rendered.should have_selector("a[href='/post']")
   end
 end

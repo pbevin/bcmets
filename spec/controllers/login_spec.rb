@@ -10,7 +10,7 @@ describe UserSessionsController do
   end
   
   def with_unconfirmed_user
-    user = User.make
+    user = User.make!
     user.active = false
     yield user
   end

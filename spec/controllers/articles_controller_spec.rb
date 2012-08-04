@@ -14,7 +14,7 @@ describe ArticlesController do
 
   describe "GET show" do
     it "assigns the requested article as @article" do
-      article = Article.make
+      article = Article.make!
       Article.stub!(:find).with("37").and_return(article)
       get :show, :id => "37"
       assigns[:article].should equal(article)
@@ -36,14 +36,6 @@ describe ArticlesController do
     it "assigns a new article as @article" do
       get :new
       assigns[:article].should be_new_record
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested article as @article" do
-      Article.stub!(:find).with("37").and_return(mock_article)
-      get :edit, :id => "37"
-      assigns[:article].should equal(mock_article)
     end
   end
 

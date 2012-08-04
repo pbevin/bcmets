@@ -10,7 +10,7 @@ If you need to change your email address or password, please click on one of the
   <li><%= link_to 'Unsubscribe from bcmets', { :action => 'unsubscribe', :key => current_user.secret_key }, :confirm => "Are you sure you want to unsubscribe?", :method => :post %></li>
 </ul>
 
-  <% form_for(@user, :html => { :multipart => true }) do |f| %>
+  <%= form_for(@user, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
 
   <p>

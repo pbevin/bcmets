@@ -1,11 +1,8 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
-describe "/donate/index" do
-  before(:each) do
-    render 'pages/donate'
-  end
-  
+describe "pages/donate" do
   it "should link to paypal" do
-    response.should have_tag("a[href^=https://www.paypal.com/]")
+    render
+    rendered.should have_selector("a[href^='https://www.paypal.com/']")
   end
 end

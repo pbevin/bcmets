@@ -8,8 +8,8 @@
       %meta{ :name => "robots", :content => "noindex, nofollow" }
     %meta{"http-equiv" => "Content-type", :content => "text/html;charset=UTF-8"}
     %meta{:name => "google-site-verification", :content => "Nh_V66O4LMXYYoR_X1YUAdtdSrMZEfwLDwP_Oo1JaXk"}
-    = javascript_include_tag :all, :cache => true
-    = stylesheet_link_tag "bcmets", "forms", :cache => true
+    = javascript_include_tag "application"
+    = stylesheet_link_tag "application"
     = yield(:head)
   %body
     #wrap
@@ -74,7 +74,7 @@
             %li
               = link_to entry.name, entry.url
               %small
-                = "(from #{link_to entry.feed.name, entry.feed.url})"
+                = "(from #{link_to entry.feed.name, entry.feed.url})".html_safe
           = link_to "More »", feed_entries_path
 
         %h3 Donations

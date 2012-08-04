@@ -8,19 +8,19 @@ describe "/archive/author" do
     @article1 = Article.make
     @article2 = Article.make
     assigns[:articles] = [@article1, @article2]
-    render 'archive/author'
+    render
   end
 
   it "should have the email in the title" do
-    response.should have_tag "h1", /#{@author.email}/
+    response.should have_selector("h1:contains('#{@author.email}')")
   end
 
   it "should list articles" do
-    response.should have_tag "ul>li>a", @article1.subject
-    response.should have_tag "ul>li>a", @article2.subject
+    response.should have_selector "ul>li>a:contains('#{@article1.subject}')"
+    response.should have_selector "ul>li>a:contains('#{@article2.subject}')"
   end
 
   it "should count articles" do
-    response.should have_tag "p", /2\s+articles\./
+    response.should have_selector "p:contains('2 articles.')"
   end
 end

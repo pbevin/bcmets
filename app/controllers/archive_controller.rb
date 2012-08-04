@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class ArchiveController < ApplicationController
   before_filter :enable_search_engines, :only => :index
 

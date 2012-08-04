@@ -2,9 +2,15 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Feed do
   let(:feed) { Feed.create }
+  before(:each) do
+    Timecop.freeze("2012-08-09 12:00:00")
+  end
+  after(:each) do
+    Timecop.return
+  end
+  
 
   describe '#last_n_entries' do
-
     def create_entries(count)
       count.times do |n|
         feed.entries.create(

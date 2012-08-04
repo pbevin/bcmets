@@ -18,6 +18,10 @@ class Article < ActiveRecord::Base
   validates_presence_of :subject
   validates_presence_of :body
 
+  attr_accessible :name, :email, :body, :subject, :msgid
+  attr_accessible :parent_msgid, :parent_id, :reply_type
+  attr_accessible :content_type, :to, :sent_at
+
   attr_accessor :qt  # honeytrap for body field
 
   define_index do

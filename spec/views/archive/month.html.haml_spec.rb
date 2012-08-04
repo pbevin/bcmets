@@ -4,8 +4,8 @@ describe "/archive/month" do
   before(:each) do
     activate_authlogic
 
-    @art1 = Article.make(:sent_at => DateTime.parse("2009-03-28 13:00:00"))
-    @art2 = Article.make(:sent_at => DateTime.parse("2009-03-29 04:00:00"), :parent_id => @art1.id)
+    @art1 = Article.make!(:sent_at => DateTime.parse("2009-03-28 13:00:00"))
+    @art2 = Article.make!(:sent_at => DateTime.parse("2009-03-29 04:00:00"), :parent_id => @art1.id)
     
     assigns[:year] = '2009'
     assigns[:month] = '3'

@@ -4,18 +4,18 @@
   Thank you for signing up with bcmets.  To complete your signup, please select a password,
   and tell us how often you'd like to receive email.
 
-- form_for(:user, :url => activate_path(@user), :html => { :method => :post }) do |f|
+= form_for(:user, :url => activate_path(@user), :html => { :method => :post }) do |f|
   = f.error_messages
   %p
     = f.label :password
     %br/
     = f.password_field :password
-    
+
   %p
     = f.label :password_confirmation
     %br/
     = f.password_field :password_confirmation
-    
+
   %p
     Email delivery preference
     %br/
@@ -33,6 +33,6 @@
     = f.radio_button :email_delivery, :none
     %strong None
     \- I just want to read and post on the web site.
-    
+
   %p
     = f.submit "Sign me up!"

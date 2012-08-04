@@ -8,7 +8,8 @@
     = @articles.offset + @articles.per_page
     out of
     = @articles.total_entries
-    = "(" + link_to("Show All", params.merge(:page => "all")) + ")"
+    \-
+    = link_to("Show All", params.merge(:page => "all"))
   = will_paginate(@articles)
 - else
   %p
@@ -18,8 +19,8 @@
 %ul.bydate
   - @articles.each do |article|
     %li
-      = link_to_article article
-      %small
+      = link_to_article(article).html_safe
+      %smalj
         = article.sent_at_human
 
 - if @pagination

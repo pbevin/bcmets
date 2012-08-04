@@ -4,7 +4,7 @@ describe "/article/show" do
   before(:each) do
     activate_authlogic
 
-    @article = Article.make()
+    @article = Article.make!
     assigns[:article] = @article
   end
 

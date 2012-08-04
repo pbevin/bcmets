@@ -11,7 +11,7 @@
   Once you're sure, enter your new password below and press
   "Change my email address".
 
-- form_for :email_change, :url => { :action => 'save_email' } do |f|
+= form_for :email_change, :url => { :action => 'save_email' } do |f|
   = f.error_messages
   %p
     = f.label(:new_email)

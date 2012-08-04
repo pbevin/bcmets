@@ -5,7 +5,7 @@
     articles.
     = link_to 'View in date order', archive_month_by_date_path(:year => @year, :month => @month)
   %ul.month
-    = thread_as_html(@articles)
+    = thread_as_html(@articles).html_safe
 - else
   %p
     There are no articles.
