@@ -9,11 +9,11 @@ class User < ActiveRecord::Base
 
   validates_presence_of :name
   attr_protected :active
-# has_attached_file :photo, :processors => [:cropper], :styles => {
-#   :small => "100x100#",
-#   :medium => "300x300>",
-#   :large => "500x500>"
-# }
+  has_attached_file :photo, :processors => [:cropper], :styles => {
+    :small => "100x100#",
+    :medium => "300x300>",
+    :large => "500x500>"
+  }
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   after_update :reprocess_photo, :if => :cropping?
 

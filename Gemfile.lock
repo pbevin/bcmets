@@ -49,6 +49,7 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.3.4)
       ffi (~> 1.0, >= 1.0.6)
+    cocaine (0.2.1)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -106,6 +107,11 @@ GEM
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     nokogiri (1.5.5)
+    paperclip (2.7.0)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+      cocaine (>= 0.0.2)
+      mime-types
     pickle (0.4.11)
       cucumber (>= 0.8)
       rake
@@ -209,6 +215,7 @@ DEPENDENCIES
   machinist
   mysql2
   nokogiri
+  paperclip (~> 2.7)
   pickle
   rails (= 3.2.7)
   rails_autolink
