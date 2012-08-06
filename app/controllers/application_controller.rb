@@ -1,35 +1,20 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
+require 'current_user'
+
 class ApplicationController < ActionController::Base
+  include CurrentUser
+
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
-
-  helper_method :current_user
-  hide_action :current_user
   layout :set_layout
 
-  def current_user
-    return @current_user if @current_user
-    @current_user = current_user_session && current_user_session.record
-  end
-
-  private
-
-  def current_user_session
-    return @current_user_session if @current_user_session
-    @current_user_session = UserSession.find
-  end
-
-  def logged_in_as_admin
-    current_user && current_user.admin?
-  end
+  protected
 
   def require_admin
-    if !logged_in_as_admin
+    if !view_context.logged_in_as_admin
       flash[:notice] = "Login first please"
       session[:return_to] = request.url
       redirect_to login_url
@@ -37,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
-    if !current_user
+    if !view_context.current_user
       flash[:notice] = "Login first please"
       session[:return_to] = request.url
       redirect_to login_url

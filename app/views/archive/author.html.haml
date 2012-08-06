@@ -12,7 +12,7 @@
     = link_to("Show All", params.merge(:page => "all"))
   = will_paginate(@articles)
 - else
-  %p
+  %p.article_count
     = @articles.size
     articles
 
@@ -20,7 +20,7 @@
   - @articles.each do |article|
     %li
       = link_to_article(article).html_safe
-      %smalj
+      %small
         = article.sent_at_human
 
 - if @pagination

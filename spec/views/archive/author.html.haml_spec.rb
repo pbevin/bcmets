@@ -2,25 +2,32 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/archive/author" do
   before(:each) do
-    activate_authlogic
-    @author = Article.make # hack
-    assigns[:author] = @author
+    @email = "test@example.com"
     @article1 = Article.make
     @article2 = Article.make
-    assigns[:articles] = [@article1, @article2]
+    assign(:articles, [@article1, @article2])
+    assign(:email, @email)
     render
   end
 
   it "should have the email in the title" do
-    response.should have_selector("h1:contains('#{@author.email}')")
+    rendered.should have_selector("h1") do |h1|
+      h1.should contain(@email)
+    end
   end
 
   it "should list articles" do
-    response.should have_selector "ul>li>a:contains('#{@article1.subject}')"
-    response.should have_selector "ul>li>a:contains('#{@article2.subject}')"
+    rendered.should have_selector "ul>li>a:first" do |a|
+      a.should contain(@article1.subject)
+    end
+    rendered.should have_selector "ul>li>a:last" do |a|
+      a.should contain(@article2.subject)
+    end
   end
 
   it "should count articles" do
-    response.should have_selector "p:contains('2 articles.')"
+    rendered.should have_selector("p.article_count") do |p|
+      p.should contain(/2\s+articles/)
+    end
   end
 end

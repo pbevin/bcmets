@@ -92,7 +92,7 @@ module ArchiveHelper
   end
 
   def link_to_article(article)
-    link = %Q{<a class="pjax" href="/articles/#{article.id}" class="subject">#{h article.subject}</a>}
+    link = %Q{<a href="/articles/#{article.id}" class="subject pjax">#{h article.subject}</a>}
     if article.saved_by?(current_user)
       link = %Q{<span class="star selected"></span>} + link
     end
