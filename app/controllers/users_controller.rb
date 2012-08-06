@@ -34,6 +34,7 @@ class UsersController < ApplicationController
         begin
           @user.deliver_activation_instructions!
         rescue => e
+          puts e
           @user.destroy
         end
         if logged_in_as_admin

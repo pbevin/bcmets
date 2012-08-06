@@ -60,12 +60,12 @@ class User < ActiveRecord::Base
 
   def deliver_activation_instructions!
     reset_perishable_token!
-    Notifier.deliver_activation_instructions(self)
+    Notifier.activation_instructions(self).deliver
   end
 
   def deliver_activation_confirmation!
     reset_perishable_token!
-    Notifier.deliver_activation_confirmation(self)
+    Notifier.activation_confirmation(self).deliver
   end
 
   def log_activation
@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
 
   def reset_password!
     reset_perishable_token!
-    Notifier.deliver_password_reset(self)
+    Notifier.password_reset(self).deliver
   end
 
 # alias :orig_system :system

@@ -20,7 +20,7 @@ Feature: Becoming a user
     Given that I have a confirmation email for "mary@example.com"
     When I click on the activation link
     And I fill in "Password" with "secret"
-    And I fill in "Password Confirmation" with "secret"
+    And I fill in "Password confirmation" with "secret"
     And I choose "user_email_delivery_full"
     And I press "Sign me up!"
     Then I should see "Thank you for registering!"
@@ -53,7 +53,6 @@ Feature: Becoming a user
     Given user "mary@example.com" with password "forgotten"
     When I go to Login
     And I follow "Forgot your password?"
-    And show me the page
     And I fill in "email" with "mary@example.com"
     And I press "Help!"
     Then I should see "Instructions sent to mary@example.com"
