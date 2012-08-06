@@ -15,10 +15,22 @@ When /^I login as administrator$/ do
   click_button("Login")
 end
 
+def table_at(selector)
+  Nokogiri::HTML(page.body).css(selector).map do |table|
+    table.css('tr').map do |tr|
+      tr.css('td, th').map { |td| td.text }
+    end
+  end[0].reject(&:empty?)
+end
+
 Then /^I should see users table$/ do |table|
   html_table = table_at("#users").to_a
-  html_table.map! { |r| r.map! { |c| c.gsub(/&lt;/, "<").gsub(/&gt;/, ">") } }
+  html_table.each { |row| row.pop if row.length == 4 } # delete last column
   table.diff!(html_table)
+end
+
+When /^I delete the first user$/ do
+  find("#users tbody tr:first-child").click_link("D")
 end
 
 Given /^#{capture_model} is( not)? active$/ do |name, not_active|

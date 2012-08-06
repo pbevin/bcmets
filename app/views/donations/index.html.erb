@@ -18,7 +18,7 @@
       <td><%=h donation.amount %></td>
       <td><%=h donation.date %></td>
       <td><%= link_to "Edit", edit_donation_path(donation) %></td>
-      <td><%= link_to "Destroy", donation, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to "Destroy", donation, :data => { :confirm => 'Are you sure?' }, :method => :delete %></td>
     </tr>
   <% end %>
 </table>

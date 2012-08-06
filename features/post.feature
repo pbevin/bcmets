@@ -34,16 +34,16 @@ Feature: Posting Articles
     And no article should be queued
 
   Scenario: Reply to an article
-    Given an article: "parent" exists with msgid: "xyzzy"
+    Given an article: "parent" exists with msgid: "<xyzzy@fake>"
     When I go to that article
     And I follow "Reply to this message"
     And I fill in "Name" with "Reply Name"
     And I fill in "Email" with "member@example.com"
     And I fill in "article_qt" with "blah blah"
-    And I fill in "Reply To:" with "Sender only"
+    And I select "Sender only" from "Reply To"
     And I press "Post"
     Then I should see "Message sent"
-    And an article should be queued with email: "member@example.com", parent_msgid: "xyzzy"
+    And an article should be queued with email: "member@example.com", parent_msgid: "<xyzzy@fake>"
     And I should be on article: "parent"
 
   Scenario: Reply to an article (invalid fields)
@@ -83,7 +83,7 @@ Feature: Posting Articles
     And I fill in "Email" with "member@example.com"
     And I fill in "article_qt" with "blah blah"
     And I fill in "Subject" with "Homefries"
-    And I fill in "Reply To:" with "List only"
+    And I select "List only" from "Reply To"
     And I press "Post"
     Then I should see "Message sent"
     And an article should be queued with subject: "Homefries"

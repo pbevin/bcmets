@@ -7,7 +7,7 @@ Given /^I am logged in as "([^\"]*)"$/ do |email|
   fill_in "Email", :with => email
   fill_in "Password", :with => "xyzzy"
   click_button "Login"
-  response.should contain("Logged in")
+  page.should have_content("Logged in")
 end
 
 When /^I post an article$/ do
@@ -15,7 +15,7 @@ When /^I post an article$/ do
   fill_in "Subject", :with => Faker::Lorem.sentence
   fill_in "article_qt", :with => Faker::Lorem.paragraph
   click_button "Post"
-  response.should contain("Message sent")
+  page.should have_content("Message sent")
 end
 
 Then /^there should be an article with user "([^\"]*)"$/ do |email|
@@ -30,7 +30,7 @@ When /^I post an article with email "([^\"]*)"$/ do |email|
   fill_in "Subject", :with => Faker::Lorem.sentence
   fill_in "article_qt", :with => Faker::Lorem.paragraph
   click_button "Post"
-  response.should contain("Message sent")
+  page.should have_content("Message sent")
 end
 
 Then /^no article should exist$/ do
@@ -56,15 +56,12 @@ Then /^an article should be queued with subject: "([^\"]*)"$/ do |subject|
   msg.subject.should == subject
 end
 
-Then /^an article should be queued with email: "([^\"]*)", parent_msgid: "([^\"]*)"$/ do |email, parent|
+Then /^an article should be queued with email: "([^\"]*)", parent_msgid: "([^\"]*)"$/ do |email, parent_msg_id|
   ActionMailer::Base.deliveries.length.should == 1
 
   msg = ActionMailer::Base.deliveries.first
   msg.from.should == [email]
-
-  if !parent.blank?
-    msg.header["in-reply-to"].refs.should == [parent]
-  end
+  msg.header["in-reply-to"].value.should == parent_msg_id
 end
 
 

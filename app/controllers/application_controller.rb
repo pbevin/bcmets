@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   def require_admin
     if !logged_in_as_admin
       flash[:notice] = "Login first please"
-      session[:return_to] = request.request_uri
+      session[:return_to] = request.url
       redirect_to login_url
     end
   end
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   def require_login
     if !current_user
       flash[:notice] = "Login first please"
-      session[:return_to] = request.request_uri
+      session[:return_to] = request.url
       redirect_to login_url
     end
   end
@@ -56,5 +56,4 @@ class ApplicationController < ActionController::Base
       "application"
     end
   end
-
 end

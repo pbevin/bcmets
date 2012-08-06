@@ -21,7 +21,7 @@ Feature: Admin interface
   Scenario: Deleting a user
     Given a user exists with email: "barbara@example.com"
     When I go to View Users
-    And I follow "D" within "table#users tr:first-child > td:last-child"
+    And I delete the first user
     Then I should be on View Users
     And I should see "User deleted"
     And a user should not exist with email: "barbara@example.com"
@@ -87,7 +87,7 @@ Feature: Admin interface
     And I fill in "Email" with "mary@example.com"
     And I check "Active"
     And I fill in "Password" with "secr3t"
-    And I fill in "Password Confirmation" with "secr3t"
+    And I fill in "Password confirmation" with "secr3t"
     And I choose "user_email_delivery_full"
     And I press "Submit"
     Then I should see "User added"

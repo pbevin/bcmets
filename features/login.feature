@@ -12,7 +12,7 @@ Feature: Becoming a user
     And I fill in "Name" with "Mary Jones"
     And I fill in "Email" with "mary@example.com"
     And I press "Sign up"
-    Then I should see "Registration successful."
+    Then I should see a notice "Registration successful."
     And a user should exist with name: "Mary Jones", email_delivery: "none"
     And I should not be logged in
     
@@ -53,6 +53,7 @@ Feature: Becoming a user
     Given user "mary@example.com" with password "forgotten"
     When I go to Login
     And I follow "Forgot your password?"
+    And show me the page
     And I fill in "email" with "mary@example.com"
     And I press "Help!"
     Then I should see "Instructions sent to mary@example.com"
@@ -62,9 +63,9 @@ Feature: Becoming a user
     And that user is logged in
     When I go to my profile
     And I follow "Change password"
-    And I fill in "Old Password" with "xyzzy"
-    And I fill in "New Password" with "clever"
-    And I fill in "New Password Confirmation" with "clever"
+    And I fill in "Old password" with "xyzzy"
+    And I fill in "New password" with "clever"
+    And I fill in "New password confirmation" with "clever"
     And I press "Submit"
     Then I should see "Password changed."
     And user: "Pam" should have password: "clever"
@@ -74,9 +75,9 @@ Feature: Becoming a user
     And that user is logged in
     When I go to my profile
     And I follow "Change password"
-    And I fill in "Old Password" with "xyzzy"
-    And I fill in "New Password" with "clever"
-    And I fill in "New Password Confirmation" with "does-not-match"
+    And I fill in "Old password" with "xyzzy"
+    And I fill in "New password" with "clever"
+    And I fill in "New password confirmation" with "does-not-match"
     And I press "Submit"
     Then I should see "doesn't match"
 

@@ -33,7 +33,7 @@ class UsersController < ApplicationController
       if @user.signup!
         begin
           @user.deliver_activation_instructions!
-        rescue
+        rescue => e
           @user.destroy
         end
         if logged_in_as_admin
@@ -60,6 +60,7 @@ class UsersController < ApplicationController
       render :action => :new
     end
   end
+  private :create_and_activate
 
   def update
     if params[:id] == 'current' || !logged_in_as_admin

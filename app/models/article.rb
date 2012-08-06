@@ -18,7 +18,7 @@ class Article < ActiveRecord::Base
   validates_presence_of :subject
   validates_presence_of :body
 
-  attr_accessible :name, :email, :body, :subject, :msgid
+  attr_accessible :name, :email, :body, :qt, :subject, :msgid
   attr_accessible :parent_msgid, :parent_id, :reply_type
   attr_accessible :content_type, :to, :sent_at
 
@@ -115,9 +115,9 @@ class Article < ActiveRecord::Base
     self.sent_at = self.received_at = Time.zone.now
     self.msgid = "<#{hex(16)}@bcmets.org>"
 
-    mail = Notifier.create_article(self)
-    mail.enforced_message_id = msgid
-    Notifier.deliver(mail)
+    mail = Notifier.article(self)
+    #mail.message_id = msgid
+    mail.deliver
   end
 
   def mail_to

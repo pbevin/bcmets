@@ -1,4 +1,6 @@
 class PasswordChange < ActiveRecord::Base
+  attr_accessible :new_password, :new_password_confirmation, :old_password
+
   def self.columns() @columns ||= []; end
  
   def self.column(name, sql_type = nil, default = nil, null = true)

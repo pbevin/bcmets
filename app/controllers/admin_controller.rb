@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   before_filter :require_admin
+  layout "admin"
 
   def mailman_import
     if request.post?

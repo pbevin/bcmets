@@ -8,7 +8,7 @@ Feature: Search engine micro-management
     Then Google should be disabled
 
   Scenario: Archive date order monthly page
-    Given there is an article posted on "2009-10-31"
+    Given there is an article posted on "2009-10-29"
     When I go to the "2009/10" archive page
     And I follow "View in date order"
     Then Google should be disabled

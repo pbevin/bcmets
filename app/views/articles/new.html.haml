@@ -32,7 +32,7 @@
       %br
       = f.text_area :qt, :rows => 15, :cols => 60
     %div.buttons
-      = submit_tag "Post", :disable_with=>"Sending..."
+      = submit_tag "Post", :data => { :disable_with=>"Sending..." }
       %button.quote Quote
       %span.quote_lecture Please trim the quoted text before posting.
     %pre#quoted= @quoted

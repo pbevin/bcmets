@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :saved_articles,
     :join_table => "saved_articles", :class_name => "Article"
 
+  attr_accessible :name, :created_at, :email_delivery
+  attr_accessible :password, :password_confirmation, :email
+  attr_accessible :active, :location, :photo
+
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
   end
@@ -95,7 +99,7 @@ class User < ActiveRecord::Base
   end
 
   def as_mailman(*args)
-    system("sudo", "-u", "mailman", *args)
+    system("sudo", "-u", "mailman", *args) if Rails.env.production?
   end
 
   def photo_geometry(style = :original)

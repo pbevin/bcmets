@@ -54,10 +54,10 @@ class ArticlesController < ApplicationController
   # POST /articles
   # POST /articles.xml
   def create
-    if params[:article][:body] != '' && params[:article][:body] != nil
+    if params[:article][:body].present?
       # spam attempt!
       flash[:notice] = "Message sent."
-      redirect_to :action => "index"
+      redirect_to root_url
       return
     end
 
@@ -78,9 +78,9 @@ class ArticlesController < ApplicationController
       cookies[:name] = { :value => @article.name, :expires => 3.months.from_now, :path => "/" }
       cookies[:email] = { :value => @article.email, :expires => 3.months.from_now }
       if @article.reply?
-        redirect_to(article_path(@article.parent_id))
+        redirect_to article_path(@article.parent_id)
       else
-        redirect_to :action => "index"
+        redirect_to root_url
       end
     else
       @article.body = nil

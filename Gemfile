@@ -54,6 +54,8 @@ gem 'gravatar_image_tag'
 
 group :cucumber do
   gem 'cucumber-rails'
+  gem 'webrat'
+  gem 'launchy'
 end
 
 group :test do
