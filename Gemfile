@@ -52,6 +52,7 @@ gem 'rails_autolink'
 gem 'dynamic_form'
 gem 'gravatar_image_tag'
 gem "paperclip", "~> 2.7"
+gem 'exception_notification', :require => 'exception_notifier'
 
 group :cucumber do
   gem 'cucumber-rails'
