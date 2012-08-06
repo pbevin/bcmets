@@ -8,4 +8,3 @@ Feature: Admin interface
     When I activate user "test@example.com"
     Then an event log should exist with email: "test@example.com", reason: "signup"
     And the event log should be in the user's events
-

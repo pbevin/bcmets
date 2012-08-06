@@ -59,7 +59,7 @@ When /^I activate user "([^\"]*)"$/ do |email|
   token = user.perishable_token
   visit "/register/#{token}"
   fill_in "Password", :with => "xyzzy"
-  fill_in "Password Confirmation", :with => "xyzzy"
+  fill_in "Password confirmation", :with => "xyzzy"
   choose('user_email_delivery_full')
   click_button "Sign me up"
 end
