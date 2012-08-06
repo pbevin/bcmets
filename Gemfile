@@ -32,13 +32,11 @@ gem 'jquery-rails'
 # Use unicorn as the app server
 # gem 'unicorn'
 
-# Deploy with Capistrano
-gem 'capistrano'
-
 # To use debugger
 # gem 'ruby-debug'
 
 
+gem 'capistrano'
 gem 'will_paginate', '~> 3.0.0'
 gem 'faker'
 gem 'haml'
