@@ -35,7 +35,6 @@ class Feed < ActiveRecord::Base
       end
     rescue Exception => e
       logger.warn("Failed to fetch #{feed_url}: #{e.inspect}")
-      puts e
     end
   end
 
