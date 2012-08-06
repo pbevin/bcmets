@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:georss="http://www.georss.org/georss" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:media="http://search.yahoo.com/mrss/"
+	>
+
+<channel>
+	<title>Feed Title</title>
+	<atom:link href="http://example.com/feed/" rel="self" type="application/rss+xml" />
+	<link>http://example.com</link>
+	<description>Feed description</description>
+	<lastBuildDate>Sun, 29 Jul 2012 01:22:13 +0000</lastBuildDate>
+	<language>en</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.com/</generator>
+<cloud domain='example.com' port='80' path='/?rsscloud=notify' registerProcedure='' protocol='http-post' />
+<image>
+		<url>http://0.gravatar.com/blavatar/0123456789abcde0123456789abcdef?s=96&#038;d=http%3A%2F%2Fs2.wp.com%2Fi%2Fbuttonw-com.png</url>
+		<title>Image Title!</title>
+		<link>http://example.com</link>
+	</image>
+	<atom:link rel="search" type="application/opensearchdescription+xml" href="http://example.com/osd.xml" title="I&#039;m Still Breathin&#039;" />
+	<atom:link rel='hub' href='http://example.com/?pushpress=hub'/>
+		<item>
+		<title>Entry One</title>
+		<link>http://example.com/2012/07/28/entry_one/</link>
+		<comments>http://example.com/2012/07/28/entry_one/#comments</comments>
+		<pubDate>Sun, 29 Jul 2012 01:27:15 +0000</pubDate>
+		<dc:creator>John Smith</dc:creator>
+				<category><![CDATA[Breast Cancer]]></category>
+
+		<guid isPermaLink="false">http://example.com/?p=1153</guid>
+		<description><![CDATA[...]]></description>
+				<content:encoded><![CDATA[...]]></content:encoded>
+	</item>
+  <item>
+		<title>Entry Two</title>
+		<link>http://example.com/2012/07/26/entry_two/</link>
+		<pubDate>Thu, 26 Jul 2012 20:47:31 +0000</pubDate>
+		<dc:creator>John Smith</dc:creator>
+				<category><![CDATA[Breast Cancer]]></category>
+
+		<guid isPermaLink="false">https://example.wordpress.com/?p=148</guid>
+		<description><![CDATA[...]]></description>
+				<content:encoded><![CDATA[...]]></content:encoded>
+			<wfw:commentRss>http://example.com/2012/07/26/entry_two/feed/</wfw:commentRss>
+		<slash:comments>11</slash:comments>
+	
+		<media:content url="http://1.gravatar.com/avatar/0123456789abcdef0123456789abcdef?s=96&#38;d=identicon&#38;r=G" medium="image">
+			<media:title type="html">jsmith</media:title>
+		</media:content>
+
+		<media:content url="http://example.files.wordpress.com/2012/07/20120726-122712.jpg" medium="image">
+			<media:title type="html">20120726-271206.jpg</media:title>
+		</media:content>
+	</item>
+	</channel>
+</rss>

@@ -8,7 +8,7 @@ describe Feed do
   after(:each) do
     Timecop.return
   end
-  
+
 
   describe '#last_n_entries' do
     def create_entries(count)
@@ -38,6 +38,20 @@ describe Feed do
 
         feed.last_entry_date.should == 5.days.ago
       end
+    end
+  end
+
+  describe '#update_entries' do
+    let(:xml_url) { "spec/data/feed.xml" }
+    let(:feed)    { Feed.new }
+
+    it "updates from an XML feed" do
+      feed.update_entries(xml_url)
+      feed.should have(2).entries
+      feed.entries.map(&:name).should == [
+        "Entry One",
+        "Entry Two"
+      ]
     end
   end
 end
