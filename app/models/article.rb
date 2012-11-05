@@ -205,11 +205,11 @@ class Article < ActiveRecord::Base
   end
 
   def self.parse(text)
-    returning Article.new do |article|
-      parser = ArticleParser.new(article)
-      for line in text.lines
-        parser << line.strip
-      end
+    article = Article.new
+    parser = ArticleParser.new(article)
+    for line in text.lines
+      parser << line.strip
     end
+    return article
   end
 end
