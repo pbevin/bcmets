@@ -3,6 +3,7 @@ set :application, "bcmets"
 set :repository,  "git://github.com/pbevin/bcmets.git"
 set :user, "pete"
 set :use_sudo, false
+set :public_children, "images"
 
 # If you aren't deploying to /u/apps/#{application} on the target
 # servers (which is the default), you can specify the actual location
@@ -38,6 +39,7 @@ namespace :deploy do
       rm -fr #{release_path}/db/sphinx &&
       ln -nfs #{shared_path}/db/sphinx #{release_path}/db/sphinx
     CMD
+    run "rake assets:precompile"
   end
 
   desc "Update the crontab file"
