@@ -345,7 +345,15 @@ span.star { margin-right: 6px; }
 }
 
 #header .status {
-  float: right;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  display: block;
+  border: 1px solid #333;
+  background: #ffc;
+  width: 50%;
+  padding: 0 6px;
+  font-size: 13px;
 }
 
 .pagination {

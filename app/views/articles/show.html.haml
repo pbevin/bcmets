@@ -26,44 +26,4 @@
           = thread_as_html(@conversation_roots)
 
 :javascript
-  $("#star a").click( function() {
-    var star = $(this);
-    var spinner = star.parent().find("img");
-    var ajaxDone = function() { spinner.hide(); star.show(); };
-    var saved = false;
-
-    star.toggleClass("selected");
-    if (star.hasClass("selected")) {
-      saved = true;
-    }
-    star.hide(); spinner.show();
-    $.ajax({
-      type: "POST",
-      url: document.location.href + "/set_saved",
-      data: { saved: saved },
-      success: ajaxDone,
-      error: ajaxDone
-    });
-  } );
-
-  function setStatus(message) {
-    var status = $("#header kstatus");
-    if (message != "") {
-      status.text(message).show();
-    } else {
-      status.text("").hide();
-    }
-  }
-  function clearStatus() {
-    setStatus("");
-  }
-  clearStatus();
-
-  $("#star a").hover(function() {
-    var star = $(this);
-    if (star.hasClass("selected")) {
-      setStatus("Article is in your saved list. Click again to remove it.");
-    } else {
-      setStatus("Click the star to add this article to your Saved Articles list.");
-    }
-  }, clearStatus);
+  initStar();
