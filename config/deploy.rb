@@ -35,16 +35,17 @@ namespace :deploy do
   end
 
   desc "Re-establish symlinks"
-  task :after_symlink do
+  task :link_sphinx do
     run <<-CMD
       rm -fr #{release_path}/db/sphinx &&
       ln -nfs #{shared_path}/db/sphinx #{release_path}/db/sphinx
     CMD
   end
+  before "deploy:finalize_update", "deploy:link_sphinx"
 
   desc "Update the crontab file"
   task :update_crontab, :roles => :db do
     run "cd #{release_path} && whenever --update-crontab #{application}"
   end
+  #before "deploy:finalize_update", "deploy:update_crontab"
 end
-after "deploy:symlink", "deploy:update_crontab"
