@@ -1,3 +1,4 @@
+load 'deploy/assets'
 
 set :application, "bcmets"
 set :repository,  "git://github.com/pbevin/bcmets.git"
@@ -39,7 +40,6 @@ namespace :deploy do
       rm -fr #{release_path}/db/sphinx &&
       ln -nfs #{shared_path}/db/sphinx #{release_path}/db/sphinx
     CMD
-    run "rake assets:precompile"
   end
 
   desc "Update the crontab file"
