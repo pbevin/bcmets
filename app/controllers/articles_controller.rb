@@ -24,26 +24,24 @@ class ArticlesController < ApplicationController
   # GET /articles/new
   # GET /articles/new.xml
   def new
-    @article = Article.new
+    article = Article.new
 
-    @article.name = default_name
-    @article.email = default_email
+    article.name = default_name
+    article.email = default_email
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @article }
+      format.html { render :locals => { :article => article, :title => nil, :quoted => nil } }
+      format.xml  { render :xml => article }
     end
   end
 
   def reply
-    @title = "Reply to Message"
-    @article = Article.find_by_id(params[:id]).reply
-    @article.name = default_name
-    @article.email = default_email
-    @article.qt = nil
-    @quoted = @article.body
-    @article.body = nil
-    render :new
+    article = Article.find_by_id(params[:id]).reply
+    article.name = default_name
+    article.email = default_email
+    article.qt = nil
+    article.body = nil
+    render :new, :locals => { :article => article, :quoted => article.body, :title => "Reply to Message" }
   end
 
   # GET /articles/1/edit
@@ -51,41 +49,40 @@ class ArticlesController < ApplicationController
 #   @article = Article.find(params[:id])
 # end
 
-  # POST /articles
-  # POST /articles.xml
-  def create
-    if params[:article][:body].present?
-      # spam attempt!
+  class CreatePostResponder < SimpleDelegator
+    def spam
       flash[:notice] = "Message sent."
       redirect_to root_url
-      return
     end
 
-    params[:article][:body] = params[:article][:qt]
-
-    @article = Article.new(params[:article])
-    if @article.valid?
-      @article.user = current_user || User.find_by_email(@article.email)
-      @article.send_via_email
-
-      if (@article.reply_type != 'sender' && @article.user)
-        #@article.save
-      end
-
+    def sent(article, parent)
       flash[:notice] = "Message sent."
       flash[:links] = [['Home', url_for(:action => 'index')],
                        ['Current Articles', url_for(:controller => 'archive', :action => 'this_month')]]
-      cookies[:name] = { :value => @article.name, :expires => 3.months.from_now, :path => "/" }
-      cookies[:email] = { :value => @article.email, :expires => 3.months.from_now }
-      if @article.reply?
-        redirect_to article_path(@article.parent_id)
+      cookies[:name] = { :value => article.name, :expires => 3.months.from_now, :path => "/" }
+      cookies[:email] = { :value => article.email, :expires => 3.months.from_now }
+      if parent
+        redirect_to article_path(parent)
       else
         redirect_to root_url
       end
-    else
-      @article.body = nil
-      render :new
     end
+
+    def invalid(article)
+      @article = article
+      render :new, :locals => { :article => article, :quoted => nil, :title => "Reply to Message" }
+    end
+
+    def cookies
+      request.cookie_jar
+    end
+  end
+
+  # POST /articles
+  # POST /articles.xml
+  def create
+    responder = CreatePostResponder.new(self)
+    SendArticle.new(responder).call(current_user, params[:article])
   end
 
   # DELETE /articles/1

@@ -32,13 +32,6 @@ describe ArticlesController do
     end
   end
 
-  describe "GET new" do
-    it "assigns a new article as @article" do
-      get :new
-      assigns[:article].should be_new_record
-    end
-  end
-
   describe "DELETE destroy" do
     it "destroys the requested article" do
       Article.should_receive(:find).with("37").and_return(mock_article)
