@@ -61,8 +61,7 @@ class Article < ActiveRecord::Base
     earliest = Time.local(year, month, 1, 0, 0, 0)
     latest = 1.month.since(earliest)
 
-    self.all(:conditions => ["received_at >= ? and received_at < ?", earliest, latest],
-             :order => order)
+    where(:received_at => (earliest..latest)).order(order)
   end
 
   def self.link_threads(since=6.months.ago)
