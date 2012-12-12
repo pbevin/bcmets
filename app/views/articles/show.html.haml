@@ -23,7 +23,7 @@
       %div.thread
         %h2 Articles in this thread
         %ul.conversation
-          = thread_as_html(@conversation_roots)
+          = thread_as_html(@conversation_roots).html_safe
 
 :javascript
   initStar();

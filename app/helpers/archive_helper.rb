@@ -54,7 +54,7 @@ module ArchiveHelper
       end
       out << "</li>"
     end
-    return out.html_safe
+    out
   end
 
   def donations(collected, message)
