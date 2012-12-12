@@ -51,6 +51,7 @@ gem 'dynamic_form'
 gem 'gravatar_image_tag'
 gem "paperclip", "~> 2.7"
 gem 'exception_notification', :require => 'exception_notifier'
+gem 'newrelic_rpm'
 
 group :cucumber do
   gem 'cucumber-rails'
