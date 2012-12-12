@@ -1,3 +1,4 @@
+require 'bundler/capistrano'
 load 'deploy/assets'
 
 set :application, "bcmets"
