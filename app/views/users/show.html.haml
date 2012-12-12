@@ -20,9 +20,11 @@
 - unless @articles.empty?
   #history
     %h2 Posting History
+    = will_paginate(@articles)
     %ul.bydate
       - @articles.each do |article|
         %li
           = link_to_article article
           %small
             = article.sent_at_human
+    = will_paginate(@articles)
