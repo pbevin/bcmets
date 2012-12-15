@@ -148,15 +148,9 @@ class Article < ActiveRecord::Base
   end
 
   def body_utf8
-    utf8_from(charset) || utf8_from("cp1252") || body
-  end
-
-  def utf8_from(charset)
-    begin
-      Iconv.conv("utf-8", charset, body)
-    rescue
-      nil
-    end
+    body.force_encoding(charset)
+    body.force_encoding("CP1252") if !body.valid_encoding?
+    body.encode("UTF-8")
   end
 
   def reply

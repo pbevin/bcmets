@@ -1,4 +1,4 @@
-# Encoding: utf8
+# Encoding: UTF-8
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
@@ -159,19 +159,26 @@ describe Article do
     end
 
     it "converts ISO-8859-1 to UTF8" do
-      Article.new(
+      schön_iso_8859_1 = [115, 99, 104, 246, 110].pack("C*").force_encoding("US-ASCII")
+      body = Article.new(
         :content_type => 'text/plain;charset="iso8859-1"',
-        :body => "sch\366n"
-      ).body_utf8.should ==
-        "sch\303\266n"
+        :body => schön_iso_8859_1
+      ).body_utf8
+      #body.should == "schön"
+      body.encoding.name.should == "UTF-8"
+      body.bytes.to_a.should == [115, 99, 104, 195, 182, 110]
     end
 
     it "converts CP1252 to UTF8 when normal conversion fails" do
-      Article.new(
+      # Character 160 is non-breaking space in CP1252,
+      # which is 0xC2 0xA0 in UTF-8
+      inbytes = [160] + "Hi,".bytes.to_a
+      body = Article.new(
         :content_type => 'text/plain',
-        :body => "\240Dear all,"
-      ).body_utf8.should ==
-        "\302\240Dear all,"
+        :body => inbytes.pack("C*")
+      ).body_utf8
+      body.encoding.name.should == "UTF-8"
+      body.bytes.to_a.should == [0xC2, 0xA0] + "Hi,".bytes.to_a
     end
   end
 
