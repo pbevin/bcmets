@@ -82,8 +82,10 @@ class ArchiveController < ApplicationController
 
     begin
       @articles = Article.search(@q, search_options)
+      @total_count = @articles.total_count
     rescue
       @articles = [].paginate
+      @total_count = 0
       flash[:notice] = "Sorry, search isn't working right now. " +
           "Please give <a href=\"mailto:owner@bcmets.org\">Pete</a> a kick."
     end

@@ -1,13 +1,18 @@
 %h2
   Search results for
   = @q
-%p.minimize
+%p.sortby
   Sorted by
   = "#{@sorting_by}."
   = link_to("Sort by #{@switch_sort}", @switch_url)
+%p.resultcount
+  Showing
+  = @articles.count
+  out of
+  = pluralize(@total_count, "result")
 
 = will_paginate @articles
-%ul
+%ul.search_results
   - for article in @articles
     %li
       = link_to_article(article)
