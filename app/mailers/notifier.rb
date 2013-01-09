@@ -12,7 +12,7 @@ class Notifier < ActionMailer::Base
   end
 
   def password_reset(user)
-    @reset_password_url = user.perishable_token
+    @reset_password_url = reset_password_url(:activation_code => user.perishable_token)
     mail(:subject => "Password reset", :to => user.email)
   end
 
