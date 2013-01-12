@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.7'
+gem 'rails', '3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -43,7 +43,7 @@ gem 'haml'
 gem 'authlogic'
 gem 'feedzirra'
 gem 'mysql2'
-gem 'thinking-sphinx'
+gem 'thinking-sphinx', '~> 2.0.12'
 gem 'sqlite3'
 gem 'nokogiri'
 gem 'rails_autolink'
