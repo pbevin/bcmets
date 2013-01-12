@@ -175,6 +175,20 @@ describe Article do
     end
   end
 
+  describe 'send_via_email' do
+    let(:article) {
+      Article.new
+    }
+
+    it "does not escape the body" do
+      article.body = "It's working!"
+      article.send_via_email
+      ActionMailer::Base.deliveries.last.body.to_s.strip.
+        should == article.body
+    end
+  end
+
+
   describe "bugs" do
     it "can show articles from December" do
       Article.for_month(2006, 12).should_not be_nil
