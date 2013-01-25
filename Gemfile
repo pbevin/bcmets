@@ -44,6 +44,7 @@ gem 'authlogic'
 gem 'feedzirra'
 gem 'mysql2'
 gem 'thinking-sphinx', '~> 2.0.12'
+  gem 'riddle', '1.5.3' # last working version
 gem 'sqlite3'
 gem 'nokogiri'
 gem 'rails_autolink'
