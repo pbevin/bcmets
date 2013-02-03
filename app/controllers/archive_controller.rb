@@ -61,7 +61,7 @@ class ArchiveController < ApplicationController
 
   def search
     @q = params['q']
-    order = params['sort']
+    order = params['sort'] || 'date'
 
     @title = @q
 
@@ -73,7 +73,7 @@ class ArchiveController < ApplicationController
       search_options.merge!(:order => :received_at, :sort_mode => :desc)
       @sorting_by = "date"
       @switch_sort = "relevance"
-      @switch_url = url_for(:action => "search", :q => @q)
+      @switch_url = url_for(:action => "search", :q => @q, :sort => 'relevance')
     else
       @sorting_by = "relevance"
       @switch_sort = "date"
