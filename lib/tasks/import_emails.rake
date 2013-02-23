@@ -1,23 +1,5 @@
-def each_message(mbox_filename)
-  starting = true
-  article = ''
-  File.open(mbox_filename) do |file|
-    file.each_line do |line|
-      if line =~ /^From (.*)/
-        if !starting
-          yield article
-          article = ''
-        end
-        starting = false
-      end
-      article += line
-    end
-  end
-  yield article unless starting
-end
-
 def recent_files
-  dir = "/home/mets/arch"
+  dir = ENV['MAIL_IMPORT_DIR'] || "/home/mets/arch"
   t = 30.minutes.ago
   files = []
   Dir.entries(dir).each do |f|
@@ -31,7 +13,7 @@ end
 desc "Import new emails from mailing list"
 task :import_emails => [:environment] do
   for file in recent_files
-    each_message(file) do |message|
+    Mailbox.new(file).each_message do |message|
       article = Article.parse(message)
       article.save
     end

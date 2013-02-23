@@ -203,6 +203,7 @@ class Article < ActiveRecord::Base
     for line in text.lines
       parser << line.strip
     end
+    parser.save
     return article
   end
 end

@@ -24,6 +24,7 @@ describe "Article Parser" do
     parser << "From blah"
     parser << ""
     parser << "xyzzy"
+    parser.save
   end
 
   it "parses the Subject line" do
@@ -32,9 +33,8 @@ describe "Article Parser" do
   end
 
   it "strips mailing list names from the subject line" do
-    parser.header "Subject: Re: [bcmets] Taxol" do
-      article.subject.should == "Re: Taxol"
-    end
+    parser.header "Subject: Re: [bcmets] Taxol"
+    article.subject.should == "Re: Taxol"
   end
 
   it "sets the received_at field based on the first line" do
@@ -129,5 +129,22 @@ describe "Article Parser" do
     article.subject.should == "a very"
     parser.header "   long subject line"
     article.subject.should == "a very long subject line"
+  end
+
+  describe "Character set parsing" do
+    let(:body_iso8859_1) { "Hello, \xA0 world!".force_encoding("binary") }
+    let(:body_utf8) { "Hello, \xC2\xA0 world!".force_encoding("binary") }
+
+    it "converts an ISO-8859-1 body to UTF-8" do
+      parser.body(body_iso8859_1)
+      parser.save
+      article.body.strip.should == body_utf8.force_encoding("UTF-8")
+    end
+
+    it "leaves a UTF-8 body as-is" do
+      parser.body(body_utf8)
+      parser.save
+      article.body.strip.should == body_utf8.force_encoding("UTF-8")
+    end
   end
 end
