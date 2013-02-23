@@ -58,10 +58,22 @@ When /^I activate user "([^\"]*)"$/ do |email|
   user = User.find_by_email(email)
   token = user.perishable_token
   visit "/register/#{token}"
-  fill_in "Password", :with => "xyzzy"
-  fill_in "Password confirmation", :with => "xyzzy"
+  fill_in "user_password", :with => "xyzzy"
+  fill_in "user_password_confirmation", :with => "xyzzy"
   choose('user_email_delivery_full')
   click_button "Sign me up"
+end
+
+When /^I change my old password "(.*?)" to "(.*?)" with confirmation "(.*?)"$/ do |old, password, confirmation|
+  fill_in "password_change_old_password", :with => old
+  fill_in "password_change_new_password", :with => password
+  fill_in "password_change_new_password_confirmation", :with => confirmation
+  click_button "Submit"
+end
+
+When /^I enter my password "(.*?)" with confirmation "(.*?)"$/ do |password, confirmation|
+  fill_in "user_password", :with => password
+  fill_in "user_password_confirmation", :with => confirmation
 end
 
 Then /^(.+) should have password: "([^\"]*)"$/ do |who, password|

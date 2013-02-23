@@ -3,7 +3,7 @@ Feature: Becoming a user
   In order to get support
   As a breast cancer patient
   I want to register with the web site
-  
+
   Scenario: Sign up
     Given there is no user called "Mary Jones"
     And I am not logged in
@@ -15,18 +15,17 @@ Feature: Becoming a user
     Then I should see a notice "Registration successful."
     And a user should exist with name: "Mary Jones", email_delivery: "none"
     And I should not be logged in
-    
+
   Scenario: Activate account
     Given that I have a confirmation email for "mary@example.com"
     When I click on the activation link
-    And I fill in "Password" with "secret"
-    And I fill in "Password confirmation" with "secret"
+    And I enter my password "secret" with confirmation "secret"
     And I choose "user_email_delivery_full"
     And I press "Sign me up!"
     Then I should see "Thank you for registering!"
     And a user should exist with email: "mary@example.com", email_delivery: "full"
     And I should be logged in
-    
+
   Scenario: Login with valid account
     Given user "mary@example.com" with password "secret"
     When I go to Login
@@ -62,10 +61,7 @@ Feature: Becoming a user
     And that user is logged in
     When I go to my profile
     And I follow "Change password"
-    And I fill in "Old password" with "xyzzy"
-    And I fill in "New password" with "clever"
-    And I fill in "New password confirmation" with "clever"
-    And I press "Submit"
+    And I change my old password "xyzzy" to "clever" with confirmation "clever"
     Then I should see "Password changed."
     And user: "Pam" should have password: "clever"
 
@@ -74,9 +70,6 @@ Feature: Becoming a user
     And that user is logged in
     When I go to my profile
     And I follow "Change password"
-    And I fill in "Old password" with "xyzzy"
-    And I fill in "New password" with "clever"
-    And I fill in "New password confirmation" with "does-not-match"
-    And I press "Submit"
+    And I change my old password "xyzzy" to "clever" with confirmation "does-not-match"
     Then I should see "doesn't match"
 
