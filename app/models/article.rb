@@ -140,7 +140,7 @@ class Article < ActiveRecord::Base
 
     if content_type =~ /charset="(.*?)"/
       return $1
-    elsif content_type =~ /charset=(\S+)/
+    elsif content_type =~ /charset=([^;,\s]+)/
       return $1
     else
       return "utf-8"

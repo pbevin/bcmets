@@ -53,8 +53,8 @@ describe "Article Parser" do
   end
 
   it "sets the content_type field" do
-    parser.header "Content-Type: text/plain; charset=utf-8"
-    article.content_type.should == "text/plain; charset=utf-8"
+    parser.header "Content-Type: text/plain"
+    article.content_type.should == "text/plain"
   end
 
   it "parses the Message ID" do
@@ -147,16 +147,17 @@ describe "Article Parser" do
       article.body.strip.should == body_utf8.force_encoding("UTF-8")
       article.charset.should == "utf-8"
     end
+  end
 
+  describe "#content_type" do
     it "ignores encoding" do
+      parser.content_type(%{text/plain; charset="iso-8859-1"}).should == "text/plain"
+      parser.content_type(%{text/plain; charset=iso-8859-1}).should == "text/plain"
+    end
 
-      parser.header(%{Content-type: text/plain; charset="iso8859-1"})
-      parser.body(body_iso8859_1)
-      parser.save
-
-      article.body.strip.should == body_utf8.force_encoding("UTF-8")
-      article.charset.should == "utf-8"
-      article.content_type.should == "text/plain"
+    it "ignores everything after , or ;" do
+      parser.content_type(%{text/plain; charset=iso-8859-1; format=flowed}).should == "text/plain"
+      parser.content_type(%{text/plain, charset=iso-8859-1, format=flowed}).should == "text/plain"
     end
   end
 end

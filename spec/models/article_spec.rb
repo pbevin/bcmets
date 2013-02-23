@@ -145,6 +145,10 @@ describe Article do
       :content_type => 'text/plain; charset="us-ascii" ; format="flowed"'
     ).charset.should == "us-ascii"
 
+    Article.new(
+      :content_type => 'text/plain; charset=SOME-CHARSET; format=flowed'
+    ).charset.should == "SOME-CHARSET"
+
     Article.new(:content_type => nil).charset.should == "utf-8"
     Article.new(:content_type => "").charset.should == "utf-8"
   end

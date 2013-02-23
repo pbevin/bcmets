@@ -68,7 +68,7 @@ class ArticleParser
   end
 
   def content_type(original)
-    original.gsub(/[,;]\s*charset="[^"]*"/, "")
+    original.gsub(/[,;].*/, "")
   end
 
   def converted_body
