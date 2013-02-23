@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.7'
+gem 'rails', '3.2.12'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+gem 'rubygems-bundler'
 gem 'sqlite3'
-
 gem 'json'
 
 # Gems used only for assets and not required
@@ -23,19 +23,6 @@ end
 
 gem 'jquery-rails'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# To use debugger
-# gem 'ruby-debug'
-
-
 gem 'capistrano'
 gem 'will_paginate', '~> 3.0.0'
 gem 'faker'
@@ -43,8 +30,7 @@ gem 'haml'
 gem 'authlogic'
 gem 'feedzirra'
 gem 'mysql2'
-gem 'thinking-sphinx'
-gem 'sqlite3'
+gem 'thinking-sphinx', '~> 2.0.14'
 gem 'nokogiri'
 gem 'rails_autolink'
 gem 'dynamic_form'
@@ -53,13 +39,10 @@ gem "paperclip", "~> 2.7"
 gem 'exception_notification', :require => 'exception_notifier'
 gem 'newrelic_rpm'
 
-group :cucumber do
-  gem 'cucumber-rails'
-  gem 'webrat'
-  gem 'launchy'
-end
-
 group :test do
+  gem 'cucumber', '~> 1.2.1'
+  gem 'cucumber-rails', '~> 1.3.0'
+  gem 'launchy'
   gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'pickle'
