@@ -148,9 +148,7 @@ class Article < ActiveRecord::Base
   end
 
   def body_utf8
-    body.force_encoding(charset)
-    body.force_encoding("CP1252") if !body.valid_encoding?
-    body.encode("UTF-8")
+    CharsetFixer.new(charset).fix(body)
   end
 
   def reply

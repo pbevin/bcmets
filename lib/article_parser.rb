@@ -72,11 +72,6 @@ class ArticleParser
   end
 
   def converted_body
-    body = @body.dup
-    if body.force_encoding("UTF-8").valid_encoding?
-      body.force_encoding("UTF-8")
-    else
-      body.force_encoding("ISO8859-1").encode("UTF-8")
-    end
+    CharsetFixer.new("utf-8").fix(@body)
   end
 end
