@@ -1,6 +1,10 @@
 require 'bundler/capistrano'
 load 'deploy/assets'
 
+set :rvm_ruby_string, '1.9.3'
+set :rvm_type, :system
+require 'rvm/capistrano'
+
 set :application, "bcmets"
 set :repository,  "git://github.com/pbevin/bcmets.git"
 set :user, "pete"
@@ -16,9 +20,9 @@ set :deploy_to, "/home/www/#{application}"
 # your SCM below:
 set :scm, :git
 
-role :app, "www2.bcmets.org"
-role :web, "www2.bcmets.org"
-role :db,  "www2.bcmets.org", :primary => true
+role :app, "www.bcmets.org"
+role :web, "www.bcmets.org"
+role :db,  "www.bcmets.org", :primary => true
 
 
 namespace :deploy do

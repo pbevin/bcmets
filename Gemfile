@@ -24,6 +24,7 @@ end
 gem 'jquery-rails'
 
 gem 'capistrano'
+gem 'rvm-capistrano'
 gem 'will_paginate', '~> 3.0.0'
 gem 'faker'
 gem 'haml'
