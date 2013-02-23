@@ -84,10 +84,10 @@ class Article < ActiveRecord::Base
   def self.thread_tree(unthreaded)
     hash = unthreaded.index_by(&:id)
 
-    retval = []
+    top_level_articles = []
     unthreaded.each do |article|
       if article.parent_id.nil? || !hash.has_key?(article.parent_id)
-        retval << article
+        top_level_articles << article
       else
         parent = hash[article.parent_id]
         parent.children ||= []
@@ -95,7 +95,7 @@ class Article < ActiveRecord::Base
       end
     end
 
-    return retval
+    return top_level_articles
   end
 
   def each_child(&block)

@@ -108,10 +108,18 @@ table.index td {
   width: 1000px;
 }
 
-p.minimize {
+p.resultcount {
   margin-top: 0;
-  text-align: right;
   font-size: smaller;
+}
+p.sortby {
+  margin-top: 0;
+  float: right;
+  font-size: smaller;
+}
+
+ul.search_results {
+  padding-left: 23px;
 }
 
 #main ul.month li {

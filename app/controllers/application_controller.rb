@@ -14,19 +14,11 @@ class ApplicationController < ActionController::Base
   protected
 
   def require_admin
-    if !view_context.logged_in_as_admin
-      flash[:notice] = "Login first please"
-      session[:return_to] = request.url
-      redirect_to login_url
-    end
+    boot_to_login unless view_context.logged_in_as_admin
   end
 
   def require_login
-    if !view_context.current_user
-      flash[:notice] = "Login first please"
-      session[:return_to] = request.url
-      redirect_to login_url
-    end
+    boot_to_login unless view_context.current_user
   end
 
   def redirect_back_or_home
@@ -40,5 +32,11 @@ class ApplicationController < ActionController::Base
     else
       "application"
     end
+  end
+
+  def boot_to_login
+    flash[:notice] = "Login first please"
+    session[:return_to] = request.url
+    redirect_to login_url
   end
 end

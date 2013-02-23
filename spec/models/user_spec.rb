@@ -22,4 +22,12 @@ describe User do
     user.unsave_article(article)
     user.saved_articles.should == [ ]
   end
+
+  describe '#reset_password!' do
+    it "sends an email with the user's perishable token" do
+      user.reset_password!
+      message = ActionMailer::Base.deliveries.last
+      message.body.should include(user.perishable_token)
+    end
+  end
 end
