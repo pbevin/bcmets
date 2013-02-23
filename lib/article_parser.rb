@@ -52,7 +52,7 @@ class ArticleParser
     when /^In-Reply-To: (<.+>)$/i
       article.parent_msgid = $1
     when /^Content-Type: (.*)$/i
-      article.content_type = $1
+      article.content_type = content_type($1)
     when /^References: (<.+?>).*$/i
       article.parent_msgid = $1 if article.parent_msgid.blank?
     end
@@ -65,6 +65,10 @@ class ArticleParser
 
   def save
     article.body = converted_body
+  end
+
+  def content_type(original)
+    original.gsub(/[,;]\s*charset="[^"]*"/, "")
   end
 
   def converted_body

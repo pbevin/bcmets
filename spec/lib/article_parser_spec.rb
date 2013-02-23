@@ -145,6 +145,18 @@ describe "Article Parser" do
       parser.body(body_utf8)
       parser.save
       article.body.strip.should == body_utf8.force_encoding("UTF-8")
+      article.charset.should == "utf-8"
+    end
+
+    it "ignores encoding" do
+
+      parser.header(%{Content-type: text/plain; charset="iso8859-1"})
+      parser.body(body_iso8859_1)
+      parser.save
+
+      article.body.strip.should == body_utf8.force_encoding("UTF-8")
+      article.charset.should == "utf-8"
+      article.content_type.should == "text/plain"
     end
   end
 end
