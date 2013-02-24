@@ -1,24 +1,16 @@
 # SQLite version 3.x
 development:
   adapter: mysql2
-  database: bcmets_development
-  user: pete
-  socket: /tmp/mysql.sock
+  database: bcmets
+  user: root
 
 test:
   adapter: mysql2
   database: bcmets_test
-  user: pete
-  socket: /tmp/mysql.sock
+  user: root
 
 production:
   adapter: mysql2
   database: bcmets_rails
   user: pete
   socket: /var/lib/mysql/mysql.sock
-
-cucumber:
-  adapter: mysql2
-  database: bcmets_test
-  user: pete
-  socket: /tmp/mysql.sock
