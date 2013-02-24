@@ -15,7 +15,15 @@ describe CharsetFixer do
 
   it "doesn't crash when given a stupid encoding name" do
     CharsetFixer.new("no-such-encoding").fix("daïs").should == "daïs"
+  end
 
+  it "switches to iso8859-1 when the stated charset causes problems" do
+    # Article 106667 has a \x9d character
+    CharsetFixer.new("Windows-1252").fix("\x9d").encode("utf-8").should == "\u009d"
+  end
+
+  it "ignores ConverterNotFound errors" do
+    CharsetFixer.new("utf-7").fix("hello").should == "hello"
   end
 end
 

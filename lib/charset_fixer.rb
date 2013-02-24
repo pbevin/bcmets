@@ -4,20 +4,29 @@ class CharsetFixer
   end
 
   def fix(text)
-    str = text.dup
+    string = text.dup
+    original_encoding = string.encoding
 
-    begin
-      str.force_encoding(@encoding)
-    rescue ArgumentError
+    best_guess = nil
+
+    guesses = [@encoding, Encoding::UTF_8, Encoding::ISO8859_1]
+    guesses.each do |guess|
+      begin
+        string.force_encoding(guess)
+        if string.valid_encoding? && string.encode(Encoding::UTF_8)
+          best_guess = guess
+          break
+        end
+      rescue ArgumentError, EncodingError
+      end
     end
 
-    if str.valid_encoding?
-      str.encode("UTF-8")
+    if best_guess
+      string.force_encoding(best_guess)
     else
-      str.force_encoding("iso8859-1").encode("utf-8")
+      string.force_encoding(original_encoding)
     end
-  end
 
-#   body.force_encoding("CP1252") if !body.valid_encoding?
-#   body.encode("UTF-8")
+    return string.encode(Encoding::UTF_8)
+  end
 end
