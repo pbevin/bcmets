@@ -36,9 +36,17 @@ module ArchiveHelper
       text.gsub!(/=20\n/, " ")
       text.gsub!(/=\n/, "")
       text.gsub!(/\n/m, $/)
-      text.gsub!(/=([\dA-F]{2})/) { $1.hex.chr }
+      text.gsub!(/=([\dA-F]{2})/) { hex_to_utf8($1.hex) }
     end
     auto_link(simple_format(h(text)))
+  end
+
+  def hex_to_utf8(code)
+    # 99% of the time, code is 0x20 (space) or 0x3D (equal sign).
+    # But sometimes, it's a funny character, which usually comes from
+    # silly Windows clients.  So we assume ISO8859-1, but return it
+    # encoded as UTF-8.
+    code.chr.force_encoding(Encoding::ISO8859_1).encode(Encoding::UTF_8)
   end
 
   def thread_as_html(articles, out="")
