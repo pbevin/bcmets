@@ -13,6 +13,11 @@ describe CharsetFixer do
       should == "daïs".bytes.to_a
   end
 
+  it "is not fooled by incorrect encodings" do
+    # Article 25676
+    CharsetFixer.new("ISO-8859-1").fix("STÖRSTA").should == "STÖRSTA"
+  end
+
   it "doesn't crash when given a stupid encoding name" do
     CharsetFixer.new("no-such-encoding").fix("daïs").should == "daïs"
   end

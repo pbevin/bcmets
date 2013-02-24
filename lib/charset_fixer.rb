@@ -9,7 +9,7 @@ class CharsetFixer
 
     best_guess = nil
 
-    guesses = [@encoding, Encoding::UTF_8, Encoding::ISO8859_1]
+    guesses = [Encoding::UTF_8, Encoding::ISO8859_1, @encoding]
     guesses.each do |guess|
       begin
         string.force_encoding(guess)
