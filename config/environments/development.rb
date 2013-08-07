@@ -40,12 +40,17 @@ Bcmets::Application.configure do
   config.action_mailer.default_url_options = { :host => "localhost:3000" }
   config.action_mailer.delivery_method = :smtp
 
+  password = nil
+  if File.exist?(".passwd-gmail")
+    password = File.read(".passwd-gmail").strip
+  end
+
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
     :domain               => 'bcmets.org',
     :user_name            => 'pbevin@gmail.com',
-    :password             => File.read(".passwd-gmail").strip,
+    :password             => password,
     :authentication       => 'plain',
     :enable_starttls_auto => true
   }

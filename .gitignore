@@ -16,3 +16,6 @@
 /log/*.log
 /tmp
 .passwd-gmail
+
+*.swp
+.secret

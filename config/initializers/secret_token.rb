@@ -4,4 +4,26 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Bcmets::Application.config.secret_token = 'a9d0251d64e5f496e4998447e771279338501d1470baba4fdb2e77a8285fb2c6d51de9ce4fd2454ba1a6df6675b33edfaaccc6fda85c9e1676aafb256b52e6cb'
+
+
+require 'securerandom'
+
+# Your secret key for verifying the integrity of signed cookies.
+# If you change this key, all old signed cookies will become invalid!
+# Make sure the secret is at least 30 characters and all random,
+# no regular words or you'll be exposed to dictionary attacks.
+
+def find_secure_token
+  token_file = Rails.root.join('.secret')
+  if File.exist? token_file
+    # Use the existing token.
+    File.read(token_file).chomp
+  else
+    # Generate a new token of 64 random hexadecimal characters and store it in token_file.
+    token = SecureRandom.hex(64)
+    File.write(token_file, token)
+    token
+  end
+end
+
+Bcmets::Application.config.secret_token = find_secure_token
