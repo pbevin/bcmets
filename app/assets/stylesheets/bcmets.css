@@ -341,6 +341,16 @@ span.star { margin-right: 6px; }
   margin: 5px 5px 0 0;
 }
 
+#header #reply_to {
+  margin: 5px 5px 0 0;
+  float: left;
+}
+
+#header #headers {
+  padding-top: 12px;
+  clear: both;
+}
+
 #header {
   background: #f5f5ff;
   position: relative;

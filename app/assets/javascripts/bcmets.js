@@ -2,9 +2,11 @@ function initStar() {
   var status = $("#header .status");
   status.hide();
   $("#star a").click( function() {
-    var star = $(this);
+    var star = $("#star a.star");
+    var message = $("#star a.save_this");
     var spinner = star.parent().find("img");
-    var ajaxDone = function() { spinner.hide(); star.show(); };
+    var ajaxDone = function() { spinner.hide(); star.show(); setText(); };
+    var setText = function() { message.text(star.hasClass("selected") ? "Message saved" : "Save this message"); }
     var saved = false;
 
     star.toggleClass("selected");
