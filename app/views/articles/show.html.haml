@@ -9,7 +9,7 @@
           %a.save_this{href: "javascript:void(0);"} Save this message
         %a.star{:href => "javascript:void(0);", :class => show_star(@article)}
         %img{:src => "/images/spinner.gif", :style => "display:none;" }
-      .status
+      .tooltip
     - if @article.recent?
       #reply_to
         = link_to "Reply to this message", article_reply_path(@article), :id => "reply"

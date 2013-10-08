@@ -362,7 +362,7 @@ span.star { margin-right: 6px; }
   padding-left: 3px;
 }
 
-#header .status {
+#header .tooltip {
   position: absolute;
   top: 30px;
   right: 30px;

@@ -1,6 +1,8 @@
 function initStar() {
-  var status = $("#header .status");
-  status.hide();
+  var tooltip = $("#header .tooltip");
+
+  tooltip.hide();
+
   $("#star a").click( function() {
     var star = $("#star a.star");
     var message = $("#star a.save_this");
@@ -23,24 +25,24 @@ function initStar() {
     });
   } );
 
-  function setStatus(message) {
+  function setTooltip(message) {
     if (message != "") {
-      status.text(message).fadeIn();
+      tooltip.text(message).fadeIn();
     } else {
-      status.fadeOut();
+      tooltip.fadeOut();
     }
   }
-  function clearStatus() {
-    setStatus("");
+  function clearTooltip() {
+    setTooltip("");
   }
-  clearStatus();
+  clearTooltip();
 
   $("#star a").hover(function() {
     var star = $(this);
     if (star.hasClass("selected")) {
-      setStatus("Article is in your saved list. Click again to remove it.");
+      setTooltip("Article is in your saved list. Click again to remove it.");
     } else {
-      setStatus("Click the star to add this article to your Saved Articles list.");
+      setTooltip("Click the star to add this article to your Saved Articles list.");
     }
-  }, clearStatus);
+  }, clearTooltip);
 }
