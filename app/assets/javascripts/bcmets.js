@@ -1,16 +1,15 @@
 function initStar() {
   var tooltip = $("#header .tooltip");
+  var star = $("#star a.star");
+  var message = $("#star a.save_this");
+  var spinner = star.parent().find("img");
+  var ajaxDone = function() { spinner.hide(); star.show(); setText(); };
+  var setText = function() { message.text(star.hasClass("selected") ? "Message saved" : "Save this message"); }
 
   tooltip.hide();
 
   $("#star a").click( function() {
-    var star = $("#star a.star");
-    var message = $("#star a.save_this");
-    var spinner = star.parent().find("img");
-    var ajaxDone = function() { spinner.hide(); star.show(); setText(); };
-    var setText = function() { message.text(star.hasClass("selected") ? "Message saved" : "Save this message"); }
     var saved = false;
-
     star.toggleClass("selected");
     if (star.hasClass("selected")) {
       saved = true;
@@ -24,6 +23,12 @@ function initStar() {
       error: ajaxDone
     });
   } );
+
+  $.getJSON(document.location.href + "/is_saved", function(response) {
+    star.toggleClass("selected", response.saved);
+    ajaxDone();
+  });
+
 
   function setTooltip(message) {
     if (message != "") {

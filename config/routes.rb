@@ -30,6 +30,7 @@ Bcmets::Application.routes.draw do
   match '/archive/:year/:month/date' => 'archive#month_by_date', :as => :archive_month_by_date, :year => /\d{4}/
   match '/article/:id/reply/' => 'articles#reply', :as => :article_reply
   match '/articles/:id/set_saved' => 'articles#set_saved', :as => :article_set_saved
+  match '/articles/:id/is_saved' => 'articles#is_saved', :as => :article_is_saved
   match 'archive/:year/:month' => 'archive#month', :as => :archive_month, :year => /\d{4}/
   match 'archive/:old_year_month/:article_number.html' => 'archive#old_article',
     :old_year_month => /\d{4}-\d{2}/,

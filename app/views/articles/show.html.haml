@@ -3,11 +3,8 @@
   #header
     - if current_user
       #star
-        - if @article.saved_by?(current_user)
-          %a.save_this{href: "javascript:void(0);"} Message saved
-        - else
-          %a.save_this{href: "javascript:void(0);"} Save this message
-        %a.star{:href => "javascript:void(0);", :class => show_star(@article)}
+        %a.save_this{href: "javascript:void(0);"}
+        %a.star{:href => "javascript:void(0);"}
         %img{:src => "/images/spinner.gif", :style => "display:none;" }
       .tooltip
     - if @article.recent?

@@ -115,6 +115,12 @@ class ArticlesController < ApplicationController
     @articles = current_user.saved_articles
   end
 
+  def is_saved
+    article = Article.find(params[:id])
+    saved = current_user && article.saved_by?(current_user)
+    render json: { saved: saved }
+  end
+
   private
 
   def cookie_or_user(attr)
