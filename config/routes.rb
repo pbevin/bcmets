@@ -2,11 +2,9 @@ Bcmets::Application.routes.draw do
   resources :feeds
   resources :links
   resources :donations do
-    collection do
-  get :stats
-  end
-
-
+      collection do
+    get :stats
+    end
   end
 
   match 'login' => 'user_sessions#new', :as => :login
