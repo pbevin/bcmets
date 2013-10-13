@@ -75,7 +75,7 @@ Feature: Becoming a user
 
   Scenario: Login with AJAX
     Given user "mary@example.com" with password "secret"
-    When I send HTTP POST to "/user_sessions.json" with the following parameters:
+    When I send HTTP POST to "/login.json" with the following parameters:
       | user_session[email]    | mary@example.com |
       | user_session[password] | secret           |
     Then the response should be "200 OK" with the following JSON:
@@ -85,7 +85,7 @@ Feature: Becoming a user
 
   Scenario: Failed login with AJAX
     Given user "mary@example.com" with password "secret"
-    When I send HTTP POST to "/user_sessions.json" with the following parameters:
+    When I send HTTP POST to "/login.json" with the following parameters:
       | user_session[email]    | mary@example.com |
       | user_session[password] | wrong            |
     Then the response should be "422 Unprocessable Entity" with the following JSON:

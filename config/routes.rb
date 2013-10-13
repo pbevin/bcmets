@@ -7,7 +7,8 @@ Bcmets::Application.routes.draw do
     end
   end
 
-  match 'login' => 'user_sessions#new', :as => :login
+  get 'login' => 'user_sessions#new', :as => :login
+  post 'login' => 'user_sessions#create', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout
   match '/register/:activation_code' => 'activations#new', :as => :register
   match '/activate/:id' => 'activations#create', :as => :activate
