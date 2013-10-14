@@ -99,13 +99,16 @@ class ArticlesController < ApplicationController
 
   def set_saved
     user = current_user
+    return render json: { succeeded: false, error: "not logged in" } if !user
     article = Article.find(params[:id])
     if params[:saved] == "true"
       user.save_article(article)
+      saved = true
     else
       user.unsave_article(article)
+      saved = false
     end
-    render :json => { :status => "OK" }
+    render json: { succeeded: true, saved: saved }
   end
 
   def saved
@@ -117,7 +120,7 @@ class ArticlesController < ApplicationController
 
   def is_saved
     article = Article.find(params[:id])
-    saved = current_user && article.saved_by?(current_user)
+    saved = current_user ? article.saved_by?(current_user) : nil
     render json: { saved: saved }
   end
 

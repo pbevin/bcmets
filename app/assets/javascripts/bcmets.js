@@ -3,32 +3,35 @@ function initStar() {
   var star = $("#star a.star");
   var message = $("#star a.save_this");
   var spinner = star.parent().find("img");
-  var ajaxDone = function() { spinner.hide(); star.show(); setText(); };
-  var setText = function() { message.text(star.hasClass("selected") ? "Message saved" : "Save this message"); }
+  var currentlySaved = star.hasClass("selected");
 
   tooltip.hide();
 
   $("#star a").click( function() {
-    var saved = false;
-    star.toggleClass("selected");
-    if (star.hasClass("selected")) {
-      saved = true;
-    }
     star.hide(); spinner.show();
     $.ajax({
       type: "POST",
       url: document.location.href + "/set_saved",
-      data: { saved: saved },
-      success: ajaxDone,
-      error: ajaxDone
+      data: { saved: !currentlySaved }
+    }).done(function(resp) {
+      currentlySaved = resp.saved;
+      setText();
+    }).always(function() {
+      spinner.hide();
+      star.show();
     });
-  } );
-
-  $.getJSON(document.location.href + "/is_saved", function(response) {
-    star.toggleClass("selected", response.saved);
-    ajaxDone();
   });
 
+  $.getJSON(document.location.href + "/is_saved", function(response) {
+    currentlySaved = response.saved
+    setText();
+  });
+
+  function setText() {
+    $('#star').toggleClass("anon", currentlySaved === null);
+    star.toggleClass("selected", currentlySaved ? true : false);
+    message.text(currentlySaved ? "Message saved" : "Save this message");
+  }
 
   function setTooltip(message) {
     if (message != "") {
