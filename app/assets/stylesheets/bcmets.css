@@ -323,6 +323,8 @@ img.profile {
 .quote, .quote_lecture { float: right; }
 .quote_lecture { display: none; color: #900; }
 
+#star.anon { display: none; }
+
 .star {
   display: inline-block;
   width: 15px;
