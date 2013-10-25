@@ -12,10 +12,6 @@ class ActivationsController < ApplicationController
 
   def create
     @user = User.find(params[:id])
-    vals = {
-      :password => params[:user][:password],
-      :password_confirmation => params[:user][:password_confirmation]
-    }
 
     if @user.update_attributes(params[:user]) && @user.activate!
       @user.deliver_activation_confirmation!
@@ -31,5 +27,5 @@ class ActivationsController < ApplicationController
 
   def reset_password
     new
-  end    
+  end
 end
