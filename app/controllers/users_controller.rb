@@ -96,9 +96,7 @@ class UsersController < ApplicationController
     @email_change = EmailChange.new(params[:email_change])
     @email_change.old_email = current_user.email
     if @email_change.valid?
-      current_user.delete_from_mailman
-      current_user.update_attributes(:email => @email_change.new_email)
-      current_user.update_mailman
+      @email_change.execute(current_user)
 
       flash[:notice] = "Email changed to #{@email_change.new_email}."
       redirect_to edit_user_path(current_user)

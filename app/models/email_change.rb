@@ -1,16 +1,20 @@
-class EmailChange < ActiveRecord::Base
-  def self.columns() @columns ||= []; end
+class EmailChange
+  include ActiveModel::Validations
 
-  def self.column(name, sql_type = nil, default = nil, null = true)
-    columns << ActiveRecord::ConnectionAdapters::Column.new(name.to_s, default, sql_type.to_s, null)
+  attr_accessor :new_email, :old_email
+
+  validates :new_email, format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+  validate :has_changed
+
+  def execute(current_user)
+    current_user.delete_from_mailman
+    current_user.update_attributes(email: new_email)
+    current_user.update_mailman
   end
 
-  column :new_email, :string
-  column :old_email, :string
+  private
 
-  validates_format_of :new_email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
-
-  def validate
+  def has_changed
     errors.add(:new_email, "cannot be the same as before") if new_email == old_email
   end
 end
