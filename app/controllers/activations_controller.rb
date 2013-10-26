@@ -11,13 +11,7 @@ class ActivationsController < ApplicationController
   end
 
   def create
-    @user = User.find(params[:id])
-
-    if @user.update_attributes(params[:user]) && @user.activate!
-      @user.deliver_activation_confirmation!
-      @user.log_activation
-      UserSession.create(@user)
-      @user.update_mailman
+    if UserActivation.new(params[:id], params[:user]).run
       flash[:notice] = "Thank you for registering!  Please check your email again for handy tips on using bcmets."
       redirect_to root_url
     else
