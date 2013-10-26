@@ -60,7 +60,7 @@ class ArchiveController < ApplicationController
   end
 
   def search
-    @search = SearchOptions.new(params)
+    @search = SearchOptions.new(params).run
     @title = @search.query
     if @search.error
       flash[:notice] = @search.error.html_safe
