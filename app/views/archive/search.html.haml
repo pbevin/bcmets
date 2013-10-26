@@ -1,23 +1,23 @@
 %h2
   Search results for
-  = @q
+  = @search.query
 %p.sortby
   Sorted by
-  = "#{@sorting_by}."
-  = link_to("Sort by #{@switch_sort}", @switch_url)
+  = "#{@search.sorting_by}."
+  = link_to("Sort by #{@search.switch_sort}", @search.switch_url)
 %p.resultcount
   Showing
-  = @articles.count
+  = @search.articles_count
   out of
-  = pluralize(@total_count, "result")
+  = pluralize(@search.total_count, "result")
 
-= will_paginate @articles
+= will_paginate @search.articles
 %ul.search_results
-  - for article in @articles
+  - for article in @search.articles
     %li
       = link_to_article(article)
       %small
         = link_to_author(article)
         ,
         = article.received_at.to_date.strftime("%b %d %Y")
-= will_paginate @articles
+= will_paginate @search.articles
