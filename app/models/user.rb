@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
   attr_accessible :name, :created_at, :email_delivery
   attr_accessible :password, :password_confirmation, :email
   attr_accessible :active, :location, :photo
+  attr_accessible :crop_x, :crop_y, :crop_w, :crop_h
 
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?

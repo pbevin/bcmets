@@ -64,27 +64,18 @@ class UsersController < ApplicationController
   private :create_and_activate
 
   def update
-    if params[:id] == 'current' || !logged_in_as_admin
-      return require_login if !current_user
-      @user = current_user
-    else
-      @user = User.find(params[:id])
-    end
-
-    if @user.update_attributes(params[:user])
-      if params[:user][:active] && !@user.active?
-        @user.activate!
-      end
-      @user.update_mailman
-
-      if params[:user][:photo].blank?
-        flash[:notice] = 'Profile updated'
-        redirect_to user_path('current')
-      else
-        render :action => "crop"
-      end
-    else
+    @user = User.find(params[:id])
+    action = UserUpdate.new(params[:id], params[:user], current_user, logged_in_as_admin)
+    case action.run
+    when :success
+      flash[:notice] = 'Profile updated'
+      redirect_to user_path('current')
+    when :failure
       render :action => "edit"
+    when :photo_updated
+      render :action => "crop"
+    when :require_login
+      require_login
     end
   end
 
@@ -129,7 +120,7 @@ class UsersController < ApplicationController
     else
       @user = User.find(params[:id])
     end
-    @articles = @articles = Article.find_all_by_email(@user.email, :order => "sent_at DESC").paginate(:page => params[:page])
+    @articles = @articles = Article.where(email: @user.email).order("sent_at DESC").paginate(:page => params[:page])
   end
 
   def password
