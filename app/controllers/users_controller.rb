@@ -64,15 +64,16 @@ class UsersController < ApplicationController
   private :create_and_activate
 
   def update
-    @user = User.find(params[:id])
     action = UserUpdate.new(params[:id], params[:user], current_user, logged_in_as_admin)
     case action.run
     when :success
       flash[:notice] = 'Profile updated'
       redirect_to user_path('current')
     when :failure
+      @user = User.find(params[:id])
       render :action => "edit"
     when :photo_updated
+      @user = User.find(params[:id])
       render :action => "crop"
     when :require_login
       require_login
