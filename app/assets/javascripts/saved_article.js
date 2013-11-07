@@ -1,4 +1,4 @@
-function initStar() {
+function initStar(articleId) {
   var tooltip = $("#header .tooltip");
   var star = $("#star a.star");
   var message = $("#star a.save_this");
@@ -11,7 +11,7 @@ function initStar() {
     star.hide(); spinner.show();
     $.ajax({
       type: "POST",
-      url: document.location.href + "/set_saved",
+      url: "/articles/" + articleId + "/set_saved",
       data: { saved: !currentlySaved }
     }).done(function(resp) {
       currentlySaved = resp.saved;
@@ -22,7 +22,7 @@ function initStar() {
     });
   });
 
-  $.getJSON(document.location.href + "/is_saved", function(response) {
+  $.getJSON("/articles/" + articleId + "/is_saved", function(response) {
     currentlySaved = response.saved
     setText();
   });
