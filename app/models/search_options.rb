@@ -38,6 +38,7 @@ class SearchOptions
       @error = "Sorry, search isn't working right now. " +
         "Please give <a href=\"mailto:owner@bcmets.org\">Pete</a> a kick."
     end
+    self
   end
 
   def query
