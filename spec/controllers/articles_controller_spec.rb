@@ -15,7 +15,7 @@ describe ArticlesController do
   describe "GET show" do
     it "assigns the requested article as @article" do
       article = Article.make!
-      Article.stub!(:find).with("37").and_return(article)
+      Article.stub(:find).with("37").and_return(article)
       get :show, :id => "37"
       assigns[:article].should equal(article)
     end
@@ -40,7 +40,7 @@ describe ArticlesController do
     end
 
     it "redirects to the articles list" do
-      Article.stub!(:find).and_return(mock_article(:destroy => true))
+      Article.stub(:find).and_return(mock_article(:destroy => true))
       delete :destroy, :id => "1"
       response.should redirect_to(articles_url)
     end

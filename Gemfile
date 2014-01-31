@@ -41,11 +41,11 @@ gem 'exception_notification', :require => 'exception_notifier'
 gem 'newrelic_rpm'
 
 group :test do
-  gem 'rspec', '~> 2.12.0'
+  gem 'rspec', '~> 2.14.0'
   gem 'cucumber', '~> 1.2.1'
   gem 'cucumber-rails', '~> 1.3.0', :require => false
   gem 'launchy'
-  gem 'rspec-rails', '~> 2.12.0'
+  gem 'rspec-rails', '~> 2.14.0'
   gem 'database_cleaner'
   gem 'pickle'
   gem 'sham'

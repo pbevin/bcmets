@@ -13,13 +13,13 @@ describe "articles/show" do
   end
 
   it "should have a Reply link if recent" do
-    @article.stub!(:recent?).and_return(true)
+    @article.stub(:recent?).and_return(true)
     render
     rendered.should have_selector "a#reply"
   end
 
   it "should not have a Reply link if ancient" do
-    @article.stub!(:recent?).and_return(false)
+    @article.stub(:recent?).and_return(false)
     render
     rendered.should_not have_selector "a#reply"
   end

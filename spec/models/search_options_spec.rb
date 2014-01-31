@@ -51,7 +51,7 @@ describe SearchOptions do
 
   describe '#search' do
     let(:search) { SearchOptions.new(q: "taxol") }
-    let(:article_base) { mock("Article") }
+    let(:article_base) { double("Article") }
 
     context "when search is offline" do
       before(:each) do
@@ -71,7 +71,7 @@ describe SearchOptions do
     end
 
     context "when search is working" do
-      let(:results) { mock(count: 20, total_count: 1228) }
+      let(:results) { double(count: 20, total_count: 1228) }
       before(:each) do
         article_base.stub(:search).and_return(results)
         search.run(article_base)
