@@ -39,6 +39,7 @@ gem 'gravatar_image_tag'
 gem "paperclip", "~> 2.7"
 gem 'exception_notification', :require => 'exception_notifier'
 gem 'newrelic_rpm'
+gem 'acts_as_tree'
 
 group :test do
   gem 'rspec', '~> 2.14.0'
