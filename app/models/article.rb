@@ -2,7 +2,8 @@ require 'article_parser'
 
 class Article < ActiveRecord::Base
   validates_uniqueness_of :msgid
-  acts_as_tree
+  attr_accessor :children
+  belongs_to :parent, :class_name => "Article", :foreign_key => "parent_id"
   belongs_to :user
   belongs_to :conversation
   before_create :start_conversation
@@ -80,9 +81,21 @@ class Article < ActiveRecord::Base
     end
   end
 
-  def self.thread_tree(articles)
-    # acts_as_tree does this already, just need...
-    articles.includes(:parent, :children).roots
+  def self.thread_tree(unthreaded)
+    hash = unthreaded.index_by(&:id)
+
+    top_level_articles = []
+    unthreaded.each do |article|
+      if article.parent_id.nil? || !hash.has_key?(article.parent_id)
+        top_level_articles << article
+      else
+        parent = hash[article.parent_id]
+        parent.children ||= []
+        parent.children << article
+      end
+    end
+
+    return top_level_articles
   end
 
   def each_child(&block)
