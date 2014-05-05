@@ -1,7 +1,7 @@
 require 'bundler/capistrano'
 load 'deploy/assets'
 
-set :rvm_ruby_string, '1.9.3'
+set :rvm_ruby_string, '2.1.1'
 set :rvm_type, :system
 require 'rvm/capistrano'
 
@@ -33,6 +33,12 @@ namespace :deploy do
   task :stop, :roles => :app do
     # Do nothing.
   end
+
+  desc 'Fix up database.yml'
+  task :dbconfig do
+    run "cp #{shared_path}/database.yml #{release_path}/config/database.yml"
+  end
+  before "deploy:finalize_update", "deploy:dbconfig"
 
   desc "Restart Application"
   task :restart, :roles => :app do
