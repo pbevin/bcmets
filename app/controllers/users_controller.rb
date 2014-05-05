@@ -121,7 +121,7 @@ class UsersController < ApplicationController
     else
       @user = User.find(params[:id])
     end
-    @articles = @articles = Article.where(email: @user.email).order("sent_at DESC").paginate(:page => params[:page])
+    @articles = @articles = Article.where("email = ? or user_id = ?", @user.email, @user.id).order("sent_at DESC").paginate(:page => params[:page])
   end
 
   def password
