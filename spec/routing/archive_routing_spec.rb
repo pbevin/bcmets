@@ -37,30 +37,11 @@ describe ArchiveController, "route generation" do
       )
   end
 
-  it "recognizes an old month URL" do
-    { :get => "/archive/2006-05" }.
-      should route_to(
-        :controller => "archive",
-        :action => "month",
-        :old_year_month => "2006-05"
-      )
-  end
-
   it "routes /donate the way I like" do
     { :get => "/donate" }.
       should route_to(
         :controller => "pages",
         :action => "donate"
-      )
-  end
-
-  it "figures out a legacy URL" do
-    { :get => "/archive/2009-04/0179.html" }.
-      should route_to(
-        :controller => "archive",
-        :action => "old_article",
-        :old_year_month => "2009-04",
-        :article_number => "0179"
       )
   end
 end

@@ -10,15 +10,11 @@ class ArchiveController < ApplicationController
   end
 
   def month
-    if params[:old_year_month]
-      @year, @month = old_year_month
-    else
-      @year, @month = params[:year], params[:month]
-    end
+    @year, @month = params[:year], params[:month]
     month_year = "#{Date::MONTHNAMES[@month.to_i]} #{@year}"
     @title = month_year
 
-    if @year.to_i > Date.today.year || @year.to_i < 2000 || @month.to_i < 1 || @month.to_i > 12
+    if !Archive.in_range(@year, @month)
       flash[:notice] = "No articles for #{@month}/#{@year}"
       return redirect_to root_url
     end

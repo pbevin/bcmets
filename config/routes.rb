@@ -31,11 +31,6 @@ Bcmets::Application.routes.draw do
   match '/articles/:id/set_saved' => 'articles#set_saved', :as => :article_set_saved
   match '/articles/:id/is_saved' => 'articles#is_saved', :as => :article_is_saved
   match 'archive/:year/:month' => 'archive#month', :as => :archive_month, :year => /\d{4}/
-  match 'archive/:old_year_month/:article_number.html' => 'archive#old_article',
-    :old_year_month => /\d{4}-\d{2}/,
-    :article_number => /\d{4}/
-  match 'archive/:old_year_month' => 'archive#month',
-    :old_year_month => /\d{4}-\d{2}/
   match 'post.pl' => 'articles#new'
   match 'post' => 'articles#new', :as => :post
   match 'donate' => 'pages#donate'
