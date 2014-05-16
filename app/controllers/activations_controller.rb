@@ -11,7 +11,7 @@ class ActivationsController < ApplicationController
   end
 
   def create
-    if UserActivation.new(params[:id], params[:user]).run
+    if UserActivation.new(params[:id], user_params).run
       flash[:notice] = "Thank you for registering!  Please check your email again for handy tips on using bcmets."
       redirect_to root_url
     else
@@ -21,5 +21,11 @@ class ActivationsController < ApplicationController
 
   def reset_password
     new
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:password, :password_confirmation, :email_delivery)
   end
 end

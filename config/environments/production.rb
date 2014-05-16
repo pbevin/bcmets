@@ -20,6 +20,7 @@ Bcmets::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  config.eager_load = false
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 
@@ -65,19 +66,19 @@ Bcmets::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.action_mailer.default_url_options = { :host => 'bcmets.org' }
+  config.action_mailer.default_url_options = { host: 'bcmets.org' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => "localhost",
-    :port => 25,
-    :domain => "bcmets.org"
+    address: "localhost",
+    port: 25,
+    domain: "bcmets.org"
   }
   config.action_mailer.raise_delivery_errors = true
 
   $list_address = 'bcmets@bcmets.org'
   config.middleware.use ExceptionNotifier,
-    :email_prefix => "[BCM] ",
-    :sender_address => "pete@bcmets.org",
-    :exception_recipients => %w{pete@petebevin.com}
+    email_prefix: "[BCM] ",
+    sender_address: "pete@bcmets.org",
+    exception_recipients: %w{pete@petebevin.com}
 
 end

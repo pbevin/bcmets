@@ -20,7 +20,7 @@ end
 
 Given /^that I have a confirmation email/ do
   User.delete_all
-  @u = User.new(:name => "Mary Jones", :email => "mary@example.com")
+  @u = User.new(name: "Mary Jones", email: "mary@example.com")
   @u.email_delivery = "none"
   @u.reset_perishable_token!
   @u.signup!
@@ -33,24 +33,23 @@ end
 
 Given /^user "([^\"]*)" with password "([^\"]*)"$/ do |email, password|
   User.delete_all
-  u = User.new(:email => email, :name => "test", :password => password, :password_confirmation => password)
+  u = User.new(email: email, name: "test", password: password, password_confirmation: password)
   u.active = true
   u.save!
 end
 
 Given /^I sign up as "([^\"]*)"$/ do |email|
   visit "/users/new"
-  fill_in "Email", :with => email
-  fill_in "Name", :with => "test"
+  fill_in "Email", with: email
+  fill_in "Name", with: "test"
   click_button "Sign up"
 end
 
-Given /^(.+) is logged in$/ do |who|
-  user = model(who)
-  user.activate!
+Given /^that user is logged in$/ do
+  @user.activate!
   visit "/login"
-  fill_in "Email", :with => user.email
-  fill_in "Password", :with => "xyzzy"
+  fill_in "Email", with: @user.email
+  fill_in "Password", with: "xyzzy"
   click_button "Login"
 end
 
@@ -58,33 +57,29 @@ When /^I activate user "([^\"]*)"$/ do |email|
   user = User.find_by_email(email)
   token = user.perishable_token
   visit "/register/#{token}"
-  fill_in "user_password", :with => "xyzzy"
-  fill_in "user_password_confirmation", :with => "xyzzy"
+  fill_in "user_password", with: "xyzzy"
+  fill_in "user_password_confirmation", with: "xyzzy"
   choose('user_email_delivery_full')
   click_button "Sign me up"
 end
 
 When /^I change my old password "(.*?)" to "(.*?)" with confirmation "(.*?)"$/ do |old, password, confirmation|
-  fill_in "password_change_old_password", :with => old
-  fill_in "password_change_new_password", :with => password
-  fill_in "password_change_new_password_confirmation", :with => confirmation
+  fill_in "password_change_old_password", with: old
+  fill_in "password_change_new_password", with: password
+  fill_in "password_change_new_password_confirmation", with: confirmation
   click_button "Submit"
 end
 
 When /^I enter my password "(.*?)" with confirmation "(.*?)"$/ do |password, confirmation|
-  fill_in "user_password", :with => password
-  fill_in "user_password_confirmation", :with => confirmation
+  fill_in "user_password", with: password
+  fill_in "user_password_confirmation", with: confirmation
 end
 
 Then /^(.+) should have password: "([^\"]*)"$/ do |who, password|
-  user = model(who)
-  user.valid_password?(password).should be_true
+  @user.reload.valid_password?(password).should be_true
 end
 
-Then /^(.+) should have been deleted/ do |who|
-  begin
-    user = model(who)
-    fail("User should have been deleted but wasn't")
-  rescue ActiveRecord::RecordNotFound
-  end
+Then /^that user should have been deleted/ do
+  fail "Don't know what user this is talking about" if !@user
+  User.where(id: @user.id).should be_empty
 end

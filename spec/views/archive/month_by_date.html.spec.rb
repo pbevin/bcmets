@@ -2,9 +2,9 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/archive/month_by_date" do
   before(:each) do
-    @article1 = Article.make!(:received_at => DateTime.parse("Thu, 12 Mar 2009 21:33:00 -0400 (EDT)"))
-    @article2 = Article.make!(:received_at => DateTime.parse("Fri, 13 Mar 2009 21:33:00 -0400 (EDT)"))
-    @article3 = Article.make!(:received_at => DateTime.parse("Fri, 13 Mar 2009 22:46:00 -0400 (EDT)"))
+    @article1 = Article.make!(received_at: DateTime.parse("Thu, 12 Mar 2009 21:33:00 -0400 (EDT)"))
+    @article2 = Article.make!(received_at: DateTime.parse("Fri, 13 Mar 2009 21:33:00 -0400 (EDT)"))
+    @article3 = Article.make!(received_at: DateTime.parse("Fri, 13 Mar 2009 22:46:00 -0400 (EDT)"))
 
     thu = Date.new(2009, 3, 12)
     fri = Date.new(2009, 3, 13)
@@ -29,7 +29,7 @@ describe "/archive/month_by_date" do
   end
 
   it "should link back to threaded view" do
-    response.should have_tag("a[href=#{archive_month_path(:year => 2009, :month => 3)}]")
+    response.should have_tag("a[href=#{archive_month_path(year: 2009, month: 3)}]")
   end
 
 end

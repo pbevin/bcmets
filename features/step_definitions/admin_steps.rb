@@ -1,17 +1,17 @@
 Before do
-  u = User.create(:email => "pete@petebevin.com",
-                  :name => "Pete Bevin",
-                  :password => "123456",
-                  :email_delivery => "none",
-                  :created_at => "1969-12-30")
+  u = User.create(email: "pete@petebevin.com",
+                  name: "Pete Bevin",
+                  password: "123456",
+                  email_delivery: "none",
+                  created_at: "1969-12-30")
   u.activate!
   u.save!
 end
 
 When /^I login as administrator$/ do
   visit "/login"
-  fill_in("Email", :with => "pete@petebevin.com")
-  fill_in("Password", :with => "123456")
+  fill_in("Email", with: "pete@petebevin.com")
+  fill_in("Password", with: "123456")
   click_button("Login")
 end
 
@@ -31,10 +31,4 @@ end
 
 When /^I delete the first user$/ do
   find("#users tbody tr:first-child").click_link("D")
-end
-
-Given /^#{capture_model} is( not)? active$/ do |name, not_active|
-  user = model(name)
-  user.active = !not_active
-  user.save!
 end

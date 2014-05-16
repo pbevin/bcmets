@@ -20,7 +20,7 @@ class FeedsController < ApplicationController
       flash[:notice] = "Successfully created feed."
       redirect_to @feed
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
@@ -34,7 +34,7 @@ class FeedsController < ApplicationController
       flash[:notice] = "Successfully updated feed."
       redirect_to @feed
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 

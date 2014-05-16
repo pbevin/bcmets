@@ -18,23 +18,23 @@ class LinksController < ApplicationController
   end
 
   def create
-    @link = Link.new(params[:link])
+    @link = Link.new(link_params)
 
     if @link.save
       flash[:notice] = 'Link was successfully created.'
       redirect_to(@link)
     else
-      render :action => "new"
+      render action: "new"
     end
   end
 
   def update
     @link = Link.find(params[:id])
-    if @link.update_attributes(params[:link])
+    if @link.update_attributes(link_params)
       flash[:notice] = 'Link was successfully updated.'
       redirect_to(@link)
     else
-      render :action => "edit"
+      render action: "edit"
     end
   end
 
@@ -43,5 +43,12 @@ class LinksController < ApplicationController
     @link.destroy
 
     redirect_to(links_url)
+  end
+
+
+  private
+
+  def link_params
+    params.require(:link).permit(:title, :url, :position)
   end
 end

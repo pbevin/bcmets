@@ -57,16 +57,16 @@ Feature: Becoming a user
     Then I should see "Instructions sent to mary@example.com"
 
   Scenario: Change Password
-    Given a user: "Pam" exists with password: "xyzzy", email: "pam@example.com"
+    Given a user exists with password: "xyzzy", email: "pam@example.com"
     And that user is logged in
     When I go to my profile
     And I follow "Change password"
     And I change my old password "xyzzy" to "clever" with confirmation "clever"
     Then I should see "Password changed."
-    And user: "Pam" should have password: "clever"
+    And the user should have password: "clever"
 
   Scenario: Change password, confirmation doesn't match
-    Given a user: "Pam" exists with password: "xyzzy", email: "pam@example.com"
+    Given a user exists with password: "xyzzy", email: "pam@example.com"
     And that user is logged in
     When I go to my profile
     And I follow "Change password"

@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "archive/month" do
   before(:each) do
-    @art1 = Article.make!(:sent_at => DateTime.parse("2009-03-28 13:00:00"))
-    @art2 = Article.make!(:sent_at => DateTime.parse("2009-03-29 04:00:00"), :parent_id => @art1.id)
+    @art1 = Article.make!(sent_at: DateTime.parse("2009-03-28 13:00:00"))
+    @art2 = Article.make!(sent_at: DateTime.parse("2009-03-29 04:00:00"), parent_id: @art1.id)
 
     assign :year, "2009"
     assign :month, "3"

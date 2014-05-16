@@ -13,12 +13,12 @@ module Mailman
 
   class Parser
     SECTIONS = {
-      :members => :email,
-      :usernames => :name,
-      :passwords => :password,
-      :digest_members => :email,
-      :delivery_status => :status,
-      :user_options => :email
+      members: :email,
+      usernames: :name,
+      passwords: :password,
+      digest_members: :email,
+      delivery_status: :status,
+      user_options: :email
     }
     
     SECTION_START = %r#^\s*'(.*)':\s+\{#

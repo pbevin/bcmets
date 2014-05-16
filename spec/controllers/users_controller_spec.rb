@@ -7,16 +7,16 @@ describe UsersController do
   end
 
   it "requires email and name during signup" do
-    post :create, :user => { }
+    post :create, user: { name: "", email: "" }
     assigns[:user].id.should be_nil
 
-    post :create, :user => { :name => "just a name" }
+    post :create, user: { name: "just a name" }
     assigns[:user].id.should be_nil
 
-    post :create, :user => { :email => "email@example.com" }
+    post :create, user: { email: "email@example.com" }
     assigns[:user].id.should be_nil
 
-    post :create, :user => { :name => "Joe", :email => "joe@example.com" }
+    post :create, user: { name: "Joe", email: "joe@example.com" }
     assigns[:user].id.should_not be_nil
   end
 end

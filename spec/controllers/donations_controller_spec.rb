@@ -12,15 +12,14 @@ describe DonationsController do
 
   context "admin functions" do
     before(:each) do
-      controller.stub(:require_admin => true)
+      controller.stub(require_admin: true)
     end
 
     describe "GET index" do
       it "returns the donations list" do
-        list = [Donation.new]
-        Donation.should_receive(:all).and_return(list)
+        donation = Donation.create!(email: "test@example.com", amount: "15.00", date: Date.yesterday)
         get :index
-        assigns(:donations).should == list
+        assigns(:donations).should == [ donation ]
       end
     end
   end

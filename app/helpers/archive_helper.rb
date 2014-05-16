@@ -10,7 +10,7 @@ module ArchiveHelper
       return text
     end
 
-    return link_to text.html_safe, archive_month_path(year, month), :class => "pjax"
+    return link_to text.html_safe, archive_month_path(year, month), class: "pjax"
   end
 
   def from_linked(author)
@@ -23,7 +23,7 @@ module ArchiveHelper
   end
 
   def email_linked(author)
-    #link_to author.email, { :controller => "archive", :action => "author", :email => author.email }, :class => "pjax"
+    #link_to author.email, { controller: "archive", action: "author", email: author.email }, class: "pjax"
     %Q{<a href="/archive/author?email=#{URI.escape author.email}" class="pjax">#{h author.email}</a>}
   end
 
@@ -52,7 +52,7 @@ module ArchiveHelper
   end
 
   def donations(collected, message)
-    "#{number_to_currency(collected, :precision => 0)} this #{message}"
+    "#{number_to_currency(collected, precision: 0)} this #{message}"
   end
 
   def donations_this_month
@@ -77,11 +77,11 @@ module ArchiveHelper
 
   def link_to_author(article)
     path = {
-      :controller => "archive",
-      :action => "author",
-      :email => article.email
+      controller: "archive",
+      action: "author",
+      email: article.email
     }
-    link_to h(article.from), path, :class => "pjax"
+    link_to h(article.from), path, class: "pjax"
     #%Q{<a href="/archive/author?email=#{URI.escape(article.email)}" class="pjax">#{h article.from}</a>}
   end
 

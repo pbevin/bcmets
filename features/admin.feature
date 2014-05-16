@@ -42,7 +42,7 @@ Feature: Admin interface
 
   Scenario: Not changing the password by default
     Given a user exists with email: "test@example.com", password: "secr3t"
-    And that user is active
+    And the user is active
     When I go to Edit User for that user
     And I press "Submit"
     And I go to Login
@@ -53,7 +53,7 @@ Feature: Admin interface
 
   Scenario: Changing the password
     Given a user exists with email: "test@example.com", password: "secr3t"
-    And that user is active
+    And the user is active
     When I go to Edit User for that user
     And I fill in "Password" with "123456"
     And I press "Submit"
@@ -65,12 +65,12 @@ Feature: Admin interface
 
   Scenario: Activating a user
     Given a user exists
-    And that user is not active
+    And the user is not active
     When I go to Edit User for that user
     Then I should see "User is not active"
     When I check "Activate User"
     And I press "Submit"
-    Then that user should be active
+    Then the user should be active
 
   Scenario: Subscribe a user
     When I go to View Users
@@ -92,4 +92,4 @@ Feature: Admin interface
     And I press "Submit"
     Then I should see "User added"
     And a user should exist with email: "mary@example.com"
-    And that user should be active
+    And the user should be active

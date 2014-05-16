@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_filter :require_admin, :only => [:index, :destroy]
+  before_filter :require_admin, only: [:index, :destroy]
 
   def index
-    @users = User.all(:order => "created_at DESC")
-    render :index, :layout => "admin"
+    @users = User.order("created_at DESC")
+    render :index, layout: "admin"
   end
 
   def new
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def edit
     if params[:id] != 'current' && logged_in_as_admin
       @user = User.find_by_id(params[:id])
-      render :template => "users/edit_root"
+      render template: "users/edit_root"
     else
       return require_login if !current_user
       @user = current_user
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     if params[:user][:active] == "1" && logged_in_as_admin
       create_and_activate
     else
-      p = params[:user].slice(:name, :email)
+      p = params.require(:user).permit(:name, :email)
       @user = User.new(p)
       @user.email_delivery = "none"
       if @user.signup!
@@ -44,13 +44,13 @@ class UsersController < ApplicationController
         end
         redirect_to(root_url)
       else
-        render :action => "new"
+        render action: "new"
       end
     end
   end
 
   def create_and_activate
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
     @user.activate!
 
     if @user.signup!
@@ -58,30 +58,30 @@ class UsersController < ApplicationController
       flash[:notice] = "User added"
       redirect_to(root_url)
     else
-      render :action => :new
+      render action: :new
     end
   end
   private :create_and_activate
 
   def update
-    action = UserUpdate.new(params[:id], params[:user], current_user, logged_in_as_admin)
+    action = UserUpdate.new(params[:id], user_params, current_user, logged_in_as_admin)
     case action.run
     when :success
       flash[:notice] = 'Profile updated'
       redirect_to user_path('current')
     when :failure
       @user = User.find(params[:id])
-      render :action => "edit"
+      render action: "edit"
     when :photo_updated
       @user = User.find(params[:id])
-      render :action => "crop"
+      render action: "crop"
     when :require_login
       require_login
     end
   end
 
   def edit_email
-    @email_change = EmailChange.new(:new_email => current_user.email)
+    @email_change = EmailChange.new(new_email: current_user.email)
   end
 
   def save_email
@@ -93,7 +93,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Email changed to #{@email_change.new_email}."
       redirect_to edit_user_path(current_user)
     else
-      render :action => "edit_email"
+      render action: "edit_email"
     end
   end
 
@@ -103,14 +103,14 @@ class UsersController < ApplicationController
   end
 
   def save_password
-    @password_change = PasswordChange.new(params[:password_change])
+    @password_change = PasswordChange.new(password_change_params)
     if @password_change.valid? && @password_change.old_password_correct?(current_user)
       current_user.password = @password_change.new_password
       current_user.save!
       flash[:notice] = 'Password changed.'
       redirect_to current_user
     else
-      render :action => 'edit_password'
+      render action: 'edit_password'
     end
   end
 
@@ -121,7 +121,7 @@ class UsersController < ApplicationController
     else
       @user = User.find(params[:id])
     end
-    @articles = @articles = Article.where("email = ? or user_id = ?", @user.email, @user.id).order("sent_at DESC").paginate(:page => params[:page])
+    @articles = @articles = Article.where("email = ? or user_id = ?", @user.email, @user.id).order("sent_at DESC").paginate(page: params[:page])
   end
 
   def password
@@ -139,7 +139,7 @@ class UsersController < ApplicationController
 
   def profile
     @user = User.find(params[:id])
-    @articles = Article.find_all_by_email(@user.email, :order => "sent_at DESC")
+    @articles = Article.where(email: @user.email).order("sent_at DESC")
   end
 
   def unsubscribe
@@ -161,5 +161,16 @@ class UsersController < ApplicationController
     @user.destroy
     flash[:notice] = "User deleted"
     redirect_to users_path
+  end
+
+  private
+
+  def password_change_params
+    params.require(:password_change).permit(:old_password, :new_password, :new_password_confirmation)
+  end
+
+  def user_params
+    admin_params = logged_in_as_admin ? [:active] : []
+    params.require(:user).permit(:name, :photo, :email, :password, *admin_params)
   end
 end

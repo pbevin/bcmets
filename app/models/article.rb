@@ -3,7 +3,7 @@ require 'article_parser'
 class Article < ActiveRecord::Base
   validates_uniqueness_of :msgid
   attr_accessor :children
-  belongs_to :parent, :class_name => "Article", :foreign_key => "parent_id"
+  belongs_to :parent, class_name: "Article", foreign_key: "parent_id"
   belongs_to :user
   belongs_to :conversation
   before_create :start_conversation
@@ -13,21 +13,12 @@ class Article < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :email
   validates_format_of :email,
-                      :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
-                      :message => "is not a full email address"
+                      with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
+                      message: "is not a full email address"
   validates_presence_of :subject
   validates_presence_of :body
 
-  attr_accessible :name, :email, :body, :qt, :subject, :msgid
-  attr_accessible :parent_msgid, :parent_id, :reply_type
-  attr_accessible :content_type, :to, :sent_at
-
   attr_accessor :qt  # honeytrap for body field
-
-  define_index do
-    indexes name, email, subject, body
-    indexes received_at, :sortable => true
-  end
 
   def from
     if name == email
@@ -61,20 +52,19 @@ class Article < ActiveRecord::Base
     earliest = Time.local(year, month, 1, 0, 0, 0)
     latest = 1.month.since(earliest)
 
-    where(:received_at => (earliest..latest)).order(order)
+    where(received_at: (earliest..latest)).order(order)
   end
 
   def self.link_threads(since=6.months.ago)
-    articles_to_link = Article.all(:conditions => ["parent_msgid != '' and parent_id is null and created_at > ?", since])
+    articles_to_link = Article.where("parent_msgid != '' and parent_id is null and created_at > ?", since)
     articles_to_link.each do |article|
-      parent = Article.find_by_msgid(article.parent_msgid)
+      parent = Article.find_by(msgid: article.parent_msgid)
       if parent != nil
         article.parent_id = parent.id
         if article.conversation.nil?
           article.conversation = parent.conversation
         else
-          Article.update_all(["conversation_id = ?", parent.conversation],
-                             ["conversation_id = ?", article.conversation])
+          Article.where(conversation_id: article.conversation_id).update_all(conversation_id: parent.conversation_id)
         end
       end
       article.save
@@ -187,7 +177,7 @@ class Article < ActiveRecord::Base
     elsif parent_id
       self.conversation = Article.find_by_id(self.parent_id).conversation
     else
-      self.conversation ||= Conversation.create(:title => self.subject)
+      self.conversation ||= Conversation.create(title: self.subject)
     end
   end
 

@@ -17,7 +17,7 @@ class ArticlesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @article }
+      format.xml  { render xml: @article }
     end
   end
 
@@ -30,8 +30,8 @@ class ArticlesController < ApplicationController
     article.email = default_email
 
     respond_to do |format|
-      format.html { render :locals => { :article => article, :title => nil, :quoted => nil } }
-      format.xml  { render :xml => article }
+      format.html { render locals: { article: article, title: nil, quoted: nil } }
+      format.xml  { render xml: article }
     end
   end
 
@@ -41,7 +41,7 @@ class ArticlesController < ApplicationController
     article.email = default_email
     article.qt = nil
     article.body = nil
-    render :new, :locals => { :article => article, :quoted => article.body, :title => "Reply to Message" }
+    render :new, locals: { article: article, quoted: article.body, title: "Reply to Message" }
   end
 
   # GET /articles/1/edit
@@ -57,10 +57,10 @@ class ArticlesController < ApplicationController
 
     def sent(article, parent)
       flash[:notice] = "Message sent."
-      flash[:links] = [['Home', url_for(:action => 'index')],
-                       ['Current Articles', url_for(:controller => 'archive', :action => 'this_month')]]
-      cookies[:name] = { :value => article.name, :expires => 3.months.from_now, :path => "/" }
-      cookies[:email] = { :value => article.email, :expires => 3.months.from_now }
+      flash[:links] = [['Home', url_for(action: 'index')],
+                       ['Current Articles', url_for(controller: 'archive', action: 'this_month')]]
+      cookies[:name] = { value: article.name, expires: 3.months.from_now, path: "/" }
+      cookies[:email] = { value: article.email, expires: 3.months.from_now }
       if parent
         redirect_to article_path(parent)
       else
@@ -70,7 +70,7 @@ class ArticlesController < ApplicationController
 
     def invalid(article)
       @article = article
-      render :new, :locals => { :article => article, :quoted => nil, :title => "Reply to Message" }
+      render :new, locals: { article: article, quoted: nil, title: "Reply to Message" }
     end
 
     def cookies
@@ -82,7 +82,7 @@ class ArticlesController < ApplicationController
   # POST /articles.xml
   def create
     responder = CreatePostResponder.new(self)
-    SendArticle.new(responder).call(current_user, params[:article])
+    SendArticle.new(responder).call(current_user, article_params)
   end
 
   # DELETE /articles/1
@@ -136,5 +136,9 @@ class ArticlesController < ApplicationController
 
   def default_email
     cookie_or_user(:email)
+  end
+
+  def article_params
+    params.require(:article).permit(:name, :email, :subject, :qt, :body, :to, :parent_msgid, :parent_id, :reply_type)
   end
 end
