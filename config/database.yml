@@ -2,15 +2,9 @@
 development:
   adapter: mysql2
   database: bcmets
-  user: root
+  username: root
 
 test:
   adapter: mysql2
   database: bcmets_test
-  user: root
-
-production:
-  adapter: mysql2
-  database: bcmets_rails
-  user: pete
-  socket: /var/lib/mysql/mysql.sock
+  username: root

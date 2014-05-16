@@ -4,8 +4,6 @@ class Donation < ActiveRecord::Base
   validates_presence_of :date
   validates_numericality_of :amount
 
-  attr_accessible :date, :amount, :email
-
   def self.total_this_month(date = Time.zone.today)
     start_of_month = Date.new(date.year, date.month, 1)
     end_of_month = 1.month.since(start_of_month)

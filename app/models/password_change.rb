@@ -1,12 +1,10 @@
 class PasswordChange < ActiveRecord::Base
-  attr_accessible :new_password, :new_password_confirmation, :old_password
-
   def self.columns() @columns ||= []; end
- 
+
   def self.column(name, sql_type = nil, default = nil, null = true)
     columns << ActiveRecord::ConnectionAdapters::Column.new(name.to_s, default, sql_type.to_s, null)
   end
- 
+
   column :id, :integer
   column :old_password, :string
   column :new_password, :string

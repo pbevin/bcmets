@@ -3,7 +3,6 @@ require 'nokogiri'
 
 class Feed < ActiveRecord::Base
   has_many :entries, :class_name => "FeedEntry"
-  attr_accessible :url
 
   def self.update_all()
     all.each do |feed|

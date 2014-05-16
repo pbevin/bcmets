@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   end
 
   validates_presence_of :name
-  attr_protected :active
+
   has_attached_file :photo, :processors => [:cropper], :styles => {
     :small => "100x100#",
     :medium => "300x300>",
@@ -20,11 +20,6 @@ class User < ActiveRecord::Base
   has_many :events, :class_name => "EventLog"
   has_and_belongs_to_many :saved_articles,
     :join_table => "saved_articles", :class_name => "Article"
-
-  attr_accessible :name, :created_at, :email_delivery
-  attr_accessible :password, :password_confirmation, :email
-  attr_accessible :active, :location, :photo
-  attr_accessible :crop_x, :crop_y, :crop_w, :crop_h
 
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
