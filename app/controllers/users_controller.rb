@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_filter :require_admin, :only => [:index, :destroy]
+  before_filter :require_admin, only: [:index, :destroy]
 
   def index
     @users = User.order("created_at DESC")
-    render :index, :layout => "admin"
+    render :index, layout: "admin"
   end
 
   def new
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def edit
     if params[:id] != 'current' && logged_in_as_admin
       @user = User.find_by_id(params[:id])
-      render :template => "users/edit_root"
+      render template: "users/edit_root"
     else
       return require_login if !current_user
       @user = current_user
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
         end
         redirect_to(root_url)
       else
-        render :action => "new"
+        render action: "new"
       end
     end
   end
@@ -58,7 +58,7 @@ class UsersController < ApplicationController
       flash[:notice] = "User added"
       redirect_to(root_url)
     else
-      render :action => :new
+      render action: :new
     end
   end
   private :create_and_activate
@@ -71,17 +71,17 @@ class UsersController < ApplicationController
       redirect_to user_path('current')
     when :failure
       @user = User.find(params[:id])
-      render :action => "edit"
+      render action: "edit"
     when :photo_updated
       @user = User.find(params[:id])
-      render :action => "crop"
+      render action: "crop"
     when :require_login
       require_login
     end
   end
 
   def edit_email
-    @email_change = EmailChange.new(:new_email => current_user.email)
+    @email_change = EmailChange.new(new_email: current_user.email)
   end
 
   def save_email
@@ -93,7 +93,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Email changed to #{@email_change.new_email}."
       redirect_to edit_user_path(current_user)
     else
-      render :action => "edit_email"
+      render action: "edit_email"
     end
   end
 
@@ -110,7 +110,7 @@ class UsersController < ApplicationController
       flash[:notice] = 'Password changed.'
       redirect_to current_user
     else
-      render :action => 'edit_password'
+      render action: 'edit_password'
     end
   end
 
@@ -121,7 +121,7 @@ class UsersController < ApplicationController
     else
       @user = User.find(params[:id])
     end
-    @articles = @articles = Article.where("email = ? or user_id = ?", @user.email, @user.id).order("sent_at DESC").paginate(:page => params[:page])
+    @articles = @articles = Article.where("email = ? or user_id = ?", @user.email, @user.id).order("sent_at DESC").paginate(page: params[:page])
   end
 
   def password

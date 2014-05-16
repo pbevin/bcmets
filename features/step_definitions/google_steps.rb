@@ -11,13 +11,13 @@ When /^I go to the archives at "([^\"]*)"/ do |path|
 end
 
 Given /^there is an article posted on "([^\"]*)"$/ do |date|
-  Article.make!(:received_at => date)
+  Article.make!(received_at: date)
 end
 
 Given /^there is an article posted on "([^\"]*)" with subject "([^\"]*)"$/ do |date, subject|
   Article.make!(
-    :received_at => date,
-    :subject => subject
+    received_at: date,
+    subject: subject
   )
 end
 

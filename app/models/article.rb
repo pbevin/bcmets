@@ -3,7 +3,7 @@ require 'article_parser'
 class Article < ActiveRecord::Base
   validates_uniqueness_of :msgid
   attr_accessor :children
-  belongs_to :parent, :class_name => "Article", :foreign_key => "parent_id"
+  belongs_to :parent, class_name: "Article", foreign_key: "parent_id"
   belongs_to :user
   belongs_to :conversation
   before_create :start_conversation
@@ -13,8 +13,8 @@ class Article < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :email
   validates_format_of :email,
-                      :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
-                      :message => "is not a full email address"
+                      with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
+                      message: "is not a full email address"
   validates_presence_of :subject
   validates_presence_of :body
 
@@ -52,7 +52,7 @@ class Article < ActiveRecord::Base
     earliest = Time.local(year, month, 1, 0, 0, 0)
     latest = 1.month.since(earliest)
 
-    where(:received_at => (earliest..latest)).order(order)
+    where(received_at: (earliest..latest)).order(order)
   end
 
   def self.link_threads(since=6.months.ago)
@@ -177,7 +177,7 @@ class Article < ActiveRecord::Base
     elsif parent_id
       self.conversation = Article.find_by_id(self.parent_id).conversation
     else
-      self.conversation ||= Conversation.create(:title => self.subject)
+      self.conversation ||= Conversation.create(title: self.subject)
     end
   end
 

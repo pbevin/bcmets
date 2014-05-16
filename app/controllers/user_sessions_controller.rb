@@ -21,7 +21,7 @@ class UserSessionsController < ApplicationController
         format.html { redirect_back_or_home }
         format.json { render json: { succeeded: true } }
       else
-        format.html { render :action => "new" }
+        format.html { render action: "new" }
         format.json { render json: { succeeded: false, errors: @user_session.errors }, status: :unprocessable_entity }
       end
     end

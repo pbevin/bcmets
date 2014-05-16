@@ -22,15 +22,15 @@ set :scm, :git
 
 role :app, "www.bcmets.org"
 role :web, "www.bcmets.org"
-role :db,  "www.bcmets.org", :primary => true
+role :db,  "www.bcmets.org", primary: true
 
 
 namespace :deploy do
-  task :start, :roles => :app do
+  task :start, roles: :app do
     run "touch #{current_release}/tmp/restart.txt"
   end
 
-  task :stop, :roles => :app do
+  task :stop, roles: :app do
     # Do nothing.
   end
 
@@ -41,7 +41,7 @@ namespace :deploy do
   before "deploy:finalize_update", "deploy:dbconfig"
 
   desc "Restart Application"
-  task :restart, :roles => :app do
+  task :restart, roles: :app do
     run "touch #{current_release}/tmp/restart.txt"
   end
 
@@ -55,7 +55,7 @@ namespace :deploy do
   before "deploy:finalize_update", "deploy:link_sphinx"
 
   desc "Update the crontab file"
-  task :update_crontab, :roles => :db do
+  task :update_crontab, roles: :db do
     run "cd #{release_path} && whenever --update-crontab #{application}"
   end
   #before "deploy:finalize_update", "deploy:update_crontab"

@@ -2,7 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 
 class Feed < ActiveRecord::Base
-  has_many :entries, :class_name => "FeedEntry"
+  has_many :entries, class_name: "FeedEntry"
 
   def self.update_all()
     all.each do |feed|
@@ -21,12 +21,12 @@ class Feed < ActiveRecord::Base
         feed = Feedzirra::Feed.parse(open(feed_url).read)
         return unless feed || feed.is_a?(Fixnum)
         feed.entries.each do |entry|
-          unless FeedEntry.exists? :guid => entry.id
+          unless FeedEntry.exists? guid: entry.id
             entries << FeedEntry.create!(
               :name         => entry.title,
               :summary      => entry.summary,
               :url          => entry.url,
-              :published_at => entry.published,
+              published_at: entry.published,
               :guid         => entry.id
             )
           end

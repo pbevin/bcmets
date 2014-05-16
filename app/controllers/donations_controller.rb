@@ -1,5 +1,5 @@
 class DonationsController < ApplicationController
-  before_filter :require_admin, :except => :stats
+  before_filter :require_admin, except: :stats
 
   def index
     @donations = Donation.order('date DESC')
@@ -20,7 +20,7 @@ class DonationsController < ApplicationController
       flash[:notice] = "Successfully created donation."
       redirect_to donations_path
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
@@ -34,7 +34,7 @@ class DonationsController < ApplicationController
       flash[:notice] = "Successfully updated donation."
       redirect_to @donations
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 
@@ -46,7 +46,7 @@ class DonationsController < ApplicationController
   end
 
   def stats
-    render :text => "#{Donation.total_this_month} #{Donation.total_this_year}"
+    render text: "#{Donation.total_this_month} #{Donation.total_this_year}"
   end
 
   private

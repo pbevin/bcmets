@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe User do
-  let(:user) { User.create!(:email => "test@example.com", :name => "Fred") }
+  let(:user) { User.create!(email: "test@example.com", name: "Fred") }
 
   let(:article) {
     Article.create(
-      :name => "Anita",
-      :email => "test2@example.com",
-      :subject => "Test article",
-      :body => "xyzzy"
+      name: "Anita",
+      email: "test2@example.com",
+      subject: "Test article",
+      body: "xyzzy"
     )
   }
 

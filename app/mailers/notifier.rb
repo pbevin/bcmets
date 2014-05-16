@@ -1,19 +1,19 @@
 class Notifier < ActionMailer::Base
-  default :from => "Pete Bevin <owner@bcmets.org>"
+  default from: "Pete Bevin <owner@bcmets.org>"
 
   def activation_instructions(user)
     @account_activation_url = register_url(user.perishable_token)
-    mail(:subject => "Activation Instructions", :to => user.email)
+    mail(subject: "Activation Instructions", to: user.email)
   end
 
   def activation_confirmation(user)
     @root_url = root_url
-    mail(:subject => "Activation Complete", :to => user.email)
+    mail(subject: "Activation Complete", to: user.email)
   end
 
   def password_reset(user)
-    @reset_password_url = reset_password_url(:activation_code => user.perishable_token)
-    mail(:subject => "Password reset", :to => user.email)
+    @reset_password_url = reset_password_url(activation_code: user.perishable_token)
+    mail(subject: "Password reset", to: user.email)
   end
 
   def article(article)
@@ -23,7 +23,7 @@ class Notifier < ActionMailer::Base
     @article = article
 
     mail(
-      :subject => article.subject,
+      subject: article.subject,
       :to      => article.mail_to,
       :cc      => article.mail_cc,
       :from    => article.from

@@ -5,11 +5,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Article do
   before(:each) do
     @attrs = {
-      :name => "Fred",
-      :email => "fred@example.com",
-      :body => "lorem ipsum",
-      :subject => "my title",
-      :msgid => "12345@bcmets.org"
+      name: "Fred",
+      email: "fred@example.com",
+      body: "lorem ipsum",
+      subject: "my title",
+      msgid: "12345@bcmets.org"
     }
     @article = Article.new(@attrs)
   end
@@ -40,8 +40,8 @@ describe Article do
 
   describe ".link_threads" do
     it "links articles together based on parent_msgid" do
-      art1 = Article.make!(:msgid => "<abc>")
-      art2 = Article.make!(:msgid => "<def>", :parent_msgid => "<abc>")
+      art1 = Article.make!(msgid: "<abc>")
+      art2 = Article.make!(msgid: "<def>", parent_msgid: "<abc>")
 
       Article.link_threads
 
@@ -53,9 +53,9 @@ describe Article do
   describe ".thread_tree" do
     before(:each) do
       @art1 = Article.make!
-      @art2 = Article.make!(:parent_id => @art1.id)
-      @art3 = Article.make!(:parent_id => @art2.id)
-      @art4 = Article.make!(:parent_id => @art1.id)
+      @art2 = Article.make!(parent_id: @art1.id)
+      @art3 = Article.make!(parent_id: @art2.id)
+      @art4 = Article.make!(parent_id: @art1.id)
       @art5 = Article.make!
 
       @tree = Article.thread_tree([@art1, @art2, @art3, @art4, @art5])
@@ -138,26 +138,26 @@ describe Article do
 
   it "detects charset based on content type" do
     Article.new(
-      :content_type => 'text/plain; charset=utf-8'
+      content_type: 'text/plain; charset=utf-8'
     ).charset.should == "utf-8"
 
     Article.new(
-      :content_type => 'text/plain; charset="us-ascii" ; format="flowed"'
+      content_type: 'text/plain; charset="us-ascii" ; format="flowed"'
     ).charset.should == "us-ascii"
 
     Article.new(
-      :content_type => 'text/plain; charset=SOME-CHARSET; format=flowed'
+      content_type: 'text/plain; charset=SOME-CHARSET; format=flowed'
     ).charset.should == "SOME-CHARSET"
 
-    Article.new(:content_type => nil).charset.should == "utf-8"
-    Article.new(:content_type => "").charset.should == "utf-8"
+    Article.new(content_type: nil).charset.should == "utf-8"
+    Article.new(content_type: "").charset.should == "utf-8"
   end
 
   describe '#body_utf8' do
     it "converts body to UTF8 when content type is UTF8" do
       Article.new(
-        :content_type => 'text/plain; charset=utf-8',
-        :body => "Påté"
+        content_type: 'text/plain; charset=utf-8',
+        body: "Påté"
       ).body_utf8.should ==
         "Påté"
     end
@@ -165,8 +165,8 @@ describe Article do
     it "converts ISO-8859-1 to UTF8" do
       schön_iso_8859_1 = [115, 99, 104, 246, 110].pack("C*").force_encoding("US-ASCII")
       body = Article.new(
-        :content_type => 'text/plain;charset="iso8859-1"',
-        :body => schön_iso_8859_1
+        content_type: 'text/plain;charset="iso8859-1"',
+        body: schön_iso_8859_1
       ).body_utf8
       #body.should == "schön"
       body.encoding.name.should == "UTF-8"
@@ -178,8 +178,8 @@ describe Article do
       # which is 0xC2 0xA0 in UTF-8
       inbytes = [160] + "Hi,".bytes.to_a
       body = Article.new(
-        :content_type => 'text/plain',
-        :body => inbytes.pack("C*")
+        content_type: 'text/plain',
+        body: inbytes.pack("C*")
       ).body_utf8
       body.encoding.name.should == "UTF-8"
       body.bytes.to_a.should == [0xC2, 0xA0] + "Hi,".bytes.to_a
@@ -262,22 +262,22 @@ describe Article do
     describe ".link_threads" do
       it "links up conversations" do
         a1 = Article.make!
-        a2 = Article.make!(:parent_msgid => a1.msgid)
+        a2 = Article.make!(parent_msgid: a1.msgid)
         Article.link_threads
         a1.reload.conversation.should === a2.reload.conversation
       end
 
       it "handles out of order message arrival" do
-        grandchild = Article.make!(:msgid => "3", :parent_msgid => "2")
+        grandchild = Article.make!(msgid: "3", parent_msgid: "2")
         Article.link_threads
 
-        child = Article.make!(:msgid => "2", :parent_msgid => "1")
+        child = Article.make!(msgid: "2", parent_msgid: "1")
         Article.link_threads
 
         [grandchild, child].each(&:reload)
         grandchild.conversation.should == child.conversation
 
-        parent = Article.make!(:msgid => "1")
+        parent = Article.make!(msgid: "1")
         Article.link_threads
 
         [grandchild, child, parent].each(&:reload)
@@ -287,8 +287,8 @@ describe Article do
       end
 
       it "merges conversations based on new information" do
-        child1 = Article.make!(:msgid => "3", :parent_msgid => "1")
-        child2 = Article.make!(:msgid => "2", :parent_msgid => "1")
+        child1 = Article.make!(msgid: "3", parent_msgid: "1")
+        child2 = Article.make!(msgid: "2", parent_msgid: "1")
         Article.link_threads
 
         [child1, child2].each(&:reload)
@@ -308,14 +308,14 @@ describe Article do
   describe '#sent_at_human' do
     it "shows a recent date as just the time" do
       Timecop.freeze("2012-07-01 11:39:00".to_time) do
-        a = Article.new(:sent_at => "2012-07-01 09:41:18")
+        a = Article.new(sent_at: "2012-07-01 09:41:18")
         a.sent_at_human.should == "09:41 AM"
       end
     end
 
     it "shows a date from yesterday as just the date" do
       Timecop.freeze("2012-07-01 11:39:00".to_time) do
-        a = Article.new(:sent_at => "2012-06-30 23:52:39")
+        a = Article.new(sent_at: "2012-06-30 23:52:39")
         a.sent_at_human.should == "Jun 30, 2012"
       end
     end

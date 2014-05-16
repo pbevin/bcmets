@@ -14,8 +14,8 @@ describe Feed do
     def create_entries(count)
       count.times do |n|
         feed.entries.create(
-          :created_at => n.days.ago,
-          :name => "Entry #{n}"
+          created_at: n.days.ago,
+          name: "Entry #{n}"
         )
       end
     end
@@ -31,10 +31,10 @@ describe Feed do
   describe '#last_entry_date' do
     it "gives the date of the most recent entry" do
       Timecop.freeze do
-        feed.entries.create(:created_at => 7.days.ago)
-        feed.entries.create(:created_at => 10.days.ago)
-        feed.entries.create(:created_at => 5.days.ago)
-        feed.entries.create(:created_at => 12.days.ago)
+        feed.entries.create(created_at: 7.days.ago)
+        feed.entries.create(created_at: 10.days.ago)
+        feed.entries.create(created_at: 5.days.ago)
+        feed.entries.create(created_at: 12.days.ago)
 
         feed.last_entry_date.should == 5.days.ago
       end

@@ -1,7 +1,7 @@
 require 'will_paginate/array'
 
 class ArchiveController < ApplicationController
-  before_filter :enable_search_engines, :only => :index
+  before_filter :enable_search_engines, only: :index
 
   def index
     now = Time.zone.now
@@ -53,9 +53,9 @@ class ArchiveController < ApplicationController
     if @article.nil?
       flash[:notice] = "Oops.  We couldn't find your bookmark.  " +
           "You can use the Search function to try and locate it, or click on a month below."
-      redirect_to :action => "index"
+      redirect_to action: "index"
     else
-      redirect_to :action => "article", :id => @article
+      redirect_to action: "article", id: @article
     end
   end
 
@@ -71,14 +71,14 @@ class ArchiveController < ApplicationController
     @email = params[:email]
     @articles = Article.where(email: params[:email]).order("sent_at DESC")
     unless params[:page] == "all"
-      @articles = @articles.paginate(:page => params[:page])
+      @articles = @articles.paginate(page: params[:page])
       @pagination = true
     end
   end
 
   def this_month
     date = Time.zone.today
-    redirect_to url_for(:action => 'month', :year => date.year, :month => date.month)
+    redirect_to url_for(action: 'month', year: date.year, month: date.month)
   end
 
   private

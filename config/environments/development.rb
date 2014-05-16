@@ -35,7 +35,7 @@ Bcmets::Application.configure do
 
   $list_address = 'pete@petebevin.com'
 
-  config.action_mailer.default_url_options = { :host => "localhost:3000" }
+  config.action_mailer.default_url_options = { host: "localhost:3000" }
   config.action_mailer.delivery_method = :smtp
 
   password = nil
@@ -50,7 +50,7 @@ Bcmets::Application.configure do
     :user_name            => 'pbevin@gmail.com',
     :password             => password,
     :authentication       => 'plain',
-    :enable_starttls_auto => true
+    enable_starttls_auto: true
   }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true

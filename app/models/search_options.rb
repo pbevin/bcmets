@@ -17,14 +17,14 @@ class SearchOptions
       }
     }
     if order == 'date'
-      @search_options.merge!(:order => :received_at, :sort_mode => :desc)
+      @search_options.merge!(order: :received_at, sort_mode: :desc)
       @sorting_by = "date"
       @switch_sort = "relevance"
-      @switch_url = { :action => "search", :q => @q, :sort => 'relevance' }
+      @switch_url = { action: "search", q: @q, sort: 'relevance' }
     else
       @sorting_by = "relevance"
       @switch_sort = "date"
-      @switch_url = { :action => "search", :q => @q, :sort => 'date' }
+      @switch_url = { action: "search", q: @q, sort: 'date' }
     end
   end
 

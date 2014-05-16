@@ -16,7 +16,7 @@ describe ArticlesController do
     it "assigns the requested article as @article" do
       article = Article.make!
       Article.stub(:find).with("37").and_return(article)
-      get :show, :id => "37"
+      get :show, id: "37"
       assigns[:article].should equal(article)
     end
 
@@ -27,7 +27,7 @@ describe ArticlesController do
 
       Article.should_receive(:find).once().with("37").and_return(article)
       article.should_receive(:conversation).once().and_return(conversation)
-      get :show, :id => "37"
+      get :show, id: "37"
       assigns[:article].should equal(article)
     end
   end
@@ -36,12 +36,12 @@ describe ArticlesController do
     it "destroys the requested article" do
       Article.should_receive(:find).with("37").and_return(mock_article)
       mock_article.should_receive(:destroy)
-      delete :destroy, :id => "37"
+      delete :destroy, id: "37"
     end
 
     it "redirects to the articles list" do
-      Article.stub(:find).and_return(mock_article(:destroy => true))
-      delete :destroy, :id => "1"
+      Article.stub(:find).and_return(mock_article(destroy: true))
+      delete :destroy, id: "1"
       response.should redirect_to(articles_url)
     end
   end

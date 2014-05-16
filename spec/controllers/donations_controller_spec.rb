@@ -12,7 +12,7 @@ describe DonationsController do
 
   context "admin functions" do
     before(:each) do
-      controller.stub(:require_admin => true)
+      controller.stub(require_admin: true)
     end
 
     describe "GET index" do

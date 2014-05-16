@@ -4,8 +4,8 @@ Given /^I am logged in as "([^\"]*)"$/ do |email|
   u.activate!
   u.save!
   visit "/login"
-  fill_in "Email", :with => email
-  fill_in "Password", :with => "xyzzy"
+  fill_in "Email", with: email
+  fill_in "Password", with: "xyzzy"
   click_button "Login"
   page.should have_content("Logged in")
 end
@@ -16,8 +16,8 @@ end
 
 When /^I post an article$/ do
   visit post_path
-  fill_in "Subject", :with => Faker::Lorem.sentence
-  fill_in "article_qt", :with => Faker::Lorem.paragraph
+  fill_in "Subject", with: Faker::Lorem.sentence
+  fill_in "article_qt", with: Faker::Lorem.paragraph
   click_button "Post"
   page.should have_content("Message sent")
 end
@@ -29,10 +29,10 @@ end
 
 When /^I post an article with email "([^\"]*)"$/ do |email|
   visit post_path
-  fill_in "Name", :with => Faker::Name.name
-  fill_in "Email", :with => email
-  fill_in "Subject", :with => Faker::Lorem.sentence
-  fill_in "article_qt", :with => Faker::Lorem.paragraph
+  fill_in "Name", with: Faker::Name.name
+  fill_in "Email", with: email
+  fill_in "Subject", with: Faker::Lorem.sentence
+  fill_in "article_qt", with: Faker::Lorem.paragraph
   click_button "Post"
   page.should have_content("Message sent")
 end
@@ -43,10 +43,10 @@ end
 
 When /^an article arrives with email "([^\"]*)"$/ do |email|
   Article.create!(
-    :email => email,
-    :name => Faker::Name.name,
-    :subject => Faker::Lorem.sentence,
-    :body => Faker::Lorem.paragraph)
+    email: email,
+    name: Faker::Name.name,
+    subject: Faker::Lorem.sentence,
+    body: Faker::Lorem.paragraph)
 end
 
 Then /^no article should be queued$/ do

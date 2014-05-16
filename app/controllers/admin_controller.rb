@@ -10,7 +10,7 @@ class AdminController < ApplicationController
       else
         import_mailman_dump(filename)
       end
-      redirect_to :action => :index
+      redirect_to action: :index
     end
   end
 
@@ -31,7 +31,7 @@ class AdminController < ApplicationController
         u[:name] = u[:email] if u[:name].nil? || u[:name] == ''
 
         user = User.find_by_email(u[:email])
-        user ||= User.new(:email => u[:email])
+        user ||= User.new(email: u[:email])
         user.name = u[:name]
         user.password = u[:password]
         user.email_delivery = delivery_type

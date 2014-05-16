@@ -9,7 +9,7 @@ describe "archive/index" do
 
   it "should render years back to 2001" do
     (2000..2009).each do |year|
-      rendered.should have_selector('h2', :text => year.to_s)
+      rendered.should have_selector('h2', text: year.to_s)
     end
   end
 
