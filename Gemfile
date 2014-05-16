@@ -22,6 +22,7 @@ gem 'will_paginate', '~> 3.0.0'
 gem 'faker'
 gem 'haml'
 gem 'authlogic'
+gem 'scrypt'
 gem 'feedzirra', "~> 0.2.0.rc2"
 gem 'mysql2'
 gem 'thinking-sphinx', '~> 3.1.1'
