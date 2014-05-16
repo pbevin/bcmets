@@ -53,11 +53,11 @@ class Feed < ActiveRecord::Base
   end
 
   def last_n_entries(n)
-    entries.all(:order => "created_at DESC", :limit => n)
+    entries.order("created_at DESC").limit(n)
   end
 
   def last_entry_date
-    entries.first(:order => "created_at DESC").created_at
+    entries.order("created_at DESC").first.created_at
   end
 
   def parsed_feed
