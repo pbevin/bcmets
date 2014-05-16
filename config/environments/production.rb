@@ -76,9 +76,10 @@ Bcmets::Application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   $list_address = 'bcmets@bcmets.org'
-  config.middleware.use ExceptionNotifier,
-    email_prefix: "[BCM] ",
-    sender_address: "pete@bcmets.org",
-    exception_recipients: %w{pete@petebevin.com}
-
+  config.middleware.use ExceptionNotification::Rack,
+    email: {
+      email_prefix: "[BCM] ",
+      sender_address: "pete@bcmets.org",
+      exception_recipients: %w{pete@petebevin.com}
+    }
 end
