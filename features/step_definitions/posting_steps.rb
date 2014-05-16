@@ -10,6 +10,10 @@ Given /^I am logged in as "([^\"]*)"$/ do |email|
   page.should have_content("Logged in")
 end
 
+Given(/^a parent article exists with #{capture_fields}$/) do |attrs|
+  @article = @parent = Article.make! parse_fields(attrs)
+end
+
 When /^I post an article$/ do
   visit post_path
   fill_in "Subject", :with => Faker::Lorem.sentence

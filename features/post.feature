@@ -34,7 +34,7 @@ Feature: Posting Articles
     And no article should be queued
 
   Scenario: Reply to an article
-    Given an article: "parent" exists with msgid: "<xyzzy@fake>"
+    Given a parent article exists with msgid: "<xyzzy@fake>"
     When I go to that article
     And I follow "Reply to this message"
     And I fill in "Name" with "Reply Name"
@@ -44,7 +44,7 @@ Feature: Posting Articles
     And I press "Post"
     Then I should see "Message sent"
     And an article should be queued with email: "member@example.com", parent_msgid: "<xyzzy@fake>"
-    And I should be on article: "parent"
+    And I should be on the parent article
 
   Scenario: Reply to an article (invalid fields)
     Given an article exists
@@ -60,7 +60,7 @@ Feature: Posting Articles
     And I fill in "Name" with "A. Spammer"
     And I fill in "Email" with "member@example.com"
     And I fill in "Subject" with "Make Money Fast"
-    And I fill in "article_body" with "..."
+    And I fill in the fake article body with "Make easy $$$ working from home!@!!"
     And I press "Post"
     Then I should see "Message sent"
     But no article should be queued
@@ -76,7 +76,7 @@ Feature: Posting Articles
     Then I should see "Reply to Message" within "h1"
 
   Scenario: Back to "this month"
-    Given an article: "parent" exists with msgid: "xyzzy"
+    Given an article exists with msgid: "xyzzy"
     When I go to that article
     And I follow "Reply to this message"
     And I fill in "Name" with "Reply Name"

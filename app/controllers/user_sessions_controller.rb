@@ -13,7 +13,7 @@ class UserSessionsController < ApplicationController
   # POST /user_sessions
   # POST /user_sessions.json
   def create
-    @user_session = UserSession.new(params[:user_session])
+    @user_session = UserSession.new(user_session_params)
 
     respond_to do |format|
       if @user_session.save
@@ -39,5 +39,11 @@ class UserSessionsController < ApplicationController
       format.html { redirect_to(root_url) }
       format.json  { head :ok }
     end
+  end
+
+  private
+
+  def user_session_params
+    params.require(:user_session).permit(:email, :password)
   end
 end

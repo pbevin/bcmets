@@ -1,7 +1,7 @@
-Given(/^there are no #{capture_plural_factory}$/) do |plural_factory|
-  name = plural_factory.singularize
-  factory, name = *parse_model(name)
-  model_class = pickle_config.factories[factory].klass
-  model_class.delete_all
+Given(/^there are no links$/) do
+  Link.destroy_all
 end
 
+Then(/^a link should exist with #{capture_fields}$/) do |attrs|
+  Link.where(parse_fields(attrs)).count.should == 1
+end

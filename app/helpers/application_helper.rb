@@ -2,7 +2,8 @@ require 'current_user'
 
 module ApplicationHelper
   include CurrentUser
+
   def all_links
-    Link.all(:order => "position")
+    Link.order("position")
   end
 end

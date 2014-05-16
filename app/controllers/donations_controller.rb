@@ -2,7 +2,7 @@ class DonationsController < ApplicationController
   before_filter :require_admin, :except => :stats
 
   def index
-    @donations = Donation.all(:order => 'date DESC')
+    @donations = Donation.order('date DESC')
     @donation = Donation.new
   end
 
@@ -15,7 +15,7 @@ class DonationsController < ApplicationController
   end
 
   def create
-    @donation = Donation.new(params[:donation])
+    @donation = Donation.new(donation_params)
     if @donation.save
       flash[:notice] = "Successfully created donation."
       redirect_to donations_path
@@ -30,7 +30,7 @@ class DonationsController < ApplicationController
 
   def update
     @donation = Donation.find(params[:id])
-    if @donation.update_attributes(params[:donation])
+    if @donation.update_attributes(donation_params)
       flash[:notice] = "Successfully updated donation."
       redirect_to @donations
     else
@@ -47,5 +47,11 @@ class DonationsController < ApplicationController
 
   def stats
     render :text => "#{Donation.total_this_month} #{Donation.total_this_year}"
+  end
+
+  private
+
+  def donation_params
+    params.require(:donation).permit(:amount, :email, :date)
   end
 end

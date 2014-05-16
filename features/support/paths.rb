@@ -32,14 +32,14 @@ module NavigationHelpers
     when "Donations"
       donations_path
 
-    when "that article"
-      article_path(model('that article'))
+    when "the article", "that article"
+      article_path(@article)
 
-    when /article: "([^"]*)"/
-      article_path(model($&))
+    when "the parent article"
+      article_path(@parent)
 
     when /Edit User for (.+)/
-      edit_user_path(model($1))
+      edit_user_path(@user)
 
     when "my profile"
       "/users/current/edit"

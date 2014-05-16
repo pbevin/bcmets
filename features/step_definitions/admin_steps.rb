@@ -32,9 +32,3 @@ end
 When /^I delete the first user$/ do
   find("#users tbody tr:first-child").click_link("D")
 end
-
-Given /^#{capture_model} is( not)? active$/ do |name, not_active|
-  user = model(name)
-  user.active = !not_active
-  user.save!
-end

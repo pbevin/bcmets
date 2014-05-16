@@ -69,7 +69,7 @@ class ArchiveController < ApplicationController
 
   def author
     @email = params[:email]
-    @articles = Article.find_all_by_email(params[:email], :order => "sent_at DESC")
+    @articles = Article.where(email: params[:email]).order("sent_at DESC")
     unless params[:page] == "all"
       @articles = @articles.paginate(:page => params[:page])
       @pagination = true

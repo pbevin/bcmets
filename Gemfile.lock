@@ -136,9 +136,6 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
-    pickle (0.4.11)
-      cucumber (>= 0.8)
-      rake
     polyglot (0.3.4)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -253,7 +250,6 @@ DEPENDENCIES
   newrelic_rpm
   nokogiri
   paperclip (~> 4.1.1)
-  pickle
   rails (~> 4.1.1)
   rails_autolink
   rspec (~> 2.14.0)

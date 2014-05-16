@@ -41,7 +41,6 @@ group :test do
   gem 'launchy'
   gem 'rspec-rails', '~> 2.14.0'
   gem 'database_cleaner'
-  gem 'pickle'
   gem 'sham'
   gem 'machinist'
   gem 'timecop'

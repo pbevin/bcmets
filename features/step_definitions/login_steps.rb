@@ -45,11 +45,10 @@ Given /^I sign up as "([^\"]*)"$/ do |email|
   click_button "Sign up"
 end
 
-Given /^(.+) is logged in$/ do |who|
-  user = model(who)
-  user.activate!
+Given /^that user is logged in$/ do
+  @user.activate!
   visit "/login"
-  fill_in "Email", :with => user.email
+  fill_in "Email", :with => @user.email
   fill_in "Password", :with => "xyzzy"
   click_button "Login"
 end
@@ -77,14 +76,10 @@ When /^I enter my password "(.*?)" with confirmation "(.*?)"$/ do |password, con
 end
 
 Then /^(.+) should have password: "([^\"]*)"$/ do |who, password|
-  user = model(who)
-  user.valid_password?(password).should be_true
+  @user.reload.valid_password?(password).should be_true
 end
 
-Then /^(.+) should have been deleted/ do |who|
-  begin
-    user = model(who)
-    fail("User should have been deleted but wasn't")
-  rescue ActiveRecord::RecordNotFound
-  end
+Then /^that user should have been deleted/ do
+  fail "Don't know what user this is talking about" if !@user
+  User.where(id: @user.id).should be_empty
 end

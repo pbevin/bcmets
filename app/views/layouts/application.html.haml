@@ -1,9 +1,7 @@
 !!! Strict
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en" }
   %head
-    %title
-      BCMets.org -
-      = @title || "Metastatic Breast Cancer"
+    %title BCMets.org - #{@title || "Metastatic Breast Cancer"}
     - if not @indexable
       %meta{ :name => "robots", :content => "noindex, nofollow" }
     %meta{"http-equiv" => "Content-type", :content => "text/html;charset=UTF-8"}

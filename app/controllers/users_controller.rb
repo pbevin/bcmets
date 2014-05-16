@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_filter :require_admin, :only => [:index, :destroy]
 
   def index
-    @users = User.all(:order => "created_at DESC")
+    @users = User.order("created_at DESC")
     render :index, :layout => "admin"
   end
 
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
   end
 
   def create_and_activate
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
     @user.activate!
 
     if @user.signup!
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   private :create_and_activate
 
   def update
-    action = UserUpdate.new(params[:id], params[:user], current_user, logged_in_as_admin)
+    action = UserUpdate.new(params[:id], user_params, current_user, logged_in_as_admin)
     case action.run
     when :success
       flash[:notice] = 'Profile updated'
@@ -103,7 +103,7 @@ class UsersController < ApplicationController
   end
 
   def save_password
-    @password_change = PasswordChange.new(params[:password_change])
+    @password_change = PasswordChange.new(password_change_params)
     if @password_change.valid? && @password_change.old_password_correct?(current_user)
       current_user.password = @password_change.new_password
       current_user.save!
@@ -139,7 +139,7 @@ class UsersController < ApplicationController
 
   def profile
     @user = User.find(params[:id])
-    @articles = Article.find_all_by_email(@user.email, :order => "sent_at DESC")
+    @articles = Article.where(email: @user.email).order("sent_at DESC")
   end
 
   def unsubscribe
@@ -161,5 +161,16 @@ class UsersController < ApplicationController
     @user.destroy
     flash[:notice] = "User deleted"
     redirect_to users_path
+  end
+
+  private
+
+  def password_change_params
+    params.require(:password_change).permit(:old_password, :new_password, :new_password_confirmation)
+  end
+
+  def user_params
+    admin_params = logged_in_as_admin ? [:active] : []
+    params.require(:user).permit(:name, :photo, :email, :password, *admin_params)
   end
 end

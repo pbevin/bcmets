@@ -82,7 +82,7 @@ class ArticlesController < ApplicationController
   # POST /articles.xml
   def create
     responder = CreatePostResponder.new(self)
-    SendArticle.new(responder).call(current_user, params[:article])
+    SendArticle.new(responder).call(current_user, article_params)
   end
 
   # DELETE /articles/1
@@ -136,5 +136,9 @@ class ArticlesController < ApplicationController
 
   def default_email
     cookie_or_user(:email)
+  end
+
+  def article_params
+    params.require(:article).permit(:name, :email, :subject, :qt, :body, :to, :parent_msgid, :parent_id, :reply_type)
   end
 end
