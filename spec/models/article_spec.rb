@@ -268,20 +268,39 @@ describe Article do
       end
 
       it "handles out of order message arrival" do
-        a1 = Article.make!(:msgid => "3", :parent_msgid => "2")
+        grandchild = Article.make!(:msgid => "3", :parent_msgid => "2")
         Article.link_threads
 
-        a2 = Article.make!(:msgid => "2", :parent_msgid => "1")
+        child = Article.make!(:msgid => "2", :parent_msgid => "1")
         Article.link_threads
 
-        a3 = Article.make!(:msgid => "1")
+        [grandchild, child].each(&:reload)
+        grandchild.conversation.should == child.conversation
+
+        parent = Article.make!(:msgid => "1")
         Article.link_threads
 
-        a1.reload
-        a2.reload
-        a3.reload
+        [grandchild, child, parent].each(&:reload)
 
-        a1.conversation.should === a2.conversation
+        grandchild.conversation.should == child.conversation
+        child.conversation.should == parent.conversation
+      end
+
+      it "merges conversations based on new information" do
+        child1 = Article.make!(:msgid => "3", :parent_msgid => "1")
+        child2 = Article.make!(:msgid => "2", :parent_msgid => "1")
+        Article.link_threads
+
+        [child1, child2].each(&:reload)
+        child1.conversation_id.should_not eq(child2.conversation_id)
+
+        parent = Article.make!(msgid: "1")
+        Article.link_threads
+
+        [parent, child1, child2].each(&:reload)
+        child1.reload.conversation_id.should eq(parent.reload.conversation_id)
+        child2.reload.conversation_id.should eq(parent.reload.conversation_id)
+
       end
     end
   end

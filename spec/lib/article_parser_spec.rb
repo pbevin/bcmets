@@ -39,12 +39,12 @@ describe "Article Parser" do
 
   it "sets the received_at field based on the first line" do
     parser << "From bcmets-bounces@bcmets.org  Thu Mar 12 21:33:32 2009"
-    article.received_at.should == "Thu Mar 12 21:33:32 2009".to_time
+    article.received_at.should == Time.zone.parse("Thu Mar 12 21:33:32 2009")
   end
 
   it "is not fooled by two double spaces in dates before the 10th" do
     parser << "From bcmets-bounces@bcmets.org  Thu Mar  5 21:33:32 2009"
-    article.received_at.should == "Thu Mar  5 21:33:32 2009".to_time
+    article.received_at.should == Time.zone.parse("Thu Mar  5 21:33:32 2009")
   end
 
   it "sets the sent_at field based on the Date: header" do

@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     if params[:user][:active] == "1" && logged_in_as_admin
       create_and_activate
     else
-      p = params[:user].slice(:name, :email)
+      p = params.require(:user).permit(:name, :email)
       @user = User.new(p)
       @user.email_delivery = "none"
       if @user.signup!
