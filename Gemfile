@@ -29,7 +29,7 @@ gem 'nokogiri'
 gem 'rails_autolink'
 gem 'dynamic_form'
 gem 'gravatar_image_tag'
-gem "paperclip", "~> 2.7"
+gem 'paperclip', '~> 4.1.1'
 gem 'exception_notification', :require => 'exception_notifier'
 gem 'newrelic_rpm'
 
