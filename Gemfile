@@ -24,7 +24,7 @@ gem 'haml'
 gem 'authlogic'
 gem 'feedzirra', "~> 0.2.0.rc2"
 gem 'mysql2'
-gem 'thinking-sphinx', '~> 2.0.14'
+gem 'thinking-sphinx', '~> 3.1.1'
 gem 'nokogiri'
 gem 'rails_autolink'
 gem 'dynamic_form'
