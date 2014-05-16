@@ -35,8 +35,8 @@ gem 'newrelic_rpm'
 
 group :test do
   gem 'rspec', '~> 2.14.0'
-  gem 'cucumber', '~> 1.2.1'
-  gem 'cucumber-rails', '~> 1.3.0', :require => false
+  gem 'cucumber', '~> 1.3.15'
+  gem 'cucumber-rails', '~> 1.4.1', :require => false
   gem 'launchy'
   gem 'rspec-rails', '~> 2.14.0'
   gem 'database_cleaner'
