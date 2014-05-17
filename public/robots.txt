@@ -7,3 +7,5 @@
 User-Agent: *
 Disallow: /articles
 Disallow: /archive
+Disallow: /users
+Disallow: /blogs
