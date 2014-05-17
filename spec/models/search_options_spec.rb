@@ -5,8 +5,7 @@ describe SearchOptions do
 
   shared_examples_for "by date" do
     it "searches by received_at" do
-      options[:order].should == :received_at
-      options[:sort_mode].should == :desc
+      options[:order].should == "received_at desc"
     end
 
     it "is listed as search by date" do
@@ -21,7 +20,6 @@ describe SearchOptions do
   shared_examples_for "by relevance" do
     it "searches by default order" do
       options[:order].should be_nil
-      options[:sort_mode].should be_nil
     end
 
     it "is listed as search by relevance" do

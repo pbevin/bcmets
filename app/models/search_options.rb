@@ -17,7 +17,7 @@ class SearchOptions
       }
     }
     if order == 'date'
-      @search_options.merge!(order: :received_at, sort_mode: :desc)
+      @search_options.merge!(order: "received_at desc")
       @sorting_by = "date"
       @switch_sort = "relevance"
       @switch_url = { action: "search", q: @q, sort: 'relevance' }
