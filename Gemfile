@@ -16,8 +16,6 @@ gem 'uglifier', '>= 1.0.3'
 
 gem 'jquery-rails'
 
-gem 'capistrano'
-gem 'rvm-capistrano'
 gem 'will_paginate', '~> 3.0.0'
 gem 'faker'
 gem 'haml'
@@ -33,6 +31,12 @@ gem 'gravatar_image_tag'
 gem 'paperclip', '~> 4.1.1'
 gem 'exception_notification'
 gem 'newrelic_rpm'
+
+group :development do
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rvm', require: false
+end
 
 group :test do
   gem 'rspec', '~> 2.14.0'

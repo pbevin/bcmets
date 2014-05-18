@@ -1,62 +1,58 @@
-require 'bundler/capistrano'
-load 'deploy/assets'
+# config valid only for Capistrano 3.1
+lock '3.2.1'
 
-set :rvm_ruby_string, '2.1.1'
-set :rvm_type, :system
-require 'rvm/capistrano'
+set :application, 'bcmets'
+set :repo_url, 'git@github.com:pbevin/bcmets.git'
 
-set :application, "bcmets"
-set :repository,  "git://github.com/pbevin/bcmets.git"
-set :user, "pete"
-set :use_sudo, false
-set :public_children, "images"
+# Default branch is :master
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-# If you aren't deploying to /u/apps/#{application} on the target
-# servers (which is the default), you can specify the actual location
-# via the :deploy_to variable:
-set :deploy_to, "/home/www/#{application}"
+# Default deploy_to directory is /var/www/my_app
+set :deploy_to, '/home/www/bcmets'
 
-# If you aren't using Subversion to manage your source code, specify
-# your SCM below:
-set :scm, :git
+# Default value for :scm is :git
+# set :scm, :git
 
-role :app, "www.bcmets.org"
-role :web, "www.bcmets.org"
-role :db,  "www.bcmets.org", primary: true
+# Default value for :format is :pretty
+# set :format, :pretty
 
+# Default value for :log_level is :debug
+# set :log_level, :debug
+
+# Default value for :pty is false
+# set :pty, true
+
+# Default value for :linked_files is []
+set :linked_files, %w{config/database.yml}
+
+# Default value for linked_dirs is []
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system db/sphinx}
+
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+
+# Default value for keep_releases is 5
+# set :keep_releases, 5
 
 namespace :deploy do
-  task :start, roles: :app do
-    run "touch #{current_release}/tmp/restart.txt"
+
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      # execute :touch, release_path.join('tmp/restart.txt')
+    end
   end
 
-  task :stop, roles: :app do
-    # Do nothing.
+  after :publishing, :restart
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
   end
 
-  desc 'Fix up database.yml'
-  task :dbconfig do
-    run "cp #{shared_path}/database.yml #{release_path}/config/database.yml"
-  end
-  before "deploy:finalize_update", "deploy:dbconfig"
-
-  desc "Restart Application"
-  task :restart, roles: :app do
-    run "touch #{current_release}/tmp/restart.txt"
-  end
-
-  desc "Re-establish symlinks"
-  task :link_sphinx do
-    run <<-CMD
-      rm -fr #{release_path}/db/sphinx &&
-      ln -nfs #{shared_path}/db/sphinx #{release_path}/db/sphinx
-    CMD
-  end
-  before "deploy:finalize_update", "deploy:link_sphinx"
-
-  desc "Update the crontab file"
-  task :update_crontab, roles: :db do
-    run "cd #{release_path} && whenever --update-crontab #{application}"
-  end
-  #before "deploy:finalize_update", "deploy:update_crontab"
 end
