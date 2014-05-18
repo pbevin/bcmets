@@ -26,6 +26,19 @@ Feature: Becoming a user
     And a user should exist with email: "mary@example.com", email_delivery: "full"
     And I should be logged in
 
+  Scenario: Activate account with error
+    Given that I have a confirmation email for "mary@example.com"
+    When I click on the activation link
+    And I enter my password "secret" with confirmation "oops"
+    And I choose "user_email_delivery_full"
+    And I press "Sign me up!"
+    Then I should see "Password confirmation doesn't match Password"
+    When I enter my password "secret" with confirmation "secret"
+    And I press "Sign me up!"
+    Then I should see "Thank you for registering!"
+    And a user should exist with email: "mary@example.com", email_delivery: "full"
+    And I should be logged in
+
   Scenario: Login with valid account
     Given user "mary@example.com" with password "secret"
     When I go to Login

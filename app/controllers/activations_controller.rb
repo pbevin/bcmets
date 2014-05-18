@@ -11,10 +11,12 @@ class ActivationsController < ApplicationController
   end
 
   def create
-    if UserActivation.new(params[:id], user_params).run
+    activation = UserActivation.new(params[:id], user_params)
+    if activation.run
       flash[:notice] = "Thank you for registering!  Please check your email again for handy tips on using bcmets."
       redirect_to root_url
     else
+      @user = activation.user
       render :new
     end
   end
