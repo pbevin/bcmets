@@ -30,5 +30,15 @@ describe CharsetFixer do
   it "ignores ConverterNotFound errors" do
     CharsetFixer.new("utf-7").fix("hello").should == "hello"
   end
-end
 
+  it "removes unknown emoji characters" do
+    # This is because mysql won't store characters outside the
+    # Basic Multilingual Plane: http://stackoverflow.com/a/2692304/183140
+    CharsetFixer.new("utf-8").fix("\u{1F47D}").should == "" # alien
+  end
+
+  it "converts known emoji characters" do
+    CharsetFixer.new("utf-8").fix("\u{1F601}").should == ":)"
+    CharsetFixer.new("utf-8").fix("\u{1F612}").should == ":("
+  end
+end

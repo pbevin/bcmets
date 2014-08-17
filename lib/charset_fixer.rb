@@ -27,6 +27,12 @@ class CharsetFixer
       string.force_encoding(original_encoding)
     end
 
-    return string.encode(Encoding::UTF_8)
+    return convert_emoji(string.encode(Encoding::UTF_8))
+  end
+
+  def convert_emoji(str)
+    str.gsub(/[\u{1f601}-\u{1f60f}]/, ":)")  # smiley faces
+       .gsub(/[\u{1f612}-\u{1f616}]/, ":(")  # sad faces
+       .gsub(/[\u{1f300}-\u{1f6ff}]/, "")    # remove any other emoji
   end
 end
