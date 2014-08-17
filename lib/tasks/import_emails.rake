@@ -1,6 +1,6 @@
 def recent_files
   dir = ENV['MAIL_IMPORT_DIR'] || "/home/mets/arch"
-  t = 30.minutes.ago
+  t = 6.hours.ago
   files = []
   Dir.entries(dir).each do |f|
     next unless f =~ /^[12]/
