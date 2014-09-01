@@ -1,5 +1,5 @@
 body {
-  font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+  font-family: Optima, Arial, sans-serif;
 	color: #222;
 	background: #fff;
 	min-width: 970px;
@@ -235,7 +235,7 @@ padding-top : 1em;
 }
 
 pre {
-font-family: "Optima","Lucida Grande","Trebuchet MS",Verdana,sans-serif;
+font-family: Optima, Lucida Grande, sans-serif;
 font-size : 1em;
 }
 
