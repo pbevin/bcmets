@@ -44,7 +44,7 @@ class UpdateFeeds
         href = node['href']
         feed.update_attributes(
           xml_url: href,
-          name: Feedjira::Feed.fetch_and_parse(xml_url)
+          name: Feedjira::Feed.fetch_and_parse(feed.xml_url).title
         )
       end
     end
