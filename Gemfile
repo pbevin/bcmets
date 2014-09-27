@@ -21,7 +21,7 @@ gem 'faker'
 gem 'haml'
 gem 'authlogic'
 gem 'scrypt'
-gem 'feedzirra', "~> 0.2.0.rc2"
+gem 'feedjira', '~> 1.4.0'
 gem 'mysql2'
 gem 'thinking-sphinx', '~> 3.1.1'
 gem 'nokogiri'
