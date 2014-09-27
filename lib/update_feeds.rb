@@ -16,7 +16,7 @@ class UpdateFeeds
     begin
       Feed.transaction do
         rss = Feedjira::Feed.fetch_and_parse(feed_url)
-        return if rss.nil? # || rss.is_a?(Fixnum)
+        return if rss.nil?
         rss.entries.each { |entry| add_entry_to_feed(entry, feed) }
       end
     rescue => e
@@ -25,7 +25,7 @@ class UpdateFeeds
   end
 
   def add_entry_to_feed(entry, feed)
-    unless FeedEntry.exists?(guid: entry.id)
+    unless feed.has_entry?(guid: entry.id)
       feed.entries << FeedEntry.new(
         published_at: entry.published,
         name:         entry.title,

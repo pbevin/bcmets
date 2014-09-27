@@ -11,4 +11,8 @@ class Feed < ActiveRecord::Base
   def last_entry_date
     entries.order("created_at DESC").first.created_at
   end
+
+  def has_entry?(guid: nil)
+    entries.map(&:guid).include?(guid)
+  end
 end
