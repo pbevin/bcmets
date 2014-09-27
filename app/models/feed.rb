@@ -15,4 +15,8 @@ class Feed < ActiveRecord::Base
   def has_entry?(guid: nil)
     entries.map(&:guid).include?(guid)
   end
+
+  def add_entry(entry)
+    entries << entry unless has_entry?(guid: entry.guid)
+  end
 end

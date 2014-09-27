@@ -5,8 +5,10 @@ class UpdateFeeds
   end
 
   def run
+    Feed.where(xml_url: nil).find_each do |feed|
+      update_xml_url(feed)
+    end
     Feed.find_each do |feed|
-      update_feed_data(feed) if !feed.xml_url
       update_entries(feed)
     end
   end
@@ -17,34 +19,25 @@ class UpdateFeeds
       Feed.transaction do
         rss = Feedjira::Feed.fetch_and_parse(feed_url)
         return if rss.nil?
-        rss.entries.each { |entry| add_entry_to_feed(entry, feed) }
+        rss.entries.each do |entry|
+          feed.add_entry(FeedEntry.from_rss_entry(entry))
+        end
       end
     rescue => e
       Rails.logger.warn("Failed to fetch #{feed_url}: #{e.inspect}")
     end
   end
 
-  def add_entry_to_feed(entry, feed)
-    unless feed.has_entry?(guid: entry.id)
-      feed.entries << FeedEntry.new(
-        published_at: entry.published,
-        name:         entry.title,
-        summary:      entry.summary,
-        url:          entry.url,
-        guid:         entry.id
-      )
-    end
-  end
-
-  def update_feed_data(feed)
+  def update_xml_url(feed)
     content = URI.parse(feed.url).read
     if content.content_type == 'text/html'
       doc = Nokogiri::HTML(content)
       if node = doc.css('link[rel=alternate][href]').first
         href = node['href']
+        title = Feedjira::Feed.fetch_and_parse(href).title
         feed.update_attributes(
           xml_url: href,
-          name: Feedjira::Feed.fetch_and_parse(feed.xml_url).title
+          name: title
         )
       end
     end
