@@ -30,7 +30,6 @@ gem 'dynamic_form'
 gem 'gravatar_image_tag'
 gem 'paperclip', '~> 4.1.1'
 gem 'exception_notification'
-gem 'newrelic_rpm'
 
 group :development do
   gem 'capistrano-rails', require: false

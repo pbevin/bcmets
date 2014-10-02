@@ -7,15 +7,21 @@ Given /^I am not logged in$/ do
 end
 
 Then /^I should be logged in$/ do
-  UserSession.find.should_not be_nil
+  visit "/"
+  page.should have_content "Logged in as"
+  page.should_not have_selector("a", text: "Login")
 end
 
 Then /^I should be logged out$/ do
-  UserSession.find.should be_nil
+  visit "/"
+  page.should have_selector("a", text: "Login")
+  page.should_not have_content "Logged in as"
 end
 
 Then /^I should not be logged in$/ do
-  UserSession.find.should be_nil
+  visit "/"
+  page.should have_selector("a", text: "Login")
+  page.should_not have_content "Logged in as"
 end
 
 Given /^that I have a confirmation email/ do
