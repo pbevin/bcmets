@@ -13,7 +13,7 @@ PostList = React.createClass
   displayName: "PostList",
   render: ->
     div { className: "tl_posts" },
-      this.props.posts.map (post) -> Post({ post: post })
+      this.props.posts.map (post) -> Post({ post: post, key: post.id })
 
 Post = React.createClass
   displayName: "Post",

@@ -9,6 +9,7 @@ gem 'rubygems-bundler'
 gem 'sqlite3'
 gem 'json'
 gem 'jbuilder', '~> 2.2.4'
+gem 'therubyracer'
 
 gem 'sass-rails', '~> 4.0.3'
 gem 'coffee-rails'
