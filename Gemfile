@@ -8,6 +8,7 @@ gem 'rails', '~> 4.1.1'
 gem 'rubygems-bundler'
 gem 'sqlite3'
 gem 'json'
+gem 'jbuilder', '~> 2.2.4'
 
 gem 'sass-rails', '~> 4.0.3'
 gem 'coffee-rails'
@@ -19,6 +20,7 @@ gem 'jquery-rails'
 gem 'will_paginate', '~> 3.0.0'
 gem 'faker'
 gem 'haml-rails'
+gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
 gem 'authlogic'
 gem 'scrypt'
 gem 'feedjira', '~> 1.4.0'
@@ -35,6 +37,7 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rvm', require: false
+  gem 'quiet_assets'
 end
 
 group :test do

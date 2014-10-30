@@ -15,4 +15,7 @@
 //= require jquery.pjax
 //= require jquery.color
 //= require jquery.Jcrop
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .

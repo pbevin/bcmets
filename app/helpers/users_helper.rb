@@ -11,6 +11,14 @@ module UsersHelper
     end
   end
 
+  def avatar_url(user, size = :medium)
+    if user.photo.file?
+      user.photo.url(size)
+    else
+      gravatar_image_url(user.email, class: "profile", default: "identicon", size: 100)
+    end
+  end
+
   def profile_picture_linked(user)
     link_to(profile_picture(user, :small), user, class: 'profile')
   end

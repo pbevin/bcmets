@@ -1,4 +1,6 @@
 Bcmets::Application.routes.draw do
+  get 'timeline/index'
+
   resources :feeds
   resources :links
   resources :donations do
