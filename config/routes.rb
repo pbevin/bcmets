@@ -29,6 +29,7 @@ Bcmets::Application.routes.draw do
   match 'saved' => 'articles#saved', via: [:get, :post]
   match 'archive/article/:id' => 'archive#article', as: :bookmarked_article, constraints: 'id(?-mix:\d+)', via: [:get, :post]
   match '/archive/:year/:month/date' => 'archive#month_by_date', as: :archive_month_by_date, year: /\d{4}/, via: [:get, :post]
+  get 'archive/author' => 'archive#author', as: :author_search
   match '/article/:id/reply/' => 'articles#reply', as: :article_reply, via: [:get, :post]
   match '/articles/:id/set_saved' => 'articles#set_saved', as: :article_set_saved, via: [:get, :post]
   match '/articles/:id/is_saved' => 'articles#is_saved', as: :article_is_saved, via: [:get, :post]
