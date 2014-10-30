@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'rails_helper'
 
 describe UserSessionsController do
   it "doesn't let an unconfirmed user login" do
@@ -8,7 +8,7 @@ describe UserSessionsController do
       assigns[:user_session].errors[:base].inspect.should == '["Your account is not active"]'
     end
   end
-  
+
   def with_unconfirmed_user
     user = User.make!
     user.active = false

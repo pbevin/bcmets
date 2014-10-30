@@ -1,9 +1,8 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'rails_helper'
 
 describe ArticlesController do
-  def mock_article(stubs={})
-    @mock_model ||= mock_model(Article, stubs)
-  end
+  let(:article) { Article.make! }
+  let(:article_id) { article.id.to_s }
 
   describe "GET index" do
     it "redirects to /archive" do
@@ -14,34 +13,26 @@ describe ArticlesController do
 
   describe "GET show" do
     it "assigns the requested article as @article" do
-      article = Article.make!
-      Article.stub(:find).with("37").and_return(article)
-      get :show, id: "37"
-      assigns[:article].should equal(article)
+      get :show, id: article_id
+      assigns[:article].should eq(article)
     end
 
     it "retrieves the conversation thread" do
-      article = Article.new
-      conversation = Conversation.new()
-      3.times { conversation.articles << Article.new }
+      conversation = Conversation.new
+      articles = []
+      3.times { articles << Article.make!(conversation: conversation) }
+      conversation.articles = articles
 
-      Article.should_receive(:find).once().with("37").and_return(article)
-      article.should_receive(:conversation).once().and_return(conversation)
-      get :show, id: "37"
-      assigns[:article].should equal(article)
+      article = articles.second
+
+      get :show, id: article.id.to_s
+      assigns[:article].should eq(article)
     end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested article" do
-      Article.should_receive(:find).with("37").and_return(mock_article)
-      mock_article.should_receive(:destroy)
-      delete :destroy, id: "37"
-    end
-
-    it "redirects to the articles list" do
-      Article.stub(:find).and_return(mock_article(destroy: true))
-      delete :destroy, id: "1"
+    it "destroys the requested article and redirects to the article list" do
+      delete :destroy, id: article_id
       response.should redirect_to(articles_url)
     end
   end

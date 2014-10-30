@@ -3,7 +3,7 @@ require 'faker'
 
 def alnum(n)
   chars = ('a'..'z').to_a + ('0'..'9').to_a
-  (1..n).map { chars[rand(chars.length)] }.to_s
+  (1..n).map { chars[rand(chars.length)] }.join
 end
 
 def fake_msgid

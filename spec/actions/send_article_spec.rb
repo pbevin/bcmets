@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe SendArticle do
   let(:responder) { double("responder") }

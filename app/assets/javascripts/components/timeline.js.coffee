@@ -28,7 +28,7 @@ PostHeader = React.createClass
   render: ->
     post = this.props.post
     div { className: "tl_headers" },
-      div { className: "tl_header" }, "From: ", a({ href: post.user_path }, post.name),
+      div { className: "tl_header" }, "From: ", a({ href: post.user_path }, post.name), " #{post.date} ago",
       div { className: "tl_header" }, "Subject: ", post.subject
 
 PostBody = React.createClass

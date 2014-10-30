@@ -1,4 +1,5 @@
-require_relative "../../app/models/search_options"
+require 'spec_helper'
+require 'search_options'
 
 describe SearchOptions do
   let(:options) { search.search_options }

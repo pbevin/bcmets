@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe FeedEntry do
   describe '.latest' do
@@ -8,9 +8,9 @@ describe FeedEntry do
         feed.entries.create published_at: Date.new(2012, 12, n+1)
       end
     end
-    
+
     it "returns the latest entries" do
-      FeedEntry.latest(3).should have(3).items
+      FeedEntry.latest(3).count.should eq(3)
     end
   end
 

@@ -39,16 +39,19 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rvm', require: false
   gem 'quiet_assets'
+  gem 'spring'
 end
 
 group :test do
-  gem 'rspec', '~> 2.14.0'
   gem 'cucumber', '~> 1.3.15'
   gem 'cucumber-rails', '~> 1.4.1', :require => false
   gem 'launchy'
-  gem 'rspec-rails', '~> 2.14.0'
   gem 'database_cleaner'
   gem 'sham'
   gem 'machinist'
   gem 'timecop'
+  gem 'rspec-rails', '~> 3.1.0'
+  gem 'spring-commands-rspec'
+  gem 'guard-rspec'
+  gem 'rb-fsevent'
 end
