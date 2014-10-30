@@ -18,7 +18,7 @@ gem 'jquery-rails'
 
 gem 'will_paginate', '~> 3.0.0'
 gem 'faker'
-gem 'haml'
+gem 'haml-rails'
 gem 'authlogic'
 gem 'scrypt'
 gem 'feedjira', '~> 1.4.0'
