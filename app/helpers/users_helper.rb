@@ -12,10 +12,10 @@ module UsersHelper
   end
 
   def avatar_url(user, size = :medium)
-    if user.photo.file?
+    if user && user.photo.file?
       user.photo.url(size)
     else
-      gravatar_image_url(user.email, class: "profile", default: "identicon", size: 100)
+      nil
     end
   end
 

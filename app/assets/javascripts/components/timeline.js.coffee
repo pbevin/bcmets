@@ -1,5 +1,9 @@
 {div, h2, a, img, strong} = React.DOM
 
+gravatar_url = (email) ->
+  hash = CryptoJS.MD5(email.trim().toLowerCase()).toString()
+  "http://www.gravatar.com/avatar/#{hash}?s=100&d=identicon"
+
 Timeline = React.createClass
   displayName: "Timeline",
   render: ->
@@ -40,7 +44,6 @@ Avatar = React.createClass
   render: ->
     post = this.props.post
     a { href: post.user_path, className: "avatar" },
-      img { src: post.avatar_url, width: 100, height: 100 }
+      img { src: post.avatar_url || gravatar_url(post.email), width: 100, height: 100 }
 
 window.Timeline = Timeline
-
