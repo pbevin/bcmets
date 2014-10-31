@@ -12,13 +12,13 @@ describe FuzzyTime do
   end
 
   it "gives minutes ago if <1h" do
-    fuzzy_time(now - 60.seconds).should == "1 minute"
-    fuzzy_time(now - (59.minutes + 55.seconds)).should == "59 minutes"
+    fuzzy_time(now - 60.seconds).should == "1 minute ago"
+    fuzzy_time(now - (59.minutes + 55.seconds)).should == "59 minutes ago"
   end
 
   it "gives hours ago if today" do
-    fuzzy_time(now - 100.minutes).should == "1 hour"
-    fuzzy_time(now - 200.minutes).should == "3 hours"
+    fuzzy_time(now - 100.minutes).should == "1 hour ago"
+    fuzzy_time(now - 200.minutes).should == "3 hours ago"
   end
 
   it "gives the time yesterday" do

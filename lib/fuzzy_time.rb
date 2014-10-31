@@ -8,10 +8,10 @@ module FuzzyTime
       "Just now"
     elsif diff < 1.hour
       minutes = (diff / 60).to_i
-      pluralize minutes, "minute"
+      pluralize(minutes, "minute") + " ago"
     elsif date(tm) == date(now)
       hours = (diff / 3600).to_i
-      pluralize hours, "hour"
+      pluralize(hours, "hour") + " ago"
     elsif date(tm) == date(now - 1.day)
       "Yesterday, #{tm.strftime("%-I:%M%P")}"
     elsif diff < 7.days
