@@ -12,6 +12,8 @@ module Bcmets
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += [config.root.join("lib")]
+    config.watchable_files.concat Dir["#{root}/app/assets/javascripts/*/*.js*"]
+
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
