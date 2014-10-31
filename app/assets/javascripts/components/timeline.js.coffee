@@ -7,8 +7,10 @@ fuzzyTime = (time) ->
   diff = Math.abs(now.diff(tm, 'hours'))
   if diff < 6
     tm.fromNow()
+  else if diff < 3 * 24
+    tm.format('ddd, h:mma')
   else if diff < 7 * 24
-    tm.calendar()
+    tm.format('ddd Do, h:mma')
   else
     tm.format('h:mma MMM D, YYYY')
 
