@@ -1,6 +1,18 @@
 {div, h2, a, img, strong} = React.DOM
 
-gravatar_url = (email) ->
+fuzzyTime = (time) ->
+  tm = moment(time)
+  now = moment()
+
+  diff = Math.abs(now.diff(tm, 'hours'))
+  if diff < 6
+    tm.fromNow()
+  else if diff < 7 * 24
+    tm.calendar()
+  else
+    tm.format('h:mma MMM D, YYYY')
+
+gravatarUrl = (email) ->
   hash = CryptoJS.MD5(email.trim().toLowerCase()).toString()
   "http://www.gravatar.com/avatar/#{hash}?s=100&d=identicon"
 
@@ -28,7 +40,7 @@ PostHeader = React.createClass
   render: ->
     post = this.props.post
     div { className: "tl_headers" },
-      div { className: "tl_header" }, "From: ", a({ href: post.user_path }, post.name), " #{moment(post.date).calendar()}",
+      div { className: "tl_header" }, "From: ", a({ href: post.user_path }, post.name), " #{fuzzyTime(post.date)}",
       div { className: "tl_header" }, "Subject: ", post.subject
 
 PostBody = React.createClass
@@ -44,6 +56,6 @@ Avatar = React.createClass
   render: ->
     post = this.props.post
     a { href: post.user_path, className: "avatar" },
-      img { src: post.avatar_url || gravatar_url(post.email), width: 100, height: 100 }
+      img { src: post.avatar_url || gravatarUrl(post.email), width: 100, height: 100 }
 
 window.Timeline = Timeline
