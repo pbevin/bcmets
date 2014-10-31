@@ -43,8 +43,7 @@ group :development do
 end
 
 group :test do
-  gem 'cucumber', '~> 1.3.15'
-  gem 'cucumber-rails', '~> 1.4.1', :require => false
+  gem 'cucumber-rails', :require => false
   gem 'launchy'
   gem 'database_cleaner'
   gem 'sham'
