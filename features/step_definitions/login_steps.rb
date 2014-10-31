@@ -82,7 +82,7 @@ When /^I enter my password "(.*?)" with confirmation "(.*?)"$/ do |password, con
 end
 
 Then /^(.+) should have password: "([^\"]*)"$/ do |who, password|
-  @user.reload.valid_password?(password).should be_true
+  @user.reload.valid_password?(password).should be(true)
 end
 
 Then /^that user should have been deleted/ do
