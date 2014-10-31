@@ -17,6 +17,7 @@ gem 'coffee-rails'
 gem 'uglifier', '>= 1.0.3'
 
 gem 'jquery-rails'
+gem 'momentjs-rails'
 
 gem 'will_paginate', '~> 3.0.0'
 gem 'faker'

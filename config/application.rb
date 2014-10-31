@@ -60,7 +60,5 @@ module Bcmets
       g.view_specs :false
       g.helper_specs :false
     end
-
-    config.react.component_filenames = ['components.js', 'md5.js']
   end
 end
