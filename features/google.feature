@@ -22,3 +22,7 @@ Feature: Search engine micro-management
     When I go to the "2009/10" archive page
     And I follow "xyzzy"
     Then Google should be disabled
+
+  Scenario:
+    When I go to path "/timeline"
+    Then Google should be disabled

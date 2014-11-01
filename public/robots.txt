@@ -9,3 +9,4 @@ Disallow: /articles
 Disallow: /archive
 Disallow: /users
 Disallow: /blogs
+Disallow: /timeline
