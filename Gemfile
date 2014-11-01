@@ -22,7 +22,7 @@ gem 'momentjs-rails'
 gem 'will_paginate', '~> 3.0.0'
 gem 'faker'
 gem 'haml-rails'
-gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
+gem 'react-rails', '~> 1.0.0.pre', github: 'grahamcracker/react-rails', ref: "359cfbb"
 gem 'authlogic'
 gem 'scrypt'
 gem 'feedjira', '~> 1.4.0'
