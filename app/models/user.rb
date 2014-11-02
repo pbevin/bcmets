@@ -2,8 +2,10 @@ class User < ActiveRecord::Base
   acts_as_authentic do |c|
     c.login_field = :email
     c.transition_from_crypto_providers = Authlogic::CryptoProviders::Sha512
-    c.validates_length_of_password_field_options = { on: :update, minimum: 4, if: :has_no_credentials? }
-    c.validates_length_of_password_confirmation_field_options = { on: :update, minimum: 4, if: :has_no_credentials? }
+    c.validates_length_of_password_field_options =
+      { on: :update, minimum: 4, if: :no_credentials? }
+    c.validates_length_of_password_confirmation_field_options =
+      { on: :update, minimum: 4, if: :no_credentials? }
   end
 
   validates_presence_of :name
@@ -14,7 +16,7 @@ class User < ActiveRecord::Base
     large: "500x500>"
   }
   validates_attachment :photo,
-                       content_type: { content_type: %r{\Aimage} },
+                       content_type: { content_type: /\Aimage/ },
                        size: { in: 0..1.megabyte }
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
@@ -28,7 +30,7 @@ class User < ActiveRecord::Base
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
   end
 
-  def has_no_credentials?
+  def no_credentials?
     crypted_password.blank?
   end
 
@@ -78,19 +80,17 @@ class User < ActiveRecord::Base
     Notifier.password_reset(self).deliver
   end
 
-  # alias :orig_system :system
-  #
-  # def system(*args)
-  #   p args.join(" ")
-  #   orig_system(*args)
-  # end
-
   def update_mailman
-    as_mailman("/home/mailman/delivery", "bcmets", email, email_delivery) if active? && email_delivery
+    return unless active? && email_delivery
+    as_mailman("/home/mailman/delivery", "bcmets", email, email_delivery)
   end
 
   def delete_from_mailman
-    as_mailman("/home/mailman/bin/remove_members", "--nouserack", "--noadminack", "bcmets", email)
+    as_mailman(
+      "/home/mailman/bin/remove_members",
+      "--nouserack", "--noadminack",
+      "bcmets", email
+    )
   end
 
   def as_mailman(*args)
@@ -111,11 +111,15 @@ class User < ActiveRecord::Base
   end
 
   def saved?(article)
-    saved_articles.inspect if !saved_articles.loaded? # get the association cached
+    cache_saved_articles!
     saved_articles.include?(article)
   end
 
   private
+
+  def cache_saved_articles!
+    saved_articles.inspect unless saved_articles.loaded?
+  end
 
   def reprocess_photo
     photo.reprocess!
