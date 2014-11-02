@@ -22,7 +22,7 @@ class ArticleParser
     when :body
       body(line)
     else
-      raise "Article parser: funny state #{state.inspect}"
+      fail "Article parser: funny state #{state.inspect}"
     end
   end
 

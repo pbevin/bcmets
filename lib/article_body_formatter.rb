@@ -11,15 +11,15 @@ class ArticleBodyFormatter
   end
 
   def decode_quoted_printable(text)
-    if (text =~ /=20$/)
+    if text =~ /=20$/
       text = text
-        .gsub(/=20\n/, " ")
-        .gsub(/=\n/, "")
-        .gsub(/\n/m, $/)
-        .gsub(/=([\dA-F]{2})/) { hex_to_utf8($1.hex) }
+             .gsub(/=20\n/, " ")
+             .gsub(/=\n/, "")
+             .gsub(/\n/m, $INPUT_RECORD_SEPARATOR)
+             .gsub(/=([\dA-F]{2})/) { hex_to_utf8($1.hex) }
     end
 
-    return text
+    text
   end
 
   def hex_to_utf8(code)

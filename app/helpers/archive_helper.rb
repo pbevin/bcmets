@@ -10,7 +10,7 @@ module ArchiveHelper
       return text
     end
 
-    return link_to text.html_safe, archive_month_path(year, month), class: "pjax"
+    link_to text.html_safe, archive_month_path(year, month), class: "pjax"
   end
 
   def from_linked(author)
@@ -19,12 +19,12 @@ module ArchiveHelper
     else
       from = author.name + " &lt;" + email_linked(author) + "&gt;"
     end
-    return from.html_safe
+    from.html_safe
   end
 
   def email_linked(author)
-    #link_to author.email, { controller: "archive", action: "author", email: author.email }, class: "pjax"
-    %Q{<a href="/archive/author?email=#{URI.escape author.email}" class="pjax">#{h author.email}</a>}
+    # link_to author.email, { controller: "archive", action: "author", email: author.email }, class: "pjax"
+    %(<a href="/archive/author?email=#{URI.escape author.email}" class="pjax">#{h author.email}</a>)
   end
 
   def wrap(tag, content)
@@ -35,7 +35,7 @@ module ArchiveHelper
     ArticleBodyFormatter.new.format(text)
   end
 
-  def thread_as_html(articles, out="")
+  def thread_as_html(articles, out = "")
     articles.each do |article|
       out << "<li>"
       out << link_to_article(article) << " "
@@ -65,7 +65,7 @@ module ArchiveHelper
 
   def last_donation
     date = Donation.last_donation_on
-    if date == nil
+    if date.nil?
       last_donation = "never"
     elsif date.to_date == Time.zone.today
       last_donation = "today"
@@ -82,15 +82,15 @@ module ArchiveHelper
       email: article.email
     }
     link_to h(article.from), path, class: "pjax"
-    #%Q{<a href="/archive/author?email=#{URI.escape(article.email)}" class="pjax">#{h article.from}</a>}
+    # %Q{<a href="/archive/author?email=#{URI.escape(article.email)}" class="pjax">#{h article.from}</a>}
   end
 
   def link_to_article(article)
-    link = %Q{<a href="/articles/#{article.id}" class="subject pjax">#{h article.subject}</a>}
+    link = %(<a href="/articles/#{article.id}" class="subject pjax">#{h article.subject}</a>)
     if article.saved_by?(current_user)
-      link = %Q{<span class="star selected"></span>} + link
+      link = %(<span class="star selected"></span>) + link
     end
 
-    return link.html_safe
+    link.html_safe
   end
 end

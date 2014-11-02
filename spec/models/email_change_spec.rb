@@ -21,4 +21,3 @@ describe EmailChange do
     end
   end
 end
-

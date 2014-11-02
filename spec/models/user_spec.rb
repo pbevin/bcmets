@@ -3,14 +3,14 @@ require 'rails_helper'
 describe User do
   let(:user) { User.create!(email: "test@example.com", name: "Fred") }
 
-  let(:article) {
+  let(:article) do
     Article.create(
       name: "Anita",
       email: "test2@example.com",
       subject: "Test article",
       body: "xyzzy"
     )
-  }
+  end
 
   it "can save an article" do
     user.save_article(article)

@@ -23,8 +23,8 @@ describe "archive/month" do
 
   it "should link to by_date view" do
     rendered.should have_selector("a.date_order") do |a|
-      a.attr("href").value.
-        should == '/archive/2009/3/date'
+      a.attr("href").value
+        .should == '/archive/2009/3/date'
     end
   end
 end

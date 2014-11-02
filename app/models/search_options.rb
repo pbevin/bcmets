@@ -28,14 +28,14 @@ class SearchOptions
     end
   end
 
-  def run(searcher=Article)
+  def run(searcher = Article)
     begin
       @articles = searcher.search(@q, @search_options)
       @total_count = @articles.total_count
     rescue
       @articles = [].paginate
       @total_count = 0
-      @error = "Sorry, search isn't working right now. " +
+      @error = "Sorry, search isn't working right now. " \
         "Please give <a href=\"mailto:owner@bcmets.org\">Pete</a> a kick."
     end
     self
@@ -49,7 +49,5 @@ class SearchOptions
     @articles.count
   end
 
-  def total_count
-    @total_count
-  end
+  attr_reader :total_count
 end

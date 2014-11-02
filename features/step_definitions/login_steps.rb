@@ -81,7 +81,7 @@ When /^I enter my password "(.*?)" with confirmation "(.*?)"$/ do |password, con
   fill_in "user_password_confirmation", with: confirmation
 end
 
-Then /^(.+) should have password: "([^\"]*)"$/ do |who, password|
+Then /^(.+) should have password: "([^\"]*)"$/ do |_who, password|
   @user.reload.valid_password?(password).should be(true)
 end
 

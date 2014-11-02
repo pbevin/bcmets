@@ -19,10 +19,10 @@ describe Article, type: :model do
   end
 
   it "enforces msgid uniqueness" do
-    lambda {
+    lambda do
       Article.create(@attrs)
       Article.create(@attrs)
-    }.should change(Article, :count).by(1)
+    end.should change(Article, :count).by(1)
   end
 
   it "has a definition of 'recent'" do
@@ -168,7 +168,7 @@ describe Article, type: :model do
         content_type: 'text/plain;charset="iso8859-1"',
         body: schön_iso_8859_1
       ).body_utf8
-      #body.should == "schön"
+      # body.should == "schön"
       body.encoding.name.should == "UTF-8"
       body.bytes.to_a.should == [115, 99, 104, 195, 182, 110]
     end
@@ -187,18 +187,17 @@ describe Article, type: :model do
   end
 
   describe 'send_via_email' do
-    let(:article) {
+    let(:article) do
       Article.new
-    }
+    end
 
     it "does not escape the body" do
       article.body = "It's working!"
       article.send_via_email
-      ActionMailer::Base.deliveries.last.body.to_s.strip.
-        should == article.body
+      ActionMailer::Base.deliveries.last.body.to_s.strip
+        .should == article.body
     end
   end
-
 
   describe "bugs" do
     it "can show articles from December" do
@@ -207,14 +206,14 @@ describe Article, type: :model do
 
     it "figure out mail_to and mail_cc" do
       params = {
-        "name"=>"Pete Bevin",
-        "body"=>"xxx",
-        "to"=>"Pete Bevin <pete@petebevin.com>",
-        "subject"=>"Re: Thingummy",
-        "parent_id"=>"5282",
-        "parent_msgid"=>"<c5e58b18c735b668@bcmets.org>",
-        "reply_type"=>"list",
-        "email"=>"pete@petebevin.com"
+        "name" => "Pete Bevin",
+        "body" => "xxx",
+        "to" => "Pete Bevin <pete@petebevin.com>",
+        "subject" => "Re: Thingummy",
+        "parent_id" => "5282",
+        "parent_msgid" => "<c5e58b18c735b668@bcmets.org>",
+        "reply_type" => "list",
+        "email" => "pete@petebevin.com"
       }
       $list_address = 'list@example.com'
       @article = Article.new(params)
@@ -244,9 +243,9 @@ describe Article, type: :model do
       it "relies on parent_id, not just parent, for conversation handling" do
         article = Article.make!
         params = {
-          "name"=>"Pete Bevin",
+          "name" => "Pete Bevin",
           "email" => "pete@petebevin.com",
-          "body"=>"xxx",
+          "body" => "xxx",
           "to" => article.from,
           "subject" => article.reply.subject,
           "parent_id" => article.id,
@@ -321,4 +320,3 @@ describe Article, type: :model do
     end
   end
 end
-

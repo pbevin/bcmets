@@ -45,7 +45,6 @@ class LinksController < ApplicationController
     redirect_to(links_url)
   end
 
-
   private
 
   def link_params

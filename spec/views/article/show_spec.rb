@@ -9,7 +9,7 @@ describe "articles/show" do
   it "should display article body" do
     render
     rendered.should have_selector 'div#body',
-      text: @article.body
+                                  text: @article.body
   end
 
   it "should have a Reply link if recent" do

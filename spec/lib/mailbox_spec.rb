@@ -13,4 +13,3 @@ describe Mailbox do
     end
   end
 end
-

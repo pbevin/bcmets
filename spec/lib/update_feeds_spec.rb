@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe UpdateFeeds do
   describe '#update_entries' do
     let(:updater) { UpdateFeeds.new }

@@ -15,4 +15,3 @@ describe UserSessionsController do
     yield user
   end
 end
-

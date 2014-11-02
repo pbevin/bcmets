@@ -55,11 +55,11 @@ class Article < ActiveRecord::Base
     where(received_at: (earliest..latest)).order(order)
   end
 
-  def self.link_threads(since=6.months.ago)
+  def self.link_threads(since = 6.months.ago)
     articles_to_link = Article.where("parent_msgid != '' and parent_id is null and created_at > ?", since)
     articles_to_link.each do |article|
       parent = Article.find_by(msgid: article.parent_msgid)
-      if parent != nil
+      if !parent.nil?
         article.parent_id = parent.id
         if article.conversation.nil?
           article.conversation = parent.conversation
@@ -76,7 +76,7 @@ class Article < ActiveRecord::Base
 
     top_level_articles = []
     unthreaded.each do |article|
-      if article.parent_id.nil? || !hash.has_key?(article.parent_id)
+      if article.parent_id.nil? || !hash.key?(article.parent_id)
         top_level_articles << article
       else
         parent = hash[article.parent_id]
@@ -85,7 +85,7 @@ class Article < ActiveRecord::Base
       end
     end
 
-    return top_level_articles
+    top_level_articles
   end
 
   def each_child(&block)
@@ -97,7 +97,7 @@ class Article < ActiveRecord::Base
   end
 
   def hex(n)
-    SecureRandom::hex(n/2)
+    SecureRandom.hex(n / 2)
   end
 
   def send_via_email
@@ -105,13 +105,13 @@ class Article < ActiveRecord::Base
     self.msgid = "<#{hex(16)}@bcmets.org>"
 
     mail = Notifier.article(self)
-    #mail.message_id = msgid
+    # mail.message_id = msgid
     mail.deliver
   end
 
   def mail_to
     if reply_type == 'sender'
-      self.to
+      to
     else
       $list_address
     end
@@ -119,7 +119,7 @@ class Article < ActiveRecord::Base
 
   def mail_cc
     if reply_type == 'both'
-      self.to
+      to
     else
       ''
     end
@@ -143,14 +143,14 @@ class Article < ActiveRecord::Base
 
   def reply
     Article.new.tap do |reply|
-      reply.reply_type = self.reply_type
-      reply.subject = self.subject
+      reply.reply_type = reply_type
+      reply.subject = subject
       reply.subject = "Re: #{reply.subject}" unless reply.subject =~ /^Re:/i
-      reply.to = self.from
+      reply.to = from
       reply.parent = self
-      reply.parent_id = self.id
-      reply.parent_msgid = self.msgid
-      reply.body = "#{self.name} writes:\n#{quote(self.body_utf8)}"
+      reply.parent_id = id
+      reply.parent_msgid = msgid
+      reply.body = "#{name} writes:\n#{quote(body_utf8)}"
     end
   end
 
@@ -160,14 +160,14 @@ class Article < ActiveRecord::Base
 
   def quote(string)
     "".tap do |body|
-      lines = wrap(string).collect{|line| line.split("\n")}.flatten
+      lines = wrap(string).collect { |line| line.split("\n") }.flatten
       lines.each { |line| body << "> #{line}\n" }
     end
   end
 
   def wrap(text, columns = 72)
     text.split("\n").collect do |line|
-     line.length > columns ? line.gsub(/(.{1,#{columns}})(\s+|$)/, "\\1\n").strip : line
+      line.length > columns ? line.gsub(/(.{1,#{columns}})(\s+|$)/, "\\1\n").strip : line
     end
   end
 
@@ -175,9 +175,9 @@ class Article < ActiveRecord::Base
     if parent
       self.conversation = parent.conversation
     elsif parent_id
-      self.conversation = Article.find_by_id(self.parent_id).conversation
+      self.conversation = Article.find_by_id(parent_id).conversation
     else
-      self.conversation ||= Conversation.create(title: self.subject)
+      self.conversation ||= Conversation.create(title: subject)
     end
   end
 
@@ -192,6 +192,6 @@ class Article < ActiveRecord::Base
       parser << line.strip
     end
     parser.save
-    return article
+    article
   end
 end

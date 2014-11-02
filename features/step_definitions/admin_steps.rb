@@ -18,7 +18,7 @@ end
 def table_at(selector)
   Nokogiri::HTML(page.body).css(selector).map do |table|
     table.css('tr').map do |tr|
-      tr.css('td, th').map { |td| td.text }
+      tr.css('td, th').map(&:text)
     end
   end[0].reject(&:empty?)
 end

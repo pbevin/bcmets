@@ -45,9 +45,9 @@ class ArticlesController < ApplicationController
   end
 
   # GET /articles/1/edit
-# def edit
-#   @article = Article.find(params[:id])
-# end
+  # def edit
+  #   @article = Article.find(params[:id])
+  # end
 
   class CreatePostResponder < SimpleDelegator
     def spam

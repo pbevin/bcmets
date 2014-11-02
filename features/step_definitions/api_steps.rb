@@ -1,6 +1,6 @@
 def http_request(method, path, params)
   method = method.to_s.downcase
-  raise "Bad method" unless %w[get post put delete].include?(method)
+  fail "Bad method" unless %w(get post put delete).include?(method)
   page.driver.send(method, path, params)
 end
 
@@ -10,24 +10,24 @@ When /^I send HTTP (GET|POST|PUT|DELETE) to "([^\"]*)"(?: with #{capture_fields}
 end
 
 When /^I send HTTP (GET|POST|PUT|DELETE) to "([^"]*)" with the following parameters:$/ do |method, path, table|
-  params = table.raw.map { |k,v| "#{k}=#{URI.encode(v)}" }.join("&")
+  params = table.raw.map { |k, v| "#{k}=#{URI.encode(v)}" }.join("&")
   http_request(method, path, params)
   pp JSON.parse(response.body) if ENV['TRACE']
 end
 
-def api_get(path, params={})
+def api_get(path, params = {})
   http_request(:get, path, params)
 end
 
-def api_post(path, params={})
+def api_post(path, params = {})
   http_request(:post, path, params)
 end
 
-def api_put(path, params={})
+def api_put(path, params = {})
   http_request(:put, path, params)
 end
 
-def api_delete(path, params={})
+def api_delete(path, params = {})
   http_request(:delete, path, params)
 end
 
@@ -35,7 +35,7 @@ def api_post_json(path, json)
   page.driver.post path, json, "CONTENT_TYPE" => "application/json"
 end
 
-def follow_redirects(&block)
+def follow_redirects(&_block)
   response = yield
   if response.redirect?
     visit response.header["Location"]
@@ -81,7 +81,7 @@ end
 
 When /^I send HTTP (GET|POST|PUT|DELETE) to "([^"]*)" with the following JSON:$/ do |method, path, json|
   method = method.to_s.downcase
-  raise "Bad method" unless %w[get post put delete].include?(method)
+  fail "Bad method" unless %w(get post put delete).include?(method)
   page.driver.send(method, path, json, "CONTENT_TYPE" => "application/json")
   pp JSON.parse(response.body) if ENV['TRACE']
 end
@@ -115,9 +115,8 @@ def replace_placeholders_in_path(data)
     data = data.sub re, replacement.to_s
   end
 
-  return data
+  data
 end
-
 
 def replace_placeholders(data, mode = :json)
   data = data.to_s
@@ -144,16 +143,16 @@ def replace_placeholders(data, mode = :json)
   data
 end
 
-def compare_response_to_expected(response, expected, path=[])
+def compare_response_to_expected(response, expected, path = [])
   case response
   when Hash
     # Check attribute presence
     response.keys.sort.should == expected.keys.sort
 
     # Check attribute values
-    expected.each do |key,value|
+    expected.each do |key, value|
       unless value.nil?
-        if (!compare_response_to_expected(response[key], value, path + [key]))
+        if !compare_response_to_expected(response[key], value, path + [key])
           { key => response[key] }.should == { key => value }
         end
       end
@@ -174,7 +173,7 @@ def compare_response_to_expected(response, expected, path=[])
         "expected: #{expected.inspect}",
         "     got: #{response.inspect}"
       ]
-      raise error.join("\n")
+      fail error.join("\n")
     end
   end
 end

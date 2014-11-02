@@ -19,7 +19,7 @@ describe "Article Parser" do
   end
 
   it "counts the article body as anything after the first blank line" do
-    parser.should_receive(:body).once().with("xyzzy")
+    parser.should_receive(:body).once.with("xyzzy")
 
     parser << "From blah"
     parser << ""
@@ -59,7 +59,7 @@ describe "Article Parser" do
 
   it "parses the Message ID" do
     parser.header "Message-ID: xxx"
-    article.msgid.should =="xxx"
+    article.msgid.should == "xxx"
 
     # Common variant
     parser.header "Message-id: yyy"
@@ -151,13 +151,13 @@ describe "Article Parser" do
 
   describe "#content_type" do
     it "ignores encoding" do
-      parser.content_type(%{text/plain; charset="iso-8859-1"}).should == "text/plain"
-      parser.content_type(%{text/plain; charset=iso-8859-1}).should == "text/plain"
+      parser.content_type(%(text/plain; charset="iso-8859-1")).should == "text/plain"
+      parser.content_type(%(text/plain; charset=iso-8859-1)).should == "text/plain"
     end
 
     it "ignores everything after , or ;" do
-      parser.content_type(%{text/plain; charset=iso-8859-1; format=flowed}).should == "text/plain"
-      parser.content_type(%{text/plain, charset=iso-8859-1, format=flowed}).should == "text/plain"
+      parser.content_type(%(text/plain; charset=iso-8859-1; format=flowed)).should == "text/plain"
+      parser.content_type(%(text/plain, charset=iso-8859-1, format=flowed)).should == "text/plain"
     end
   end
 end

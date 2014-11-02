@@ -31,4 +31,3 @@ describe SendArticle do
     )
   end
 end
-

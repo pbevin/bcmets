@@ -20,27 +20,27 @@ module Mailman
       delivery_status: :status,
       user_options: :email
     }
-    
+
     SECTION_START = %r#^\s*'(.*)':\s+\{#
-    KEY_VALUE_PAIR = %r#'([^']+)': (.*),?$#
-    
+    KEY_VALUE_PAIR = %r{'([^']+)': (.*),?$}
+
     attr_reader :section, :members
     def initialize
       @section = nil
       @members = []
       @records = {}
     end
-    
+
     def accept(line)
       if line =~ SECTION_START
         key = $1.to_sym
-        if SECTIONS.has_key?(key)
+        if SECTIONS.key?(key)
           @section = key
         end
         line = $'
       end
-      
-      if @section != nil
+
+      if !@section.nil?
         if line =~ KEY_VALUE_PAIR
           email, value = $1, $2
           if @section == :delivery_status
@@ -59,7 +59,7 @@ module Mailman
             key = key_for_current_section
 
             add(email, key, value)
-          
+
             if @section == :digest_members
               add(email, :digest, true)
             end
@@ -70,16 +70,17 @@ module Mailman
         end
       end
     end
-  
+
     private
+
     def add(email, key, value)
-      if @records.has_key?(email)
+      if @records.key?(email)
         @records[email][key] = value
       else
         @members << (@records[email] = { key => value })
       end
     end
-  
+
     def key_for_current_section
       SECTIONS[@section]
     end

@@ -31,8 +31,8 @@ class ArchiveController < ApplicationController
     @title = "#{Date::MONTHNAMES[@month.to_i]} #{@year}"
 
     candidates = Article.for_month(@year.to_i, @month.to_i, "received_at DESC")
-    @articles = candidates.group_by {|article| article.received_at.to_date}
-    @dates = @articles.keys.sort { |a,b| b <=> a }
+    @articles = candidates.group_by { |article| article.received_at.to_date }
+    @dates = @articles.keys.sort { |a, b| b <=> a }
     @article_count = candidates.count
   end
 
@@ -47,8 +47,8 @@ class ArchiveController < ApplicationController
     article_number = params[:article_number]
     @article = Article.find_by_legacy_id("#{year}-#{month}/#{article_number}")
     if @article.nil?
-      flash[:notice] = "Oops.  We couldn't find your bookmark.  " +
-          "You can use the Search function to try and locate it, or click on a month below."
+      flash[:notice] = "Oops.  We couldn't find your bookmark.  " \
+          'You can use the Search function to try and locate it, or click on a month below.'
       redirect_to action: "index"
     else
       redirect_to action: "article", id: @article

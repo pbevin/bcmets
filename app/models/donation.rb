@@ -17,6 +17,6 @@ class Donation < ActiveRecord::Base
   end
 
   def self.last_donation_on
-    self.maximum(:date)
+    maximum(:date)
   end
 end

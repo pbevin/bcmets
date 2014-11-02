@@ -67,6 +67,3 @@ Then /^an article should be queued with email: "([^\"]*)", parent_msgid: "([^\"]
   msg.from.should == [email]
   msg.header["in-reply-to"].value.should == parent_msg_id
 end
-
-
-

@@ -39,7 +39,7 @@ def parse_fields(fields)
       m.merge(parse_field(match[0]))
     end
   else
-    raise ArgumentError, "The fields string is not in the correct format.\n\n'#{fields}' did not match: #{match_fields}"
+    fail ArgumentError, "The fields string is not in the correct format.\n\n'#{fields}' did not match: #{match_fields}"
   end
 end
 
@@ -47,6 +47,6 @@ def parse_field(field)
   if field =~ /^#{capture_key_and_value_in_field}$/
     { $1 => eval($2) }
   else
-    raise ArgumentError, "The field argument is not in the correct format.\n\n'#{field}' did not match: #{match_field}"
+    fail ArgumentError, "The field argument is not in the correct format.\n\n'#{field}' did not match: #{match_field}"
   end
 end

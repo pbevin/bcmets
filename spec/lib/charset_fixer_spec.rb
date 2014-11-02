@@ -9,8 +9,8 @@ describe CharsetFixer do
 
   it "fixes an ISO8859-1 string wrongly encoded as UTF-8" do
     bad_string = "daïs".encode("iso8859-1").force_encoding("utf-8")
-    CharsetFixer.new("iso8859-1").fix(bad_string).bytes.to_a.
-      should == "daïs".bytes.to_a
+    CharsetFixer.new("iso8859-1").fix(bad_string).bytes.to_a
+      .should == "daïs".bytes.to_a
   end
 
   it "is not fooled by incorrect encodings" do

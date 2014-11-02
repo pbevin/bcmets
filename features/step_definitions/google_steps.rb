@@ -6,7 +6,7 @@ Then /^Google should be enabled$/ do
   page.should_not have_selector("head>meta[name=robots]", visible: false)
 end
 
-When /^I go to the archives at "([^\"]*)"/ do |path|
+When /^I go to the archives at "([^\"]*)"/ do |_path|
   visit "/archive/#{page}"
 end
 
@@ -20,4 +20,3 @@ Given /^there is an article posted on "([^\"]*)" with subject "([^\"]*)"$/ do |d
     subject: subject
   )
 end
-

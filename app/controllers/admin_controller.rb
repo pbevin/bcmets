@@ -17,8 +17,8 @@ class AdminController < ApplicationController
   private
 
   def import_mailman_dump(filename)
-    users = Mailman::parse(filename)
-    
+    users = Mailman.parse(filename)
+
     if !users.empty?
       errors = []
       users.each do |u|
@@ -27,7 +27,7 @@ class AdminController < ApplicationController
         delivery_type = "all"
         delivery_type = "digest" if u[:digest]
         delivery_type = "none" if u[:nomail]
-        
+
         u[:name] = u[:email] if u[:name].nil? || u[:name] == ''
 
         user = User.find_by_email(u[:email])

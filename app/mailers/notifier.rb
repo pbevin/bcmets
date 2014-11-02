@@ -24,9 +24,9 @@ class Notifier < ActionMailer::Base
 
     mail(
       subject: article.subject,
-      :to      => article.mail_to,
-      :cc      => article.mail_cc,
-      :from    => article.from
+      to: article.mail_to,
+      cc: article.mail_cc,
+      from: article.from
     )
   end
 end

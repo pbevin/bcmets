@@ -42,7 +42,6 @@ describe SearchOptions do
     it_behaves_like "by relevance"
   end
 
-
   context "with no sort type declared" do
     let(:search) { SearchOptions.new(q: "taxol") }
     it_behaves_like "by date"

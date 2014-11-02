@@ -9,7 +9,6 @@ describe Feed do
     Timecop.return
   end
 
-
   describe '#last_n_entries' do
     def create_entries(count)
       count.times do |n|
