@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'search_options'
 
 describe SearchOptions do
   let(:options) { search.search_options }
@@ -50,21 +49,24 @@ describe SearchOptions do
   describe '#search' do
     let(:search) { SearchOptions.new(q: "taxol") }
     let(:article_base) { double("Article") }
+    let(:result) { search.run(article_base) }
 
     context "when search is offline" do
       before(:each) do
-        Array.any_instance.stub(:paginate) { [] }
         article_base.stub(:search).and_raise("offline")
-        search.run(article_base)
       end
 
       it "returns 0 articles" do
-        search.articles_count.should == 0
-        search.total_count.should == 0
+        result.articles_count.should == 0
+        result.total_count.should == 0
+      end
+
+      it "has will_paginate methods on the array" do
+        result.articles.total_pages.should == 1
       end
 
       it "sets an error" do
-        search.error.should_not be_nil
+        result.error.should_not be_nil
       end
     end
 
@@ -72,13 +74,12 @@ describe SearchOptions do
       let(:results) { double(count: 20, total_count: 1228) }
       before(:each) do
         article_base.stub(:search).and_return(results)
-        search.run(article_base)
       end
 
       it "returns results" do
-        search.articles.should == results
-        search.articles_count.should == 20
-        search.total_count.should == 1228
+        result.articles.should == results
+        result.articles_count.should == 20
+        result.total_count.should == 1228
       end
     end
   end
