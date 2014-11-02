@@ -11,8 +11,8 @@ def recent_files
 end
 
 desc "Import new emails from mailing list"
-task :import_emails => [:environment] do
-  for file in recent_files
+task import_emails: [:environment] do
+  recent_files.each do |file|
     Mailbox.new(file).each_message do |message|
       article = Article.parse(message)
       article.save

@@ -1,5 +1,3 @@
-require 'maxmind'
-
 class User < ActiveRecord::Base
   acts_as_authentic do |c|
     c.login_field = :email
@@ -49,10 +47,6 @@ class User < ActiveRecord::Base
 
   def has_photo?
     @photo.present?
-  end
-
-  def guess_location(ip_addr)
-    # self.location = MaxMind::lookup(ip_addr) unless self.location && self.location != ""
   end
 
   def active?

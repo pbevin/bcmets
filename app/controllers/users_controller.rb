@@ -19,7 +19,6 @@ class UsersController < ApplicationController
     else
       return require_login if !current_user
       @user = current_user
-      @user.guess_location(request.remote_ip)
     end
   end
 
