@@ -33,7 +33,7 @@ class Article < ActiveRecord::Base
   end
 
   def saved_by?(user)
-    return false if !user
+    return false if user.nil?
     user.saved?(self)
   end
 
@@ -142,33 +142,11 @@ class Article < ActiveRecord::Base
   end
 
   def reply
-    Article.new.tap do |reply|
-      reply.reply_type = reply_type
-      reply.subject = subject
-      reply.subject = "Re: #{reply.subject}" unless reply.subject =~ /^Re:/i
-      reply.to = from
-      reply.parent = self
-      reply.parent_id = id
-      reply.parent_msgid = msgid
-      reply.body = "#{name} writes:\n#{quote(body_utf8)}"
-    end
+    Reply.create_from(self)
   end
 
   def reply?
     !to.nil?
-  end
-
-  def quote(string)
-    "".tap do |body|
-      lines = wrap(string).collect { |line| line.split("\n") }.flatten
-      lines.each { |line| body << "> #{line}\n" }
-    end
-  end
-
-  def wrap(text, columns = 72)
-    text.split("\n").collect do |line|
-      line.length > columns ? line.gsub(/(.{1,#{columns}})(\s+|$)/, "\\1\n").strip : line
-    end
   end
 
   def start_conversation
@@ -188,7 +166,7 @@ class Article < ActiveRecord::Base
   def self.parse(text)
     article = Article.new
     parser = ArticleParser.new(article)
-    for line in text.lines
+    text.lines.each do |line|
       parser << line.strip
     end
     parser.save
