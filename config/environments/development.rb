@@ -33,7 +33,7 @@ Bcmets::Application.configure do
 
   config.eager_load = false
 
-  $list_address = 'pete@petebevin.com'
+  config.list_address = 'pete@petebevin.com'
 
   config.action_mailer.default_url_options = { host: "localhost:3000" }
   config.action_mailer.delivery_method = :smtp

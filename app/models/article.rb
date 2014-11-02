@@ -56,19 +56,7 @@ class Article < ActiveRecord::Base
   end
 
   def self.link_threads(since = 6.months.ago)
-    articles_to_link = Article.where("parent_msgid != '' and parent_id is null and created_at > ?", since)
-    articles_to_link.each do |article|
-      parent = Article.find_by(msgid: article.parent_msgid)
-      if !parent.nil?
-        article.parent_id = parent.id
-        if article.conversation.nil?
-          article.conversation = parent.conversation
-        else
-          Article.where(conversation_id: article.conversation_id).update_all(conversation_id: parent.conversation_id)
-        end
-      end
-      article.save
-    end
+    LinkThreads.run(since)
   end
 
   def self.thread_tree(unthreaded)
@@ -96,24 +84,23 @@ class Article < ActiveRecord::Base
     end
   end
 
-  def hex(n)
-    SecureRandom.hex(n / 2)
+  def random_msgid
+    random = SecureRandom.urlsafe_base64(12)
+    "<#{random}@bcmets.org>"
   end
 
   def send_via_email
     self.sent_at = self.received_at = Time.zone.now
-    self.msgid = "<#{hex(16)}@bcmets.org>"
+    self.msgid = random_msgid
 
-    mail = Notifier.article(self)
-    # mail.message_id = msgid
-    mail.deliver
+    Notifier.article(self).deliver
   end
 
   def mail_to
     if reply_type == 'sender'
       to
     else
-      $list_address
+      Rails.configuration.list_address
     end
   end
 

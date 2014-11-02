@@ -38,18 +38,6 @@ describe Article, type: :model do
     @article.should_not be_valid
   end
 
-  describe ".link_threads" do
-    it "links articles together based on parent_msgid" do
-      art1 = Article.make!(msgid: "<abc>")
-      art2 = Article.make!(msgid: "<def>", parent_msgid: "<abc>")
-
-      Article.link_threads
-
-      art2.reload
-      art2.parent_id.should eql(art1.id)
-    end
-  end
-
   describe ".thread_tree" do
     before(:each) do
       @art1 = Article.make!
@@ -120,7 +108,7 @@ describe Article, type: :model do
     end
 
     it "sets mail_to and mail_cc based on reply_type" do
-      $list_address = 'list@example.com'
+      Rails.configuration.list_address = 'list@example.com'
 
       @article.reply_type = 'list'
       @article.reply.mail_to.should == 'list@example.com'
@@ -215,7 +203,7 @@ describe Article, type: :model do
         "reply_type" => "list",
         "email" => "pete@petebevin.com"
       }
-      $list_address = 'list@example.com'
+      Rails.configuration.list_address = 'list@example.com'
       @article = Article.new(params)
 
       @article.mail_to.should == 'list@example.com'
@@ -258,50 +246,6 @@ describe Article, type: :model do
       end
     end
 
-    describe ".link_threads" do
-      it "links up conversations" do
-        a1 = Article.make!
-        a2 = Article.make!(parent_msgid: a1.msgid)
-        Article.link_threads
-        a1.reload.conversation.should === a2.reload.conversation
-      end
-
-      it "handles out of order message arrival" do
-        grandchild = Article.make!(msgid: "3", parent_msgid: "2")
-        Article.link_threads
-
-        child = Article.make!(msgid: "2", parent_msgid: "1")
-        Article.link_threads
-
-        [grandchild, child].each(&:reload)
-        grandchild.conversation.should == child.conversation
-
-        parent = Article.make!(msgid: "1")
-        Article.link_threads
-
-        [grandchild, child, parent].each(&:reload)
-
-        grandchild.conversation.should == child.conversation
-        child.conversation.should == parent.conversation
-      end
-
-      it "merges conversations based on new information" do
-        child1 = Article.make!(msgid: "3", parent_msgid: "1")
-        child2 = Article.make!(msgid: "2", parent_msgid: "1")
-        Article.link_threads
-
-        [child1, child2].each(&:reload)
-        child1.conversation_id.should_not eq(child2.conversation_id)
-
-        parent = Article.make!(msgid: "1")
-        Article.link_threads
-
-        [parent, child1, child2].each(&:reload)
-        child1.reload.conversation_id.should eq(parent.reload.conversation_id)
-        child2.reload.conversation_id.should eq(parent.reload.conversation_id)
-
-      end
-    end
   end
 
   describe '#sent_at_human' do

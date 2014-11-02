@@ -75,7 +75,7 @@ Bcmets::Application.configure do
   }
   config.action_mailer.raise_delivery_errors = true
 
-  $list_address = 'bcmets@bcmets.org'
+  config.list_address = 'bcmets@bcmets.org'
   config.middleware.use ExceptionNotification::Rack,
     email: {
       email_prefix: "[BCM] ",
