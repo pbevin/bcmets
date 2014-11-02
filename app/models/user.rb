@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
     email == 'pete@petebevin.com'
   end
 
-  def has_photo?
+  def photo?
     @photo.present?
   end
 
