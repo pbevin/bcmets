@@ -1,0 +1,355 @@
+html
+  box-sizing: border-box
+
+*
+  box-sizing: inherit
+  &:before, &:after
+    box-sizing: inherit
+
+body
+  font-family: Optima, Arial, sans-serif
+  color: #222
+  background: #fff
+  min-width: 970px
+  line-height: 1.5em
+
+a
+  &:link
+    color: #36414d
+  &:visited
+    color: #a40808
+  &:hover, &:focus, &:active
+    background-color: #4b6580
+    color: #fff
+    text-decoration: none
+
+#main small a
+  &:link, &:visited
+    color: #222
+    text-decoration: none
+  &:hover, &:focus, &:active
+    background: none
+    color: #000
+    text-decoration: underline
+
+a.user
+  font-weight: bold
+
+table.index
+  border: none
+  border-collapse: collapse
+  width: 600px
+  border-bottom: 8px solid #a5c3e1
+  td
+    padding: 7px
+
+#wrap
+  margin: 0 auto
+  width: 960px
+
+#sidebar
+  float: right
+  width: 250px
+  margin-top: 80px
+  h3
+    margin-bottom: 0
+  ul
+    margin-top: 1ex
+    padding-left: 1em
+  li
+    list-style: url("/images/arrow.gif")
+    padding-bottom: 1ex
+  strong
+    text-decoration: none
+    border: solid 1px #f70f0f
+    color: #f70f0f
+    background-color: #fff
+    text-decoration: none
+    padding: 5px
+    font-weight: normal
+
+#footer
+  border-top: 4px solid #87c82f
+  padding: 10px
+  padding-top: 0
+  background-color: #557290
+  color: #fff
+  text-align: center
+  clear: both
+  a
+    &:link, &:visited
+      color: #fef0a3
+    &:hover, &:focus, &:active
+      background-color: #87c82f
+      color: #fff
+      text-decoration: none
+
+#main
+  clear: both
+  float: left
+  margin-bottom: 20px
+  width: 600px
+  background-color: transparent
+  &.admin
+    width: 1000px
+
+p
+  &.resultcount
+    margin-top: 0
+    font-size: smaller
+  &.sortby
+    margin-top: 0
+    float: right
+    font-size: smaller
+
+ul.search_results
+  padding-left: 23px
+
+#main ul.month
+  li
+    margin-top: .8em
+  ul li
+    margin-top: .1em
+
+#pageheader
+  color: #009
+  background-color: transparent
+  width: 1000px
+  font-weight: normal
+  font-size: 1.7em
+  text-decoration: none
+  float: left
+  padding: 0px
+  padding-top: 30px
+  padding-bottom: 0
+  a
+    &:hover, &:focus, &:active
+      background-color: #fffefe
+
+#url
+  font-size: 1.5em
+  line-height: .8em
+  float: left
+  width: 230px
+
+#pageheader img
+  padding-left: 0px
+  padding-right: 0px
+  border: 0
+
+#headerright
+  float: left
+  padding-top: 15px
+  width: 600px
+
+#tag
+  font-size: .675em
+  float: left
+  margin-top: 20px
+  color: #a40808
+  width: 600px
+
+#q
+  background-color: transparent
+  color: #009
+  padding-left: 0.5em
+  padding-right: 0.5em
+  width: 100px
+  font-weight: bold
+  border: 1px solid #009
+
+form
+  background-color: transparent
+
+#submit
+  background-color: #009
+  color: #fff
+  padding: 0
+  padding-left: 0.5em
+  padding-right: 0.5em
+  font-weight: bold
+  font-size: .35em
+  border: none
+
+fieldset
+  border: none
+  padding-left: 0
+  margin-left: 0
+
+h1
+  color: #f70f0f
+  font-weight: normal
+  /*font-size : 3em;
+  line-height: 1.5em
+
+h2
+  color: #a40808
+  font-weight: normal
+  /*font-size : 2.5em;
+  clear: both
+
+h3
+  color: #a40808
+  font-weight: normal
+  /*font-size : 1.7em;
+  padding-bottom: .2em
+  padding-top: 1em
+
+pre
+  font-family: Optima, Lucida Grande, sans-serif
+  font-size: 1em
+
+#main ul.bydate li
+  margin-top: .1em
+
+div.thread
+  margin-top: 5em
+  ul
+    list-style: none
+    padding-left: 2em
+
+#usernav
+  float: right
+  font-size: 12px
+  ul
+    list-style-type: none
+  li
+    display: inline
+
+#profile #picture
+  float: left
+  margin-right: 20px
+
+#history
+  padding-top: 60px
+  ul
+    list-style-type: none
+    padding-left: 0
+
+table.admin
+  border-collapse: collapse
+  tbody
+    border: 1px solid #000
+  th
+    text-align: left
+    vertical-align: bottom
+  td
+    padding: 0px 5px
+  tr:hover
+    background: #ccc
+  .admin-odd
+    background: #edf3fe
+
+img.profile
+  float: right
+  border: 5px solid white
+
+#users tr.moderated
+  color: red
+
+#new_donation_form
+  display: none
+
+.buttons
+  width: 447px
+
+.quote
+  float: right
+
+.quote_lecture
+  float: right
+  display: none
+  color: #900
+
+#star.anon
+  display: none
+
+.star
+  display: inline-block
+  width: 15px
+  height: 15px
+  background: url(/images/star.png) no-repeat
+  background-position: 0 0
+  &:hover
+    background-color: transparent
+
+span.star
+  margin-right: 6px
+
+.star.selected
+  background-position: -15px 0
+
+#header
+  #star
+    float: right
+    margin: 5px 5px 0 0
+  #reply_to
+    margin: 5px 5px 0 0
+    float: left
+  #headers
+    padding-top: 12px
+    clear: both
+  background: #f5f5ff
+  position: relative
+  li
+    display: block
+  ul
+    padding-left: 3px
+  .tooltip
+    position: absolute
+    top: 30px
+    right: 30px
+    display: block
+    border: 1px solid #333
+    background: #ffc
+    width: 50%
+    padding: 0 6px
+    font-size: 13px
+
+.pagination
+  background: white
+  cursor: default
+  a, span, em
+    padding: 0.2em 0.5em
+    display: block
+    float: left
+    margin-right: 1px
+  .disabled
+    color: #999999
+    border: 1px solid #dddddd
+  .current
+    font-style: normal
+    font-weight: bold
+    background: #2e6ab1
+    color: white
+    border: 1px solid #2e6ab1
+  a
+    text-decoration: none
+    color: #36414D
+    border: 1px solid #36414D
+    &:hover, &:focus
+      color: #003
+      border-color: #003
+  .page_info
+    background: #36414D
+    color: white
+    padding: 0.4em 0.6em
+    width: 22em
+    margin-bottom: 0.3em
+    text-align: center
+    b
+      color: #000033
+      background: #6aa6ed
+      padding: 0.1em 0.25em
+  &:after
+    content: "."
+    display: block
+    height: 0
+    clear: both
+    visibility: hidden
+
+*
+  html .pagination
+    height: 1%
+  &:first-child + html .pagination
+    overflow: hidden
