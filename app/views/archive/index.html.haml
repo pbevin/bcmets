@@ -1,35 +1,10 @@
 %h1 Archives
 %p
   = link_to "Post a message to the list", post_path
-- for year in @year.downto(2000)
+- @year.downto(2000).each do |year|
   %h2
     = year
-  %table.index
-    %tbody
-      %tr
-        %td
-          = month_link(year, 1)
-        %td
-          = month_link(year, 2)
-        %td
-          = month_link(year, 3)
-        %td
-          = month_link(year, 4)
-      %tr
-        %td
-          = month_link(year, 5)
-        %td
-          = month_link(year, 6)
-        %td
-          = month_link(year, 7)
-        %td
-          = month_link(year, 8)
-      %tr
-        %td
-          = month_link(year, 9)
-        %td
-          = month_link(year, 10)
-        %td
-          = month_link(year, 11)
-        %td
-          = month_link(year, 12)
+  %ul.index
+    - (1..12).each do |month|
+      %li
+        = month_link(year, month)

@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'rails_helper'
 
 describe "archive/index" do
   before(:each) do
@@ -15,26 +15,26 @@ describe "archive/index" do
 
   it "should have links for every month" do
     (2001..2008).each do |year|
-      rendered.should have_selector("td>a:contains('March #{year}')")
-      rendered.should have_selector("td>a:contains('June #{year}')")
-      rendered.should have_selector("td>a:contains('September #{year}')")
-      rendered.should have_selector("td>a:contains('December #{year}')")
+      rendered.should have_selector("li>a:contains('March #{year}')")
+      rendered.should have_selector("li>a:contains('June #{year}')")
+      rendered.should have_selector("li>a:contains('September #{year}')")
+      rendered.should have_selector("li>a:contains('December #{year}')")
     end
   end
 
   it "should highlight the current month" do
-    rendered.should have_selector("td>a>strong:contains('March 2009')")
+    rendered.should have_selector("li>a>strong:contains('March 2009')")
   end
 
   it "should not link future months" do
-    rendered.should have_selector("td:contains('April 2009')")
-    rendered.should_not have_selector("td>a:contains('April 2009')")
+    rendered.should have_selector("li:contains('April 2009')")
+    rendered.should_not have_selector("li>a:contains('April 2009')")
   end
 
   it "should not render Jan 2000 as a link since it has no articles" do
-    rendered.should have_selector("td>a:contains('January 2001')")
-    rendered.should have_selector("td:contains('January 2000')")
-    rendered.should_not have_selector("td>a:contains('January 2000')")
+    rendered.should have_selector("li>a:contains('January 2001')")
+    rendered.should have_selector("li:contains('January 2000')")
+    rendered.should_not have_selector("li>a:contains('January 2000')")
   end
 
   it "should link to /post, not /post.pl" do
