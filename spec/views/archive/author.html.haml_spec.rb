@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'rails_helper'
 
 describe "/archive/author" do
   before(:each) do

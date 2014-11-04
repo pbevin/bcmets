@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "pages/donate" do
   it "should link to paypal" do
