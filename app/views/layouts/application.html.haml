@@ -1,11 +1,11 @@
-!!! Strict
+!!!
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en" }
   %head
     %title BCMets.org - #{@title || "Metastatic Breast Cancer"}
     - if not @indexable
       %meta{ :name => "robots", :content => "noindex, nofollow" }
-    %meta{"http-equiv" => "Content-type", :content => "text/html;charset=UTF-8"}
-    %meta{:name => "google-site-verification", :content => "Nh_V66O4LMXYYoR_X1YUAdtdSrMZEfwLDwP_Oo1JaXk"}
+    %meta{http: { equiv: "Content-type" }, content: "text/html;charset=UTF-8"}
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
     = yield(:head)
@@ -25,7 +25,8 @@
       #pageheader
         #banner
           %a{ :href => "/" }
-            %img{ :src => "/images/bcmets-header.png", :height => "120", :alt => "home page", :width => "950" }
+            =image_tag "bcmets-header.png", class: "hires"
+            =image_tag "bcmets480.png", class: "lores"
         #searchform
           = form_tag({ :controller => 'archive', :action => 'search' }, :method => 'get') do
             %fieldset

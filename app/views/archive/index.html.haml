@@ -2,9 +2,10 @@
 %p
   = link_to "Post a message to the list", post_path
 - @year.downto(2000).each do |year|
-  %h2
-    = year
-  %ul.index
-    - (1..12).each do |month|
-      %li
-        = month_link(year, month)
+  .year{class: year == @year ? "current" : "old"}
+    %h2
+      = year
+    %ul.index
+      - (1..12).each do |month|
+        %li
+          = month_link(year, month)

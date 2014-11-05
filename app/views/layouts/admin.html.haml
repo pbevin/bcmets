@@ -1,4 +1,4 @@
-!!! Strict
+!!!
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", :lang => "en" }
   %head
     %title
@@ -6,7 +6,8 @@
       = @title || "Metastatic Breast Cancer"
     - if not @indexable
       %meta{ :name => "robots", :content => "noindex, nofollow" }
-    %meta{"http-equiv" => "Content-type", :content => "text/html;charset=UTF-8"}
+    %meta{http: { equiv: "Content-type" }, content: "text/html;charset=UTF-8"}
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/ 
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
     = yield(:head)
