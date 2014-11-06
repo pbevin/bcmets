@@ -27,4 +27,4 @@
           = thread_as_html(@conversation_roots).html_safe
 
 :javascript
-  initStar(#{@article.id});
+  initStar(#{@article.id}, '#{form_authenticity_token}');
