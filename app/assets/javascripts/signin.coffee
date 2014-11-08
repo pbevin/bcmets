@@ -1,5 +1,5 @@
 $.fn.valueStream = ->
-  this.asEventStream('keyup').map((e) -> e.target.value).toProperty("")
+  this.asEventStream('keyup').map((e) -> e.target.value).toProperty(this.val())
 
 VALID_EMAIL = new RegExp(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i)
 
