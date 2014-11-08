@@ -1,25 +1,23 @@
-<h1>Login</h1>
+<h1>Login to bcmets.org</h1>
 
-Enter your username and password below.
-
-<%= form_for(@user_session) do |f| %>
+<%= form_for(@user_session, html: { class: "signin" }) do |f| %>
   <%= f.error_messages %>
 
   <p>
     <%= f.label :email %><br />
-    <%= f.text_field :email %>
+    <%= f.email_field :email, placeholder: "Your email address" %>
   </p>
   <p>
     <%= f.label :password %><br />
-    <%= f.password_field :password %>
+    <%= f.password_field :password, placeholder: "Your bcmets.org password" %>
   </p>
   <p>
-    <%= f.submit 'Login' %>
+    <button class="submit">Sign In</button>
   </p>
 <% end %>
 
 <%= link_to "Forgot your password?", forgot_password_path %>
 
 <script type="text/javascript" charset="utf-8">
-  $('#user_session_email').select();
+  signinForm();
 </script>
