@@ -44,7 +44,7 @@ Feature: Becoming a user
     When I go to Login
     And I fill in "Email" with "mary@example.com"
     And I fill in "Password" with "secret"
-    And I press "Login"
+    And I press "Sign In"
     Then I should be logged in
     And I should see "Logged in as"
     But I should not see "Join bcmets"
@@ -54,7 +54,7 @@ Feature: Becoming a user
     When I go to Login
     And I fill in "Email" with "mary@example.com"
     And I fill in "Password" with "secret"
-    And I press "Login"
+    And I press "Sign In"
     And I go to the front page
     And I follow "Logout"
     Then I should not be logged in

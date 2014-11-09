@@ -12,7 +12,7 @@ When /^I login as administrator$/ do
   visit "/login"
   fill_in("Email", with: "pete@petebevin.com")
   fill_in("Password", with: "123456")
-  click_button("Login")
+  click_button("Sign In")
 end
 
 def table_at(selector)

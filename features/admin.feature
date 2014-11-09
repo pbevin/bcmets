@@ -48,7 +48,7 @@ Feature: Admin interface
     And I go to Login
     And I fill in "Email" with "test@example.com"
     And I fill in "Password" with "secr3t"
-    And I press "Login"
+    And I press "Sign In"
     Then I should see "Logged in successfully"
 
   Scenario: Changing the password
@@ -60,7 +60,7 @@ Feature: Admin interface
     And I go to Login
     And I fill in "Email" with "test@example.com"
     And I fill in "Password" with "123456"
-    And I press "Login"
+    And I press "Sign In"
     Then I should see "Logged in successfully"
 
   Scenario: Activating a user

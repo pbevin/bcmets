@@ -56,7 +56,7 @@ Given /^that user is logged in$/ do
   visit "/login"
   fill_in "Email", with: @user.email
   fill_in "Password", with: "xyzzy"
-  click_button "Login"
+  click_button "Sign In"
 end
 
 When /^I activate user "([^\"]*)"$/ do |email|
