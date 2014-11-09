@@ -1,8 +1,10 @@
 $.fn.valueStream = ->
   this
-    .asEventStream('keyup')
-    .merge this.asEventStream('change')
+    .asEventStream('input')
+    .merge(this.asEventStream('propertychange'))
+    .merge(this.asEventStream('paste'))
     .map (e) -> e.target.value
+    .skipDuplicates()
     .toProperty this.val()
 
 VALID_EMAIL = new RegExp(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i)
