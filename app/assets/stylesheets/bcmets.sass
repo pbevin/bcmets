@@ -372,10 +372,10 @@ form.signin
 
 
   button
-    padding: 10px
+    padding: 6px 10px
     border-radius: 4px
     color: white
-    font-size: 18px
+    font: 18px Arial
 
     &, &:disabled:hover
       border: 1px solid #009
@@ -403,7 +403,10 @@ form.signin
     &:disabled
       opacity: 0.4
 
-
+button::-moz-focus-inner
+  margin: -1px
+  padding: 0
+  border-width: 1px
 
 *
   html .pagination
