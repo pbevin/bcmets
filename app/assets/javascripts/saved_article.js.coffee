@@ -1,53 +1,46 @@
-window.initStar = (articleId, token) ->
-
-  setText = ->
-    $("#star").toggleClass "anon", currentlySaved is null
-    star.toggleClass "selected", (if currentlySaved then true else false)
-    message.text (if currentlySaved then "Message saved" else "Save this message")
-
-  setTooltip = (message) ->
-    if message is ""
-      tooltip.fadeOut()
-    else
-      tooltip.text(message).fadeIn()
-
+$.fn.initStar = (articleId, initialSaved, token) ->
   tooltip = $("#header .tooltip")
-  star = $("#star a.star")
-  message = $("#star a.save_this")
-  spinner = star.parent().find("img")
-  currentlySaved = star.hasClass("selected")
+  star = this.find("a.star")
+  message = this.find("a.save_this")
 
-  tooltip.hide()
-
-  $("#star a").click ->
-    star.hide()
-    spinner.show()
+  remoteSetSaved = (val) ->
     $.ajax
       type: "POST"
-      url: "/articles/" + articleId + "/set_saved"
+      url: "/articles/#{articleId}/set_saved"
       data:
-        saved: not currentlySaved
+        saved: val
         authenticity_token: token
-    .done (resp) ->
-      currentlySaved = resp.saved
-      setText()
-      return
-    .always ->
-      spinner.hide()
-      star.show()
 
-  $.getJSON "/articles/#{articleId}/is_saved", (response) ->
-    currentlySaved = response.saved
-    setText()
+  tooltip.hide()
+  star.show()
 
-  setTooltip ""
+  clicks = this.find("a").asEventStream('click').map (e) ->
+    if star.hasClass("selected") then false else true
 
-  hoverOn = ->
-    if star.hasClass("selected")
-      setTooltip "Article is in your saved list. Click again to remove it."
-    else
-      setTooltip "Click the star to add this article to your Saved Articles list."
+  optimisticResults = clicks
+  realResults = clicks.flatMapLatest (saved) ->
+    Bacon.fromPromise remoteSetSaved(saved)
+      .map(".saved")
 
-  hoverOff = -> setTooltip ""
+  results = optimisticResults
+    .merge(realResults)
+    .toProperty(initialSaved)
+    .map (saved) ->
+      if saved
+        saved: true
+        message: "Message saved"
+        tooltip: "Article is in your saved list. Click again to remove it."
+      else
+        saved: false
+        message: "Save this message"
+        tooltip: "Click the star to add this article to your Saved Articles list."
 
-  $("#star a").hover hoverOn, hoverOff
+  results.onValue (state) ->
+    star.toggleClass("selected", state.saved)
+    message.text state.message
+    tooltip.text state.tooltip
+
+
+  hoverTooltip = (hovering) ->
+    -> tooltip.toggle(hovering)
+  this.find("a").hover hoverTooltip(true), hoverTooltip(false)

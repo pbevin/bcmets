@@ -98,7 +98,6 @@ class ArticlesController < ApplicationController
   end
 
   def set_saved
-    p session: UserSession.find
     user = current_user
     return render json: { succeeded: false, error: "not logged in" } if !user
     article = Article.find(params[:id])
