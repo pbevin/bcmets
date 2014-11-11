@@ -18,6 +18,4 @@
 //= require bacon
 //= require react
 //= require react_ujs
-//= require components
-//= require md5
 //= require_tree .
