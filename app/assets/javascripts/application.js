@@ -18,4 +18,5 @@
 //= require bacon
 //= require react
 //= require react_ujs
+//= require mailcheck
 //= require_tree .

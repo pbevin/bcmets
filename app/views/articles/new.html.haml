@@ -7,10 +7,14 @@
       = f.label :name, "Name"
       %br
       = f.text_field :name
-    %div
+    .email
       = f.label :email, "Email"
       %br
       = f.text_field :email
+      %span.email_suggestion.hidden
+        Did you mean
+        = succeed '?' do
+          = link "", class: "address"
     - if article.reply?
       %div
         = f.hidden_field :to
@@ -38,11 +42,4 @@
     %pre#quoted= quoted
 
 :javascript
-  $('.quote').click(function() {
-    $('#article_qt').val($('#article_qt').val() + "\n\n" + $('#quoted').text());
-    $('#quoted').empty();
-    $('.quote').hide();
-    $('.quote_lecture').show();
-
-    return false;
-  });
+  $(setupPost);
