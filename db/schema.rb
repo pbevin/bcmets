@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20120701203222) do
+ActiveRecord::Schema.define(version: 20141219174748) do
 
   create_table "albums", force: true do |t|
     t.string   "title"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20120701203222) do
     t.string   "name"
     t.string   "email"
     t.string   "subject"
-    t.text     "body"
+    t.text     "body",            limit: 16777215
     t.string   "msgid"
     t.string   "parent_msgid"
     t.integer  "parent_id"
@@ -41,9 +41,9 @@ ActiveRecord::Schema.define(version: 20120701203222) do
   add_index "articles", ["conversation_id"], name: "index_articles_on_conversation_id", using: :btree
   add_index "articles", ["email"], name: "index_articles_on_email", using: :btree
   add_index "articles", ["msgid"], name: "index_articles_on_msgid", using: :btree
-  add_index "articles", ["parent_id"], name: "parent", using: :btree
   add_index "articles", ["parent_msgid"], name: "index_articles_on_parent_msgid", using: :btree
   add_index "articles", ["received_at"], name: "index_articles_on_received_at", using: :btree
+  add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
 
   create_table "conversations", force: true do |t|
     t.string   "title"
