@@ -3,7 +3,6 @@ class UsersController < ApplicationController
 
   def index
     @users = User.order("created_at DESC")
-    render :index, layout: "admin"
   end
 
   def new

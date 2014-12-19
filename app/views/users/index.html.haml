@@ -1,3 +1,5 @@
+- wide_page!
+
 %h2 Users
 
 = link_to("Add User", new_user_path)
@@ -13,6 +15,7 @@
       %th User
       %th Joined
       %th Delivery
+      %th &nbsp;
   %tbody
     - for user in @users do
       %tr{:class => [cycle('admin-odd', 'admin-even'), user.moderated ? ' moderated' : nil]}

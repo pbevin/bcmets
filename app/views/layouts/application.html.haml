@@ -9,7 +9,7 @@
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
     = yield(:head)
-  %body
+  %body{class: wide_page? && "wide"}
     #wrap
       #usernav
         - if current_user

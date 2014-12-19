@@ -55,6 +55,12 @@ ul.index
   width: 100%
   max-width: 950px
 
+body.wide
+  #main
+    width: 100%
+  #sidebar, #footer
+    display: none
+
 #sidebar
   float: right
   width: 250px
@@ -258,7 +264,7 @@ table.admin
     vertical-align: bottom
   td
     padding: 0px 5px
-  tr:hover
+  tbody tr:hover
     background: #ccc
   .admin-odd
     background: #edf3fe
@@ -267,8 +273,21 @@ img.profile
   float: right
   border: 5px solid white
 
-#users tr.moderated
-  color: red
+table#users
+  width: 100%
+  table-layout: fixed
+  tr
+    th:nth-child(2)
+      width: 105px
+    th:nth-child(3)
+      width: 77px
+    th:nth-child(4)
+      width: 77px
+
+
+
+  tr.moderated
+    color: red
 
 #new_donation_form
   display: none
