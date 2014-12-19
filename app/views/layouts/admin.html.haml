@@ -22,7 +22,8 @@
       #pageheader
         #banner
           %a{ :href => "/" }
-            %img{ :src => "/images/bcmets-header.png", :height => "120", :alt => "home page", :width => "950" }
+            =image_tag "bcmets-header.png", class: "hires"
+            =image_tag "bcmets480.png", class: "lores"
         #searchform
           - form_tag({ :controller => 'archive', :action => 'search' }, :method => 'get') do
             %fieldset

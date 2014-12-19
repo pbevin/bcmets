@@ -43,6 +43,7 @@ class UsersController < ApplicationController
         end
         redirect_to(root_url)
       else
+        @button_label = @admin ? "Submit" : "Sign up"
         render action: "new"
       end
     end

@@ -27,68 +27,69 @@
           %a{ :href => "/" }
             =image_tag "bcmets-header.png", class: "hires"
             =image_tag "bcmets480.png", class: "lores"
+      #middle
         #searchform
           = form_tag({ :controller => 'archive', :action => 'search' }, :method => 'get') do
             %fieldset
-              = text_field_tag :q, params[:q], :size => 10
-              = submit_tag "Search"
-      #main
-        - if flash[:notice]
-          #notice
-            = flash[:notice]
-            - if flash[:links]
-              %p From here you can go to:
-              %ul
-              - for text, url in flash[:links]
+              = text_field_tag :q, params[:q], :size => 10, placeholder: "Search bcmets.org"
+              %button Go
+        #main
+          - if flash[:notice]
+            #notice
+              = flash[:notice]
+              - if flash[:links]
+                %p From here you can go to:
+                %ul
+                - for text, url in flash[:links]
+                  %li
+                    = link_to(text, url)
+          #content
+            = yield
+        #sidebar
+          %h3 Links
+          #links
+            %ul
+              - if !current_user
                 %li
-                  = link_to(text, url)
-        #content
-          = yield
-      #sidebar
-        %h3 Links
-        #links
+                  %strong
+                    = link_to('Join bcmets', new_user_path)
+                %li
+                  = link_to('Login', login_path)
+              - for link in all_links
+                %li
+                  = link_to link.title, link.url
+                  - if link.text
+                    = link.text
+              - if current_user
+                %li
+                  %a{ :href => "/saved" }
+                    View saved messages
+              %li
+                %a{ :href => "/post" }
+                  Post a new message
+
+          %h3 Latest Blog Entries
+          %ul.blogs
+            - blog_entries.each do |entry|
+              %li
+                = link_to entry.name, entry.url
+                %small
+                  = "(from #{link_to entry.feed.name, entry.feed.url})".html_safe
+            = link_to "More »", feed_entries_path
+
+          %h3 Donations
           %ul
-            - if !current_user
-              %li
-                %strong
-                  = link_to('Join bcmets', new_user_path)
-              %li
-                = link_to('Login', login_path)
-            - for link in all_links
-              %li
-                = link_to link.title, link.url
-                - if link.text
-                  = link.text
-            - if current_user
-              %li
-                %a{ :href => "/saved" }
-                  View saved messages
             %li
-              %a{ :href => "/post" }
-                Post a new message
-
-        %h3 Latest Blog Entries
-        %ul.blogs
-          - blog_entries.each do |entry|
+              = last_donation
             %li
-              = link_to entry.name, entry.url
-              %small
-                = "(from #{link_to entry.feed.name, entry.feed.url})".html_safe
-          = link_to "More »", feed_entries_path
-
-        %h3 Donations
-        %ul
-          %li
-            = last_donation
-          %li
-            = donations_this_month
-          %li
-            = donations_this_year
-          %li
-            Please
-            %a{ :href => "/donate" }
-              donate
-            to help keep this service running.
+              = donations_this_month
+            %li
+              = donations_this_year
+            %li
+              Please
+              %a{ :href => "/donate" }
+                donate
+              to help keep this service running.
 
       #footer
         %p
