@@ -10,10 +10,10 @@ class UserActivation
     @user = User.find(@user_id)
 
     if user.update_attributes(@username) && user.activate!
+      SubscriberEvent.queue.notify_created(user)
+      UserSession.create(user)
       user.deliver_activation_confirmation!
       user.log_activation
-      UserSession.create(user)
-      user.update_mailman
 
       return true
     else
