@@ -7,9 +7,8 @@ class EmailChange
   validate :has_changed
 
   def execute(current_user)
-    current_user.delete_from_mailman
+    SubscriberEvent.queue.notify_email_changed(old_email, new_email)
     current_user.update_attributes(email: new_email)
-    current_user.update_mailman
   end
 
   private

@@ -53,7 +53,7 @@ class UsersController < ApplicationController
     @user.activate!
 
     if @user.signup!
-      @user.update_mailman
+      SubscriberEvent.queue.notify_created(@user)
       flash[:notice] = "User added"
       redirect_to(root_url)
     else
@@ -148,7 +148,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Something went wrong: please contact owner@bcmets.org if you want to unsubscribe."
       return redirect_to current_user
     end
-    user.delete_from_mailman
+    SubscriberEvent.queue.notify_destroyed(user)
     user.destroy
     flash[:notice] = "Your account has been deleted."
     redirect_to root_url
@@ -156,7 +156,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.delete_from_mailman
+    SubscriberEvent.queue.notify_destroyed(@user)
     @user.destroy
     flash[:notice] = "User deleted"
     redirect_to users_path

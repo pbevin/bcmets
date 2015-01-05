@@ -18,7 +18,7 @@ class UserUpdate
       if @attrs[:active] && !user.active?
         user.activate!
       end
-      user.update_mailman
+      SubscriberEvent.queue.notify_prefs_changed(user)
 
       if @attrs[:photo].present?
         return :photo_updated
