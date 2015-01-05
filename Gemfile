@@ -34,6 +34,7 @@ gem 'dynamic_form'
 gem 'gravatar_image_tag'
 gem 'paperclip', '~> 4.1.1'
 gem 'exception_notification'
+gem "bunny", ">= 1.6.2"
 
 group :development do
   gem 'capistrano-rails', require: false

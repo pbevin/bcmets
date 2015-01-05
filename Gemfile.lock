@@ -39,6 +39,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     addressable (2.3.6)
+    amq-protocol (1.9.2)
     arel (5.0.1.20140414130214)
     authlogic (3.4.2)
       activerecord (>= 3.2)
@@ -46,6 +47,8 @@ GEM
       request_store (~> 1.0)
     builder (3.2.2)
     bundler-unload (1.0.2)
+    bunny (1.6.3)
+      amq-protocol (>= 1.9.2)
     capistrano (3.2.1)
       i18n
       rake (>= 10.0.0)
@@ -295,6 +298,7 @@ PLATFORMS
 
 DEPENDENCIES
   authlogic
+  bunny (>= 1.6.2)
   capistrano-bundler
   capistrano-rails
   capistrano-rvm
