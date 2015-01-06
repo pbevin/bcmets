@@ -7,7 +7,7 @@ Feature: Unsubscribe from bcmets
     Given a user exists with password: "xyzzy"
     And that user is logged in
     When I go to my profile
-    And I follow "Unsubscribe from bcmets"
+    And I press "Unsubscribe from bcmets"
     Then I should be on the front page
     And I should see "Your account has been deleted"
     And that user should have been deleted
