@@ -321,6 +321,7 @@ DEPENDENCIES
   mysql2
   nokogiri
   paperclip (~> 4.1.1)
+  pry
   quiet_assets
   rails (~> 4.1.1)
   rails_autolink

@@ -42,6 +42,7 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'quiet_assets'
   gem 'spring'
+  gem "pry"
 end
 
 group :test do

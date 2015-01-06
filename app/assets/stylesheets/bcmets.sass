@@ -23,6 +23,24 @@ a
     color: #fff
     text-decoration: none
 
+form
+  input[type=submit].link
+    display: inline
+    border: none
+    margin: 0
+    padding: 0
+    color: #000
+    font-family: Optima
+    font-weight: normal
+    text-decoration: underline
+    font-size: 16px
+    background: none
+    cursor: pointer
+    &:hover
+      background-color: #4b6580
+      color: #fff
+      text-decoration: none
+
 .hidden
   display: none
 
@@ -411,36 +429,37 @@ form
     font: 18px normal Arial,Helvetica,sans-serif
 
   button, input[type=submit]
-    padding: 6px 10px
-    border-radius: 4px
-    color: white
-    font: 18px Arial
+    &:not(.link)
+      padding: 6px 10px
+      border-radius: 4px
+      color: white
+      font: 18px Arial
 
-    &, &:disabled:hover
-      border: 1px solid #009
-      background: #54718f /* Old browsers */
-      background: -moz-linear-gradient(top,  #54718f 0%, #8da2b7 100%) /* FF3.6+ */
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#54718f), color-stop(100%,#8da2b7)) /* Chrome,Safari4+ */
-      background: -webkit-linear-gradient(top,  #54718f 0%,#8da2b7 100%) /* Chrome10+,Safari5.1+ */
-      background: -o-linear-gradient(top,  #54718f 0%,#8da2b7 100%) /* Opera 11.10+ */
-      background: -ms-linear-gradient(top,  #54718f 0%,#8da2b7 100%) /* IE10+ */
-      background: linear-gradient(to bottom,  #54718f 0%,#8da2b7 100%) /* W3C */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#54718f', endColorstr='#8da2b7',GradientType=0 ) /* IE6-9 */
+      &, &:disabled:hover
+        border: 1px solid #009
+        background: #54718f /* Old browsers */
+        background: -moz-linear-gradient(top,  #54718f 0%, #8da2b7 100%) /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#54718f), color-stop(100%,#8da2b7)) /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #54718f 0%,#8da2b7 100%) /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #54718f 0%,#8da2b7 100%) /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #54718f 0%,#8da2b7 100%) /* IE10+ */
+        background: linear-gradient(to bottom,  #54718f 0%,#8da2b7 100%) /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#54718f', endColorstr='#8da2b7',GradientType=0 ) /* IE6-9 */
 
 
-    &:hover
-      border: 1px solid #00b
-      background: #6385a8 /* Old browsers */
-      background: -moz-linear-gradient(top,  #6385a8 0%, #a1b7cd 100%) /* FF3.6+ */
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6385a8), color-stop(100%,#a1b7cd)) /* Chrome,Safari4+ */
-      background: -webkit-linear-gradient(top,  #6385a8 0%,#a1b7cd 100%) /* Chrome10+,Safari5.1+ */
-      background: -o-linear-gradient(top,  #6385a8 0%,#a1b7cd 100%) /* Opera 11.10+ */
-      background: -ms-linear-gradient(top,  #6385a8 0%,#a1b7cd 100%) /* IE10+ */
-      background: linear-gradient(to bottom,  #6385a8 0%,#a1b7cd 100%) /* W3C */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6385a8', endColorstr='#a1b7cd',GradientType=0 ) /* IE6-9 */
+      &:hover
+        border: 1px solid #00b
+        background: #6385a8 /* Old browsers */
+        background: -moz-linear-gradient(top,  #6385a8 0%, #a1b7cd 100%) /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6385a8), color-stop(100%,#a1b7cd)) /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #6385a8 0%,#a1b7cd 100%) /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #6385a8 0%,#a1b7cd 100%) /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #6385a8 0%,#a1b7cd 100%) /* IE10+ */
+        background: linear-gradient(to bottom,  #6385a8 0%,#a1b7cd 100%) /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6385a8', endColorstr='#a1b7cd',GradientType=0 ) /* IE6-9 */
 
-    &:disabled
-      opacity: 0.4
+      &:disabled
+        opacity: 0.4
 
   .field_with_errors
     display: inline-block
