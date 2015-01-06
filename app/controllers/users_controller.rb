@@ -170,6 +170,6 @@ class UsersController < ApplicationController
 
   def user_params
     admin_params = logged_in_as_admin ? [:active] : []
-    params.require(:user).permit(:name, :photo, :email, :password, *admin_params)
+    params.require(:user).permit(:name, :photo, :email, :password, :location, :email_delivery, *admin_params)
   end
 end
