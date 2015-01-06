@@ -39,7 +39,7 @@ class SubscriberEvent
     end
 
     def send_message(msg)
-      conn = Bunny.new(hostname: hostname)
+      conn = Bunny.new(hostname: @hostname)
       conn.start
 
       ch = conn.create_channel
