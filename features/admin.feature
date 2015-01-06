@@ -27,11 +27,11 @@ Feature: Admin interface
     And a user should not exist with email: "barbara@example.com"
 
   Scenario: Change delivery mode
-    Given a user exists with email_delivery: "all"
+    Given a user exists with email_delivery: "all", email: "barbara@example.com"
     When I go to Edit User for that user
     And I choose "user_email_delivery_none"
     And I press "Submit"
-    Then a user should exist with email_delivery: "none"
+    Then a user should exist with email_delivery: "none", email: "barbara@example.com"
 
   Scenario: Change email address
     Given a user exists with email: "test@example.com"
