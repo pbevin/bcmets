@@ -80,23 +80,6 @@ class User < ActiveRecord::Base
     Notifier.password_reset(self).deliver
   end
 
-  def update_mailman
-    return unless active? && email_delivery
-    as_mailman("/home/mailman/delivery", "bcmets", email, email_delivery)
-  end
-
-  def delete_from_mailman
-    as_mailman(
-      "/home/mailman/bin/remove_members",
-      "--nouserack", "--noadminack",
-      "bcmets", email
-    )
-  end
-
-  def as_mailman(*args)
-    system("sudo", "-u", "mailman", *args) if Rails.env.production?
-  end
-
   def photo_geometry(style = :original)
     @geometry ||= {}
     @geometry[style] ||= Paperclip::Geometry.from_file(photo.path(style))
