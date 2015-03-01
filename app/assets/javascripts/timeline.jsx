@@ -1,3 +1,6 @@
+//= require moment
+//= require md5
+
 function fuzzyTime(time) {
   var diff, now, tm;
   tm = moment(time);
@@ -47,8 +50,10 @@ var PostHeader = React.createClass({
     var post = this.props.post;
     return (
       <div className="tl_headers">
+        <Avatar post={post} />
+        <h2>{post.subject}</h2>
         <div className="tl_header">From: <a href={post.user_path}>{post.name}</a> {fuzzyTime(post.date)}</div>
-        <div classNmae="tl_header">Subject: {post.subject}</div>
+        <div className="clr"/>
       </div>
     );
   }
@@ -59,7 +64,6 @@ var PostBody = React.createClass({
     var post = this.props.post;
     return (
       <div className="tl_body">
-        <Avatar post={post} />
         <div dangerouslySetInnerHTML={{__html: post.body }} />
       </div>
     );
@@ -71,7 +75,7 @@ var Avatar = React.createClass({
     var post = this.props.post;
     var src = post.avatar_url || gravatarUrl(post.email);
     return (
-      <a href={post.user_path} className="avatar">
+      <a href={post.user_path} className="tl_avatar">
         <img src={src} width={100} height={100} />
       </a>
     );
