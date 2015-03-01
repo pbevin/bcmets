@@ -20,7 +20,7 @@ function fuzzyTime(time) {
 function gravatarUrl(email) {
   var hash;
   hash = CryptoJS.MD5(email.trim().toLowerCase()).toString();
-  return "http://www.gravatar.com/avatar/" + hash + "?s=100&d=identicon";
+  return "http://www.gravatar.com/avatar/" + hash + "?s=50&d=identicon";
 };
 
 var Timeline = React.createClass({
@@ -76,7 +76,7 @@ var Avatar = React.createClass({
     var src = post.avatar_url || gravatarUrl(post.email);
     return (
       <a href={post.user_path} className="tl_avatar">
-        <img src={src} width={100} height={100} />
+        <img src={src} width={50} height={50} />
       </a>
     );
   }
