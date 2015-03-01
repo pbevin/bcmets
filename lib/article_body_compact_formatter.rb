@@ -1,9 +1,11 @@
 class ArticleBodyCompactFormatter < ArticleBodyFormatter
+  include Fixpoint
+
   def format(text)
     text = correct_newlines(text)
     text = sanitize(text)
-    text = remove_signature_block(text)
     text = remove_attachment_warnings(text)
+    text = remove_signature_block(text)
     text = decode_quoted_printable(text)
 
     auto_link(article_format(h(text)))
@@ -18,9 +20,8 @@ class ArticleBodyCompactFormatter < ArticleBodyFormatter
   end
 
   def remove_signature_block(text)
-    text.gsub(/^--\s*\n(.*\n){,5}.*\s*\Z/, '').strip
+    fixpoint(text) { |text| text.gsub(/^--\s*\n(.*\n){,5}.*\s*\Z/, '').strip }
   end
-
 
   def article_format(text)
     paragraphs = text.split(/\n{2,}/)
@@ -30,8 +31,8 @@ class ArticleBodyCompactFormatter < ArticleBodyFormatter
     else
       paragraphs.map! { |paragraph|
         if paragraph =~ /^&gt;/
-          paragraph = paragraph.gsub(/^&gt;/, '')
-          content_tag("blockquote", article_format(paragraph))
+          paragraph = paragraph.gsub(/^&gt;\s*/, '')
+          content_tag("blockquote", format(paragraph))
         else
           format_para(paragraph)
         end
