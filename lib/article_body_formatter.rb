@@ -1,15 +1,48 @@
 require 'English'
 
 class ArticleBodyFormatter
+  include Fixpoint
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
 
-  def h(text)
-    ERB::Util.html_escape(text)
+  def format(text)
+    text = decode_quoted_printable(text)
+    text = h(text)
+    text = article_format(text)
+    text = auto_link(text)
   end
 
-  def format(text)
-    auto_link(simple_format(h(decode_quoted_printable(text))))
+  def article_format(text)
+    text = remove_attachment_warnings(text)
+    text = remove_signature_block(text)
+    text = correct_newlines(text)
+    paragraphs = text.split(/\n{2,}/)
+
+    if paragraphs.empty?
+      content_tag("p", nil)
+    else
+      paragraphs.map! { |paragraph|
+        if paragraph =~ /\A&gt;/
+          paragraph = paragraph.gsub(/^&gt;[^\S\n]*/, '')
+          content_tag("blockquote", article_format(paragraph))
+        else
+          paragraph = paragraph.gsub(/([^\n]\n)(?=[^\n])/, '\1<br />')
+          content_tag("p", raw(paragraph))
+        end
+      }.join("\n\n").html_safe
+    end
+  end
+
+  def correct_newlines(text)
+    text.gsub(/\r\n?/, "\n")
+  end
+
+  def remove_attachment_warnings(text)
+    text.gsub(%r{\[list software deleted \w+/\w+ attachment\]\n*}, "")
+  end
+
+  def remove_signature_block(text)
+    fixpoint(text) { |t| t.gsub(/^--\s*\n(.*\n){,5}.*\s*\Z/, '').strip }
   end
 
   def decode_quoted_printable(text)
@@ -30,5 +63,9 @@ class ArticleBodyFormatter
     # silly Windows clients.  So we assume ISO8859-1, but return it
     # encoded as UTF-8.
     code.chr.force_encoding(Encoding::ISO8859_1).encode(Encoding::UTF_8)
+  end
+
+  def h(text)
+    ERB::Util.html_escape(text)
   end
 end

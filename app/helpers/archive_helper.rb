@@ -35,10 +35,6 @@ module ArchiveHelper
     ArticleBodyFormatter.new.format(text)
   end
 
-  def to_compact_html(text)
-    ArticleBodyCompactFormatter.new.format(text)
-  end
-
   def thread_as_html(articles, out = "")
     articles.each do |article|
       out << "<li>"
