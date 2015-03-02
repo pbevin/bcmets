@@ -48,7 +48,7 @@ class ArticleBodyFormatter
   end
 
   def fix_funny_characters(text)
-    text.gsub("Â", " ")
+    text.gsub(/[\u00c2\u00a0]/, " ")
   end
 
   def quote_original_message(text)
@@ -57,12 +57,17 @@ class ArticleBodyFormatter
       pp line
       if quoting
         [lines + "&gt;" + line, true]
-      elsif line == "-----Original Message-----\n"
+      elsif start_of_quoted_message?(line)
         [lines + "\n", true]
       else
         [lines + line, false]
       end
     end.first
+  end
+
+  def start_of_quoted_message?(line)
+    line == "-----Original Message-----\n" ||
+      line =~ /^\s*On [A-Z][a-z][a-z].*(AM|PM), .* wrote:$/
   end
 
   def decode_quoted_printable(text)
