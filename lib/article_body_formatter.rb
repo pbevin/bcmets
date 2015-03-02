@@ -7,6 +7,7 @@ class ArticleBodyFormatter
 
   def format(text)
     text = decode_quoted_printable(text)
+    text = fix_funny_characters(text)
     text = h(text)
     text = article_format(text)
     text = auto_link(text)
@@ -44,6 +45,10 @@ class ArticleBodyFormatter
 
   def remove_signature_block(text)
     fixpoint(text) { |t| t.gsub(/^--\s*\n(.*\n){,5}.*\s*\Z/, '').strip }
+  end
+
+  def fix_funny_characters(text)
+    text.gsub("Â", " ")
   end
 
   def quote_original_message(text)
