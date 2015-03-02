@@ -15,6 +15,7 @@ class ArticleBodyFormatter
   def article_format(text)
     text = remove_attachment_warnings(text)
     text = remove_signature_block(text)
+    text = quote_original_message(text)
     text = correct_newlines(text)
     paragraphs = text.split(/\n{2,}/)
 
@@ -43,6 +44,20 @@ class ArticleBodyFormatter
 
   def remove_signature_block(text)
     fixpoint(text) { |t| t.gsub(/^--\s*\n(.*\n){,5}.*\s*\Z/, '').strip }
+  end
+
+  def quote_original_message(text)
+    text.lines.inject(["", false]) do |memo, line|
+      lines, quoting = memo
+      pp line
+      if quoting
+        [lines + "&gt;" + line, true]
+      elsif line == "-----Original Message-----\n"
+        [lines + "\n", true]
+      else
+        [lines + line, false]
+      end
+    end.first
   end
 
   def decode_quoted_printable(text)
