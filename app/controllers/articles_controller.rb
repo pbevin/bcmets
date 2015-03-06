@@ -1,12 +1,8 @@
 class ArticlesController < ApplicationController
-  # GET /articles
-  # GET /articles.xml
   def index
     redirect_to root_url
   end
 
-  # GET /articles/1
-  # GET /articles/1.xml
   def show
     @article = Article.find(params[:id])
     begin
@@ -14,25 +10,15 @@ class ArticlesController < ApplicationController
     rescue
       @conversation_roots = nil
     end
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render xml: @article }
-    end
   end
 
-  # GET /articles/new
-  # GET /articles/new.xml
   def new
     article = Article.new
 
     article.name = default_name
     article.email = default_email
 
-    respond_to do |format|
-      format.html { render locals: { article: article, title: nil, quoted: nil } }
-      format.xml  { render xml: article }
-    end
+    render locals: { article: article, title: nil, quoted: nil }
   end
 
   def reply
@@ -91,10 +77,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(articles_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to(articles_url)
   end
 
   def set_saved
