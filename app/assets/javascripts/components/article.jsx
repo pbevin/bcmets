@@ -37,21 +37,21 @@ var Header = React.createClass({
   render: function() {
     var article = this.props.article;
     var signedIn = this.props.signedIn;
-    var reply, star;
+    var star, reply;
+
+    if (signedIn) {
+      star = <Star article={this.props.article} />
+    }
 
     if (isRecent(article.sent_at)) {
       var replyPath = "/article/" + article.id + "/reply";
       reply = <div id="reply_to"><a href={replyPath}>Reply to this message</a></div>;
     }
 
-    if (signedIn) {
-      star = <Star article={this.props.article} />
-    }
-
     return (
       <div id="header">
-        {reply}
         {star}
+        {reply}
         <ul id="headers">
           <li id="from">
             From: {linkToAuthor(article.sender_name, article.sender_email)}
@@ -71,7 +71,9 @@ var Star = React.createClass({
   render: function() {
     return (
       <div id="star">
-        <a className="star" onClick={this.toggleSave} />
+        <a className="save_this" href="javascript:void(0)" onClick={this.toggleSave}>Save this message</a>
+        &nbsp;
+        <a className="star" href="javascript:void(0)" onClick={this.toggleSave} />
       </div>
     );
   }
