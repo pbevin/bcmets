@@ -28,4 +28,17 @@ module ArticlesHelper
       authToken: form_authenticity_token
     }
   end
+
+  def threaded_roots(roots)
+    roots.map { |article|
+      {
+        id: article.id,
+        subject: article.subject,
+        sender_name: article.sender_name,
+        sender_email: article.sender_email,
+        sent_at: article.sent_at,
+        children: threaded_roots(article.children)
+      }
+    }
+  end
 end
