@@ -30,10 +30,6 @@ var Header = React.createClass({
   },
   mixins : [ PureRenderMixin ],
 
-  componentWillMount: function() {},
-  componentWillReceiveProps: function() {},
-  componentWillUnmount: function() {},
-
   render: function() {
     var article = this.props.article;
     var signedIn = this.props.signedIn;
@@ -89,7 +85,10 @@ var Body = React.createClass({
   render: function() {
     article = this.props.article;
     return (
-      <div dangerouslySetInnerHTML={{__html: article.body }} />
+      <div id="body">
+        <Avatar article={article} />
+        <div dangerouslySetInnerHTML={{__html: article.body }} />
+      </div>
     )
   }
 });
