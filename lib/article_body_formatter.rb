@@ -54,7 +54,6 @@ class ArticleBodyFormatter
   def quote_original_message(text)
     text.lines.inject(["", false]) do |memo, line|
       lines, quoting = memo
-      pp line
       if quoting
         [lines + "&gt;" + line, true]
       elsif start_of_quoted_message?(line)
