@@ -23,7 +23,7 @@ module ArticlesHelper
   def article_view_data
     {
       article: article_to_api_data(@article),
-      roots: @conversation_roots,
+      roots: threaded_roots(@conversation_roots),
       signedIn: !!current_user,
       authToken: form_authenticity_token
     }
@@ -34,10 +34,10 @@ module ArticlesHelper
       {
         id: article.id,
         subject: article.subject,
-        sender_name: article.sender_name,
-        sender_email: article.sender_email,
+        sender_name: article.name,
+        sender_email: article.email,
         sent_at: article.sent_at,
-        children: threaded_roots(article.children)
+        children: threaded_roots(article.children || [])
       }
     }
   end

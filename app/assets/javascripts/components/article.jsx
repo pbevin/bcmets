@@ -80,7 +80,7 @@ var Body = React.createClass({
     article: React.PropTypes.object.isRequired,
     roots: React.PropTypes.array.isRequired
   },
-  mixins : [],
+  mixins : [ PureRenderMixin ],
 
   render: function() {
     article = this.props.article;
@@ -88,8 +88,45 @@ var Body = React.createClass({
       <div id="body">
         <Avatar article={article} />
         <div dangerouslySetInnerHTML={{__html: article.body }} />
+        <div className="thread">
+          <h2>Articles in this thread</h2>
+          <ConversationLinks roots={this.props.roots} />
+        </div>
       </div>
     )
+  }
+});
+
+var ConversationLinks = React.createClass({
+  propTypes: {
+    roots: React.PropTypes.array.isRequired
+  },
+  mixins : [ PureRenderMixin ],
+
+  render: function() {
+    var links = this.props.roots.map(function(article) {
+      var href = "/articles/" + article.id;
+      var children = article.children.length > 0 ? <ConversationLinks roots={article.children} /> : null;
+      var spc = " ";
+      return (
+        <li>
+          <a href={href} className="subject pjax">{article.subject}</a>
+          {spc}
+          <small>
+            {linkToAuthor(article.sender_name, article.sender_email)},
+            {spc}
+            {humanDate(moment(article.sent_at))}
+          </small>
+          {children}
+        </li>
+      );
+    });
+
+    return (
+      <ul className="conversation">
+        {links}
+      </ul>
+    );
   }
 });
 
