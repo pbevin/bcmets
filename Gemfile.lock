@@ -119,7 +119,6 @@ GEM
     formatador (0.2.5)
     gherkin (2.12.2)
       multi_json (~> 1.3)
-    gravatar_image_tag (1.2.0)
     guard (2.7.0)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -309,7 +308,6 @@ DEPENDENCIES
   exception_notification
   faker
   feedjira (~> 1.4.0)
-  gravatar_image_tag
   guard-rspec
   haml-rails
   jbuilder (~> 2.2.4)
