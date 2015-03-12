@@ -12,7 +12,7 @@ module ArticlesHelper
       id: article.id,
       subject: article.subject,
       body: to_html(article.body_utf8),
-      starred: article.saved_by?(current_user),
+      saved: article.saved_by?(current_user),
       avatar_url: profile_picture_url(article.user),
       sender_name: article.name,
       sender_email: article.email,

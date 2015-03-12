@@ -1,5 +1,13 @@
 //= require moment
 
+function initArticleView() {
+  var node = $('[data-react-class]').get(0);
+
+  ArticleStore.listen(function(props) {
+    React.render(<Article {...props} />, node);
+  });
+}
+
 var PureRenderMixin = React.addons.PureRenderMixin;
 
 var Article = React.createClass({
@@ -65,14 +73,31 @@ var Star = React.createClass({
   },
 
   render: function() {
-    return (
-      <div id="star">
-        <a className="save_this" href="javascript:void(0)" onClick={this.toggleSave}>Save this message</a>
-        &nbsp;
-        <a className="star" href="javascript:void(0)" onClick={this.toggleSave} />
-      </div>
-    );
+    var article = this.props.article;
+
+    if (article.saved) {
+      return (
+        <div id="star">
+          <a className="save_this" href="javascript:void(0)" onClick={this.toggleSaved}>Message saved</a>
+          &nbsp;
+          <a className="star selected" href="javascript:void(0)" onClick={this.toggleSaved} />
+        </div>
+      );
+    } else {
+      return (
+        <div id="star">
+          <a className="save_this" href="javascript:void(0)" onClick={this.toggleSaved}>Save this message</a>
+          &nbsp;
+          <a className="star" href="javascript:void(0)" onClick={this.toggleSaved} />
+        </div>
+      );
+    }
+  },
+
+  toggleSaved: function() {
+    Actions.toggleSaved();
   }
+
 });
 
 var Body = React.createClass({
