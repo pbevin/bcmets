@@ -84,7 +84,7 @@ class UsersController < ApplicationController
   end
 
   def save_email
-    @email_change = EmailChange.new(params[:email_change])
+    @email_change = EmailChange.new(new_email: params[:email_change][:new_email])
     @email_change.old_email = current_user.email
     if @email_change.valid?
       @email_change.execute(current_user)

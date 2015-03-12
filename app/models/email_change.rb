@@ -6,6 +6,10 @@ class EmailChange
   validates :new_email, format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validate :has_changed
 
+  def initialize(new_email:)
+    self.new_email = new_email
+  end
+
   def execute(current_user)
     SubscriberEvent.queue.notify_email_changed(old_email, new_email)
     current_user.update_attributes(email: new_email)

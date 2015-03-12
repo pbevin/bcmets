@@ -32,3 +32,16 @@ end
 Then(/^the user should be active$/) do
   @user.reload.should be_active
 end
+
+
+Given(/^my email address is "(.*?)"$/) do |email|
+  @user.update_attributes(email: email)
+end
+
+When(/^I change my email address to "(.*?)"$/) do |email|
+  fill_in "New email", with: email
+end
+
+Then(/^my email address should be "(.*?)"$/) do |email|
+  expect(@user.reload.email).to eq(email)
+end
