@@ -6,8 +6,9 @@ class EmailChange
   validates :new_email, format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validate :has_changed
 
-  def initialize(new_email:)
+  def initialize(new_email:, old_email: nil)
     self.new_email = new_email
+    self.old_email = old_email
   end
 
   def execute(current_user)
