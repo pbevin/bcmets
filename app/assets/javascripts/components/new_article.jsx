@@ -13,6 +13,7 @@
 
   function updateView(props) {
     React.render(<NewArticle {...props} />, node);
+    if (!props.form.ready) { Actions.formReady(); }
   }
   window.updateView = updateView;
   window.initNewArticleView = initNewArticleView;
@@ -32,6 +33,7 @@
       var submitButton, quoteButton;
       var article = this.props.article;
       var form = this.props.form;
+      var bodyFieldName = form.ready ? "article[qt]" : "article[body]";
 
       return (
         <form action={this.props.form.action} method="POST">
@@ -71,7 +73,7 @@
 
             <Field label="Message:">
               <textarea
-                name="article[qt]"
+                name={bodyFieldName}
                 value={article.body}
                 onChange={this.updateArticle("body")}
                 rows="15"

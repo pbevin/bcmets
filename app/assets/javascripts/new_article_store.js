@@ -4,6 +4,7 @@ function initNewArticleStore(node) {
   var Actions = Reflux.createActions([
     "updateArticle",
     "quoteOriginal",
+    "formReady", // spam honey trap
     "submitForm",
     "checkEmail",
     "acceptEmailSuggestion"
@@ -17,9 +18,8 @@ function initNewArticleStore(node) {
     init: function() {
       var propsJson = node.getAttribute('data-react-props');
       var props = propsJson && JSON.parse(propsJson);
+      props.article.emailSuggestion = findHint(props.article.sender_email);
       this.props = Immutable.fromJS(props);
-
-      this.checkEmail();
     },
 
     onUpdateArticle: function(name, value) {
@@ -28,13 +28,7 @@ function initNewArticleStore(node) {
     },
 
     checkEmail: function() {
-      var hint;
-
-      Mailcheck.run({
-        email: this.articleAttribute("sender_email"),
-        suggested: function(suggestion) { hint = suggestion.full; },
-        empty: function() { hint = null; }
-      });
+      var hint = findHint(this.articleAttribute("sender_email"));
 
       this.updateArticle("emailSuggestion", hint);
       this.publish();
@@ -61,6 +55,10 @@ function initNewArticleStore(node) {
       this.publish();
     },
 
+    formReady: function() {
+      this.props = this.props.setIn(["form", "ready"], "1");
+      this.publish();
+    },
 
     quotedText: function() {
       return this.props.get("quoted").replace(/^/mg, "> ");
@@ -83,6 +81,19 @@ function initNewArticleStore(node) {
       updateView(this.props.toJS());
     }
   });
+
+  function findHint(email) {
+    var hint;
+
+    Mailcheck.run({
+      email: email,
+      suggested: function(suggestion) { hint = suggestion.full; },
+      empty: function() { hint = null; }
+    });
+
+    return hint;
+  }
+
 
   window.NewArticleStore = NewArticleStore;
   window.Actions = Actions;
