@@ -117,10 +117,11 @@
     },
 
     replyFields: function(article) {
-      if (!article.replying) return null;
+      if (!article.parent_id) return null;
 
       return (
         <Field label="Reply To:">
+          <input type="hidden" name="article[parent_id]" value={article.parent_id} />
           <select name="article[reply_type]" value={article.reply_type}>
             <option value="list">List only</option>
             <option value="sender">Sender only</option>

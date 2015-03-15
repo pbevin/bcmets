@@ -9,11 +9,16 @@ class SendArticle
 
     article = Article.new(params)
     if article.valid?
+      if article.parent_id
+        parent = article.parent
+        article.to = parent.email
+        article.parent_msgid = parent.msgid
+      end
+
       article.user = current_user || User.find_by_email(article.email)
       article.send_via_email
 
-      parent_id = article.reply? ? article.parent_id : nil
-      return @responder.sent(article, parent_id)
+      return @responder.sent(article, article.parent_id)
     else
       article.body = nil
       return @responder.invalid(article)

@@ -1,3 +1,4 @@
+@javascript
 Feature: Posting Articles
   As a patient
   In order to get better treatment
@@ -13,7 +14,7 @@ Feature: Posting Articles
     And I fill in "Name" with "My Name"
     And I fill in "Email" with "member@example.com"
     And I fill in "Subject" with "What is Taxol?"
-    And I fill in "article_qt" with "blah blah"
+    And I fill in "Message" with "blah blah"
     And I press "Post"
     Then I should see "Message sent"
     And an article should be queued with subject: "What is Taxol?"
@@ -28,10 +29,7 @@ Feature: Posting Articles
     When I go to the front page
     And I follow "Post a new message"
     And I fill in "Email" with "me@example.com"
-    And I press "Post"
-    Then I should see "There were problems"
-    And the "Email" field should contain "me@example.com"
-    And no article should be queued
+    Then the "Post" button should be inactive
 
   Scenario: Reply to an article
     Given a parent article exists with msgid: "<xyzzy@fake>"
@@ -39,7 +37,7 @@ Feature: Posting Articles
     And I follow "Reply to this message"
     And I fill in "Name" with "Reply Name"
     And I fill in "Email" with "member@example.com"
-    And I fill in "article_qt" with "blah blah"
+    And I fill in "Message" with "blah blah"
     And I select "Sender only" from "Reply To"
     And I press "Post"
     Then I should see "Message sent"
@@ -51,19 +49,17 @@ Feature: Posting Articles
     When I go to that article
     And I follow "Reply to this message"
     And I fill in "Email" with "invalid"
-    And I press "Post"
-    Then I should see "There were problems"
-    And no article should be queued
+    Then the "Post" button should be inactive
 
-  Scenario: Spam trap: mustn't fill in article_body
-    When I go to path /post
-    And I fill in "Name" with "A. Spammer"
-    And I fill in "Email" with "member@example.com"
-    And I fill in "Subject" with "Make Money Fast"
-    And I fill in the fake article body with "Make easy $$$ working from home!@!!"
-    And I press "Post"
-    Then I should see "Message sent"
-    But no article should be queued
+  # Scenario: Spam trap: mustn't fill in article_body
+  #   When I go to path /post
+  #   And I fill in "Name" with "A. Spammer"
+  #   And I fill in "Email" with "member@example.com"
+  #   And I fill in "Subject" with "Make Money Fast"
+  #   And I fill in the fake article body with "Make easy $$$ working from home!@!!"
+  #   And I press "Post"
+  #   Then I should see "Message sent"
+  #   But no article should be queued
 
   Scenario: Page title for Post page
     When I go to path /post
@@ -81,7 +77,7 @@ Feature: Posting Articles
     And I follow "Reply to this message"
     And I fill in "Name" with "Reply Name"
     And I fill in "Email" with "member@example.com"
-    And I fill in "article_qt" with "blah blah"
+    And I fill in "Message" with "blah blah"
     And I fill in "Subject" with "Homefries"
     And I select "List only" from "Reply To"
     And I press "Post"

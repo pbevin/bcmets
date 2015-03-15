@@ -17,7 +17,7 @@ end
 When /^I post an article$/ do
   visit post_path
   fill_in "Subject", with: Faker::Lorem.sentence
-  fill_in "article_qt", with: Faker::Lorem.paragraph
+  fill_in "Message", with: Faker::Lorem.paragraph
   click_button "Post"
   page.should have_content("Message sent")
 end
@@ -32,13 +32,17 @@ When /^I post an article with email "([^\"]*)"$/ do |email|
   fill_in "Name", with: Faker::Name.name
   fill_in "Email", with: email
   fill_in "Subject", with: Faker::Lorem.sentence
-  fill_in "article_qt", with: Faker::Lorem.paragraph
+  fill_in "Message", with: Faker::Lorem.paragraph
   click_button "Post"
   page.should have_content("Message sent")
 end
 
 Then /^no article should exist$/ do
   Article.count.should == 0
+end
+
+Then(/^the "(.*?)" button should be inactive$/) do |name|
+  expect(page).to have_selector("button[disabled]", text: name)
 end
 
 When /^an article arrives with email "([^\"]*)"$/ do |email|

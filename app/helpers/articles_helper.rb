@@ -49,6 +49,7 @@ module ArticlesHelper
         subject: article.subject,
         replying: !!quoted,
         reply_type: "list",
+        parent_id: article.parent_id,
         sender_name: article.name,
         sender_email: article.email,
         body: "",

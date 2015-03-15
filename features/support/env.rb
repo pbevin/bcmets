@@ -30,6 +30,9 @@ Capybara.default_selector = :css
 #
 ActionController::Base.allow_rescue = false
 
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
+
 # Remove/comment out the lines below if your app doesn't have a database.
 # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
 begin
@@ -40,17 +43,17 @@ end
 
 # You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
 # See the DatabaseCleaner documentation for details. Example:
-#
-#   Before('@no-txn,@selenium,@culerity,@celerity,@javascript') do
-#     # { except: [:widgets] } may not do what you expect here
-#     # as tCucumber::Rails::Database.javascript_strategy overrides
-#     # this setting.
-#     DatabaseCleaner.strategy = :truncation
-#   end
-#
-#   Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
-#     DatabaseCleaner.strategy = :transaction
-#   end
+
+Before('@no-txn,@selenium,@culerity,@celerity,@javascript') do
+  # { except: [:widgets] } may not do what you expect here
+  # as tCucumber::Rails::Database.javascript_strategy overrides
+  # this setting.
+  DatabaseCleaner.strategy = :truncation
+end
+
+Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
+  DatabaseCleaner.strategy = :transaction
+end
 #
 
 # Possible values are :truncation and :transaction

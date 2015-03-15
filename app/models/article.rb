@@ -133,7 +133,7 @@ class Article < ActiveRecord::Base
   end
 
   def reply?
-    !to.nil?
+    parent_id.present?
   end
 
   def start_conversation
@@ -141,6 +141,8 @@ class Article < ActiveRecord::Base
       self.conversation = parent.conversation
     elsif parent_id
       self.conversation = Article.find_by_id(parent_id).conversation
+    elsif maybe_parent = Article.find_by_msgid(parent_msgid)
+      self.conversation = maybe_parent.conversation
     else
       self.conversation ||= Conversation.create(title: subject)
     end

@@ -46,6 +46,7 @@ end
 
 group :test do
   gem 'cucumber-rails', :require => false
+  gem 'poltergeist', '~> 1.6.0'
   gem 'launchy'
   gem 'database_cleaner'
   gem 'sham'

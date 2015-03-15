@@ -86,42 +86,25 @@ describe Article, type: :model do
       @article.reply.subject.should == @article.subject
     end
 
-    it "sets the To: field" do
-      @article.reply.to.should == @article.from
-    end
-
-    it "sets the parent_id and parent_msgid fields" do
+    it "sets the parent_id field" do
       @article.reply.parent_id.should == @article.id
-      @article.reply.parent_msgid.should == @article.msgid
     end
 
-    it "quotes the original text" do
-      @article.body = "I\nlike\ncheese\n"
-      @article.name = "Pete Bevin"
-      @article.reply.body.should == "Pete Bevin writes:\n> I\n> like\n> cheese\n"
-    end
+#     it "sets mail_to and mail_cc based on reply_type" do
+#       Rails.configuration.list_address = 'list@example.com'
 
-    it "wraps long lines when quoting" do
-      @article.body = (["asdf"] * 100).join(' ')
-      @article.reply.body.lines.count.should > 5
-      @article.reply.body.lines.find_all { %r{^> } }.count.should > 5
-    end
+#       @article.reply_type = 'list'
+#       @article.reply.mail_to.should == 'list@example.com'
+#       @article.reply.mail_cc.should == ''
 
-    it "sets mail_to and mail_cc based on reply_type" do
-      Rails.configuration.list_address = 'list@example.com'
+#       @article.reply_type = 'sender'
+#       @article.reply.mail_to.should == @article.from
+#       @article.reply.mail_cc.should == ''
 
-      @article.reply_type = 'list'
-      @article.reply.mail_to.should == 'list@example.com'
-      @article.reply.mail_cc.should == ''
-
-      @article.reply_type = 'sender'
-      @article.reply.mail_to.should == @article.from
-      @article.reply.mail_cc.should == ''
-
-      @article.reply_type = 'both'
-      @article.reply.mail_to.should == 'list@example.com'
-      @article.reply.mail_cc.should == @article.from
-    end
+#       @article.reply_type = 'both'
+#       @article.reply.mail_to.should == 'list@example.com'
+#       @article.reply.mail_cc.should == @article.from
+#     end
   end
 
   it "detects charset based on content type" do
@@ -219,33 +202,34 @@ describe Article, type: :model do
       end
 
       it "adds a reply to its parent's conversation" do
-        article = Article.make!
-        reply = article.reply
+        parent = Article.make!(msgid: "<abc@example.com>")
+
+        reply = Article.new
+        reply.msgid = "<xyz@example.com>"
+        reply.parent_msgid = parent.msgid
         reply.name = Faker::Name.name
         reply.email = Faker::Internet.email
+        reply.subject = "Reply"
+        reply.body = "yadda yadda yadda"
         reply.save!
-        article.conversation.should == reply.conversation
-        article.conversation.articles.should == [article, reply]
+
+        expect(parent.conversation).to eq(reply.conversation)
+        expect(reply.conversation.articles).to contain_exactly(parent, reply)
       end
 
-      it "relies on parent_id, not just parent, for conversation handling" do
-        article = Article.make!
-        params = {
-          "name" => "Pete Bevin",
-          "email" => "pete@petebevin.com",
-          "body" => "xxx",
-          "to" => article.from,
-          "subject" => article.reply.subject,
-          "parent_id" => article.id,
-          "parent_msgid" => article.msgid,
-          "reply_type" => "list"
-        }
-        reply = Article.new(params)
+      it "can handle a reply that appears before the parent" do
+        reply = Article.new
+        reply.msgid = "<xyz@example.com>"
+        reply.parent_msgid = "<abc@example.com>"
+        reply.name = Faker::Name.name
+        reply.email = Faker::Internet.email
+        reply.subject = "Reply"
+        reply.body = "yadda yadda yadda"
         reply.save!
-        article.conversation.should == reply.conversation
+
+        expect(reply.conversation.articles).to contain_exactly(reply)
       end
     end
-
   end
 
   describe '#sent_at_human' do
