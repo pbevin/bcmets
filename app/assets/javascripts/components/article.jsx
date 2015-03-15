@@ -136,7 +136,7 @@ var ConversationLinks = React.createClass({
       var children = article.children.length > 0 ? <ConversationLinks roots={article.children} /> : null;
       var spc = " ";
       return (
-        <li>
+        <li key={article.id}>
           <a href={href} className="subject">{article.subject}</a>
           {spc}
           <small>
