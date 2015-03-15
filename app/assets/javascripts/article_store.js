@@ -1,6 +1,6 @@
 //= require reflux.min
 
-$(function() {
+function initArticleStore(node) {
   var Actions = Reflux.createActions([
     "toggleSaved"
   ]);
@@ -36,4 +36,4 @@ $(function() {
 
   window.ArticleStore = ArticleStore;
   window.Actions = Actions;
-});
+}

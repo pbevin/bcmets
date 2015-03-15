@@ -3,6 +3,8 @@
 function initArticleView() {
   var node = $('[data-react-class]').get(0);
 
+  initArticleStore(node);
+
   ArticleStore.listen(function(props) {
     React.render(<Article {...props} />, node);
   });
