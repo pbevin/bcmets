@@ -9,7 +9,6 @@ function initArticleStore(node) {
     listenables: Actions,
 
     init: function() {
-      var node = $('[data-react-class]')[0];
       var propsJson = node.getAttribute('data-react-props');
       var props = propsJson && JSON.parse(propsJson);
       this.props = props;

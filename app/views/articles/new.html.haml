@@ -1,45 +1,6 @@
-%h1
-  = title || "Post a Message"
-= form_for(article) do |f|
-  %fieldset
-    = f.error_messages
-    %div
-      = f.label :name, "Name"
-      %br
-      = f.text_field :name
-    .email
-      = f.label :email, "Email"
-      %br
-      = f.text_field :email
-      %span.email_suggestion.hidden
-        Did you mean
-        = succeed '?' do
-          = link "", class: "address"
-    - if article.reply?
-      %div
-        = f.hidden_field :to
-        = f.hidden_field :parent_id
-        = f.hidden_field :parent_msgid
-        = f.label :reply_type, "Reply To:"
-        %br
-        = f.select :reply_type, [['List only', 'list'], ['Sender only', 'sender'], ['Both', 'both']]
-    %div
-      = f.label :subject, "Subject"
-      %br
-      = f.text_field :subject
-    %div{:style => "display:none;"}
-      = f.label :body, "Message:"
-      %br
-      = f.text_area :body, :rows => 15, :cols => 60
-    %div
-      = f.label :qt, "Message:"
-      %br
-      = f.text_area :qt, :rows => 15, :cols => 60
-    %div.buttons
-      = submit_tag "Post", :data => { :disable_with=>"Sending..." }
-      %button.quote Quote
-      %span.quote_lecture Please trim the quoted text before posting.
-    %pre#quoted= quoted
+%h1= @title || "Post a Message"
+
+= react_component "NewArticle", new_article_props(article, quoted), prerender: true
 
 :javascript
-  $(setupPost);
+  $(initNewArticleView());

@@ -11,7 +11,7 @@ module ArticlesHelper
     return {
       id: article.id,
       subject: article.subject,
-      body: to_html(article.body_utf8),
+      body: article.body && to_html(article.body_utf8),
       saved: article.saved_by?(current_user),
       avatar_url: profile_picture_url(article.user),
       sender_name: article.name,
@@ -39,6 +39,35 @@ module ArticlesHelper
         sent_at: article.sent_at,
         children: threaded_roots(article.children || [])
       }
+    }
+  end
+
+  def new_article_props(article, quoted)
+    return {
+      article: {
+        id: article.id,
+        subject: article.subject,
+        replying: !!quoted,
+        reply_type: "list",
+        sender_name: article.name,
+        sender_email: article.email,
+        body: "",
+        sent_at: article.sent_at
+      }.merge(error_props(article)),
+      quoted: quoted,
+      form: {
+        action: articles_path,
+        csrf_param: request_forgery_protection_token,
+        csrf_token: form_authenticity_token
+      }
+    }
+  end
+
+  def error_props(obj)
+    return {} if obj.errors.none?
+    return {
+      error_messages: obj.errors.full_messages,
+      errors: obj.errors.to_hash
     }
   end
 end

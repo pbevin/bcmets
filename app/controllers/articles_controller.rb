@@ -22,12 +22,13 @@ class ArticlesController < ApplicationController
   end
 
   def reply
-    article = Article.find_by_id(params[:id]).reply
+    parent_article = Article.find_by_id(params[:id])
+    article = parent_article.reply
     article.name = default_name
     article.email = default_email
     article.qt = nil
     article.body = nil
-    render :new, locals: { article: article, quoted: article.body, title: "Reply to Message" }
+    render :new, locals: { article: article, quoted: parent_article.body, title: "Reply to Message" }
   end
 
   # GET /articles/1/edit
@@ -55,7 +56,6 @@ class ArticlesController < ApplicationController
     end
 
     def invalid(article)
-      @article = article
       render :new, locals: { article: article, quoted: nil, title: "Reply to Message" }
     end
 
