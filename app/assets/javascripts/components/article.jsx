@@ -135,7 +135,7 @@ var ConversationLinks = React.createClass({
       var spc = " ";
       return (
         <li>
-          <a href={href} className="subject pjax">{article.subject}</a>
+          <a href={href} className="subject">{article.subject}</a>
           {spc}
           <small>
             {linkToAuthor(article.sender_name, article.sender_email)},
@@ -181,8 +181,8 @@ function linkToAuthor(sender_name, sender_email) {
   var path = "/archive/author?email=" + sender_email;
 
   if (sender_name) {
-    return <span>{sender_name} &lt;<a href={path} className="pjax">{sender_email}</a>&gt;</span>;
+    return <span>{sender_name} &lt;<a href={path}>{sender_email}</a>&gt;</span>;
   } else {
-    return <span>&lt;<a href={path} className="pjax">{sender_email}</a>&gt;</span>;
+    return <span>&lt;<a href={path}>{sender_email}</a>&gt;</span>;
   }
 }

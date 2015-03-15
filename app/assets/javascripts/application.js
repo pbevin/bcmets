@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.pjax
 //= require jquery.color
 //= require jquery.Jcrop
 //= require bacon

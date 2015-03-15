@@ -10,7 +10,7 @@ module ArchiveHelper
       return text
     end
 
-    link_to text.html_safe, archive_month_path(year, month), class: "pjax"
+    link_to text.html_safe, archive_month_path(year, month)
   end
 
   def from_linked(author)
@@ -23,8 +23,7 @@ module ArchiveHelper
   end
 
   def email_linked(author)
-    # link_to author.email, { controller: "archive", action: "author", email: author.email }, class: "pjax"
-    %(<a href="/archive/author?email=#{URI.escape author.email}" class="pjax">#{h author.email}</a>)
+    %(<a href="/archive/author?email=#{URI.escape author.email}">#{h author.email}</a>)
   end
 
   def wrap(tag, content)
@@ -81,12 +80,11 @@ module ArchiveHelper
       action: "author",
       email: article.email
     }
-    link_to h(article.from), path, class: "pjax"
-    # %Q{<a href="/archive/author?email=#{URI.escape(article.email)}" class="pjax">#{h article.from}</a>}
+    link_to h(article.from), path
   end
 
   def link_to_article(article)
-    link = %(<a href="/articles/#{article.id}" class="subject pjax">#{h article.subject}</a>)
+    link = %(<a href="/articles/#{article.id}" class="subject">#{h article.subject}</a>)
     if article.saved_by?(current_user)
       link = %(<span class="star selected"></span>) + link
     end
