@@ -54,6 +54,7 @@ group :test do
   gem 'timecop'
   gem 'rspec-rails', '~> 3.1.0'
   gem 'spring-commands-rspec'
+  gem 'spring-commands-cucumber'
   gem 'guard-rspec'
   gem 'rb-fsevent'
 end
