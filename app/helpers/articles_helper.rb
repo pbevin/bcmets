@@ -56,11 +56,15 @@ module ArticlesHelper
         sent_at: article.sent_at
       }.merge(error_props(article)),
       quoted: quoted,
-      form: {
-        action: articles_path,
-        csrf_param: request_forgery_protection_token,
-        csrf_token: form_authenticity_token
-      }
+      form: form_props(articles_path)
+    }
+  end
+
+  def form_props(submit_path)
+    {
+      action: submit_path,
+      csrf_param: request_forgery_protection_token,
+      csrf_token: form_authenticity_token
     }
   end
 

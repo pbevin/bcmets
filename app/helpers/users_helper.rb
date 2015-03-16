@@ -15,4 +15,14 @@ module UsersHelper
       ""
     end
   end
+
+  def signin_props
+    {
+      user_session: {
+        email: @user_session.email,
+        password: @user_session.password
+      }.merge(error_props(@user_session)),
+      form: form_props(user_sessions_path)
+    }
+  end
 end

@@ -1,3 +1,4 @@
+@javascript
 Feature: Photo Management
   As a regular on bcmets
   In order to help people recognize me

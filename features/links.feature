@@ -1,3 +1,4 @@
+@javascript
 Feature: Blogroll Links
   As the site administrator
   In order to update links in the template more easily

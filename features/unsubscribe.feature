@@ -1,3 +1,4 @@
+@javascript
 Feature: Unsubscribe from bcmets
   As a user who is doing OK now
   In order to get on with my life

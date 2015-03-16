@@ -1,4 +1,4 @@
-@admin
+@admin @javascript
 Feature: Becoming a user
   In order to get support
   As a breast cancer patient
@@ -85,25 +85,3 @@ Feature: Becoming a user
     And I follow "Change password"
     And I change my old password "xyzzy" to "clever" with confirmation "does-not-match"
     Then I should see "doesn't match"
-
-  Scenario: Login with AJAX
-    Given user "mary@example.com" with password "secret"
-    When I send HTTP POST to "/login.json" with the following parameters:
-      | user_session[email]    | mary@example.com |
-      | user_session[password] | secret           |
-    Then the response should be "200 OK" with the following JSON:
-    """
-    { "succeeded": true }
-    """
-
-  Scenario: Failed login with AJAX
-    Given user "mary@example.com" with password "secret"
-    When I send HTTP POST to "/login.json" with the following parameters:
-      | user_session[email]    | mary@example.com |
-      | user_session[password] | wrong            |
-    Then the response should be "422 Unprocessable Entity" with the following JSON:
-    """
-    { "succeeded": false,
-      "errors": { "password": ["is not valid"] }
-    }
-    """

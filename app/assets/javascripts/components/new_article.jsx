@@ -36,10 +36,9 @@
       var bodyFieldName = form.ready ? "article[qt]" : "article[body]";
 
       return (
-        <form action={this.props.form.action} method="POST">
-          <input type="hidden" name={form.csrf_param} value={form.csrf_token} />
+        <Form data={form}>
           <fieldset>
-            {this.errorMessages(article.error_messages)}
+            <ErrorMessages errors={article.error_messages} />
             <Field label="Name">
               <input
                 type="text"
@@ -87,23 +86,7 @@
             </div>
 
           </fieldset>
-        </form>
-      );
-    },
-
-    errorMessages: function(errors) {
-      if (!errors) return "";
-
-      var items = errors.map(function(item, i) {
-        return <li key={i}>{item}</li>;
-      });
-
-      return (
-        <div className="errorExplanation">
-          <h2>{pluralize(items.length, "error")} prohibited this article from being saved</h2>
-          <p>There were problems with the following fields:</p>
-          <ul>{items}</ul>
-        </div>
+        </Form>
       );
     },
 
@@ -188,21 +171,6 @@
     }
   });
 
-  var Field = React.createClass({
-    propTypes: {
-      label: React.PropTypes.string.isRequired
-    },
-    mixins : [ PureRenderMixin ],
-
-    render: function() {
-      return (
-        <label>
-          <div>{this.props.label}</div>
-          {this.props.children}
-        </label>
-      );
-    }
-  });
 
   window.NewArticle = NewArticle;
 })();

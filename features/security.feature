@@ -1,3 +1,4 @@
+@javascript
 Feature: Admin security
   As the administrator
   In order to reduce headaches
@@ -11,7 +12,7 @@ Feature: Admin security
     Then I should be on Login
     When I login as administrator
     Then I should be on path /admin
-    
+
   Scenario Outline: Admin Only
     Given I am not logged in
     When I go to path <path>

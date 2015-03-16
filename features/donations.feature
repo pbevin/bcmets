@@ -1,3 +1,4 @@
+@javascript
 Feature: Logging donations
   As a site administrator
   In order to acknowledge donations

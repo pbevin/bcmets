@@ -1,3 +1,4 @@
+@javascript
 Feature: Admin interface
   As the site admin
   In order to help people more easily
