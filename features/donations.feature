@@ -10,6 +10,7 @@ Feature: Logging donations
 
   Scenario: Entering a donation
     When I go to Donations
+    And I follow "New Donation"
     And I fill in "Amount" with "82"
     And I fill in "Email" with "donor@example.com"
     And I press "Submit"
@@ -19,6 +20,7 @@ Feature: Logging donations
 
   Scenario: Wrong fields
     When I go to Donations
+    And I follow "New Donation"
     And I fill in "Amount" with "donor@example.com"
     And I fill in "Email" with "25"
     And I press "Submit"
