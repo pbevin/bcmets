@@ -51,16 +51,6 @@ Feature: Posting Articles
     And I fill in "Email" with "invalid"
     Then the "Post" button should be inactive
 
-  # Scenario: Spam trap: mustn't fill in article_body
-  #   When I go to path /post
-  #   And I fill in "Name" with "A. Spammer"
-  #   And I fill in "Email" with "member@example.com"
-  #   And I fill in "Subject" with "Make Money Fast"
-  #   And I fill in the fake article body with "Make easy $$$ working from home!@!!"
-  #   And I press "Post"
-  #   Then I should see "Message sent"
-  #   But no article should be queued
-
   Scenario: Page title for Post page
     When I go to path /post
     Then I should see "Post a Message" within "h1"
