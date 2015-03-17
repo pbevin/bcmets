@@ -23,8 +23,8 @@ class User < ActiveRecord::Base
   after_update :reprocess_photo, if: :cropping?
 
   has_many :events, class_name: "EventLog"
-  has_and_belongs_to_many :saved_articles,
-                          join_table: "saved_articles", class_name: "Article"
+  has_many :article_saves, class_name: "SavedArticle"
+  has_many :saved_articles, through: "article_saves", source: "article"
 
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
