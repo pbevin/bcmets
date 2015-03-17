@@ -9,6 +9,7 @@ Feature: Photo Management
     And that user is logged in
 
   Scenario: Uploading a picture
+    Given PENDING: file attachment is broken in PhantomJS 2.0: https://github.com/ariya/phantomjs/issues/12506
     When I go to my profile
     And I attach the file at "features/data/wonderwoman.jpg" to "Photo"
     And I press "Submit"
