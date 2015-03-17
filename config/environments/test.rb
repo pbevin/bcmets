@@ -10,7 +10,7 @@ Bcmets::Application.configure do
   # http://qugstart.com/blog/ruby-and-rails/rails-testing-with-machinist-2-rspec-database-cleaner-gem/
   config.cache_objects = false
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
+  config.serve_static_files = true
   config.static_cache_control = "public, max-age=3600"
 
   # Log error messages when you accidentally call methods on nil

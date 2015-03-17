@@ -93,7 +93,7 @@ class Article < ActiveRecord::Base
     self.sent_at = self.received_at = Time.zone.now
     self.msgid = random_msgid
 
-    Notifier.article(self).deliver
+    Notifier.article(self).deliver_now
   end
 
   def mail_to

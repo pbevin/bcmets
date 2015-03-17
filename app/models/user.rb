@@ -57,12 +57,12 @@ class User < ActiveRecord::Base
 
   def deliver_activation_instructions!
     reset_perishable_token!
-    Notifier.activation_instructions(self).deliver
+    Notifier.activation_instructions(self).deliver_now
   end
 
   def deliver_activation_confirmation!
     reset_perishable_token!
-    Notifier.activation_confirmation(self).deliver
+    Notifier.activation_confirmation(self).deliver_now
   end
 
   def log_activation
@@ -77,7 +77,7 @@ class User < ActiveRecord::Base
 
   def reset_password!
     reset_perishable_token!
-    Notifier.password_reset(self).deliver
+    Notifier.password_reset(self).deliver_now
   end
 
   def photo_geometry(style = :original)
