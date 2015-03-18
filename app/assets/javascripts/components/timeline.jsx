@@ -53,7 +53,7 @@
         <div className="tl_headers">
           <Avatar article={post} />
           <h2>{post.subject}</h2>
-          <div className="tl_header">From: <a href={post.user_path}>{post.name}</a> {fuzzyTime(post.date)}</div>
+          <div className="tl_header">From: {linkToAuthor(post.sender_name, post.sender_email)} {fuzzyTime(post.sent_at)}</div>
           <div className="clr"/>
         </div>
       );
@@ -74,7 +74,7 @@
   var Avatar = React.createClass({
     render: function() {
       var post = this.props.article;
-      var src = post.avatar_url || gravatarUrl(post.email);
+      var src = post.avatar_url || gravatarUrl(post.sender_email);
       return (
         <a href={post.user_path} className="tl_avatar">
           <img src={src} width={50} height={50} />
