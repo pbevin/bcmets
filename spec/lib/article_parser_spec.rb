@@ -147,6 +147,27 @@ describe "Article Parser" do
       article.body.strip.should == body_utf8.force_encoding("UTF-8")
       article.charset.should == "utf-8"
     end
+
+    it "removes emoji" do
+      Article.delete_all
+      art = <<'EOF'
+From bcmets-bounces@bcmets.org  Wed Jul  1 21:29:34 2015
+From: me <me@example.com>
+To: bcmets@bcmets.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: binary
+Subject: Hi
+
+xxx 🇨🇦yy 서 힔z
+
+EOF
+
+      art.lines.each { |line| parser << line.strip }
+      parser.save
+      article.save!
+      expect(article.body).to eq "xxx yy \u{c11c} \u{d794}z\n\n"
+      expect(article.charset).to eq "utf-8"
+    end
   end
 
   describe "#content_type" do

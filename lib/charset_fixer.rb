@@ -33,6 +33,6 @@ class CharsetFixer
   def convert_emoji(str)
     str.gsub(/[\u{1f601}-\u{1f60f}]/, ":)")  # smiley faces
       .gsub(/[\u{1f612}-\u{1f616}]/, ":(")  # sad faces
-      .gsub(/[\u{1f300}-\u{1f6ff}]/, "")    # remove any other emoji
+      .gsub(/[\u{10000}-\u{fffff}]/, "")    # remove any other emoji
   end
 end
