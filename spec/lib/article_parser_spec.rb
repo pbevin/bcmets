@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Article Parser" do
   attr_accessor :article, :parser
@@ -122,6 +122,20 @@ describe "Article Parser" do
     parser.header "From: <mary@example.com>"
     article.name.should == "mary@example.com"
     article.email.should == "mary@example.com"
+  end
+
+  it "fixes .bcmets.email addresses" do
+    parser.header "From: test@example.com.bcmets.email"
+    expect(article.name).to eq("test@example.com")
+    expect(article.email).to eq("test@example.com")
+
+    parser.header "From: Mary <mary@example.com.bcmets.email>"
+    expect(article.name).to eq("Mary")
+    expect(article.email).to eq("mary@example.com")
+
+    parser.header "From: <mary@example.com.bcmets.email>"
+    expect(article.name).to eq("mary@example.com")
+    expect(article.email).to eq("mary@example.com")
   end
 
   it "recognizes multi-part lines" do

@@ -33,6 +33,10 @@ class ArticleParser
     end
   end
 
+  def fix_email(address)
+    address.gsub(/\.bcmets\.email\Z/, '')
+  end
+
   def header(line)
     case line
     when /^\s+(.*)/
@@ -40,9 +44,9 @@ class ArticleParser
       return header(@current_line)
     when /^From: (.*) <(.*)>$/
       article.name = $1
-      article.email = $2
+      article.email = fix_email($2)
     when /^From: <(.*)>$/, /^From: (.*)$/
-      article.name = article.email = $1
+      article.name = article.email = fix_email($1)
     when /^Subject: (.*)$/
       article.subject = $1.gsub(/\[.*\]\s*/, '')
     when /^Message-ID: (.*)$/i
