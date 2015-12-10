@@ -156,7 +156,7 @@ class Article < ActiveRecord::Base
     article = Article.new
     parser = ArticleParser.new(article)
     text.lines.each do |line|
-      parser << line.strip
+      parser << line.rstrip
     end
     parser.save
     article

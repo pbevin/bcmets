@@ -67,6 +67,31 @@ describe Article, type: :model do
     end
   end
 
+  describe '#parse' do
+    it "copes with multi-line headers" do
+      text = <<'.'
+From name@example.com Thu 10 Dec 2015 13:45:20 +0000
+From: Test <test@example.com>
+Date: Thu 10 Dec 2015 13:25:06 +0000
+Message-ID: <1234@example.com>
+Subject: [bcmets] This is a very
+  long subject line
+
+body
+.
+      article = Article.parse(text)
+      expect(article).to have_attributes(
+        msgid: "<1234@example.com>",
+        subject: "This is a very long subject line",
+        name: "Test",
+        email: "test@example.com",
+        body: "body\n"
+      )
+
+
+    end
+  end
+
   describe ".reply" do
     before(:each) do
       @article = Article.make!
