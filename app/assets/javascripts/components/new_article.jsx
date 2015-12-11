@@ -107,7 +107,7 @@
       return (
         <Field label="Reply To:">
           <input type="hidden" name="article[parent_id]" value={article.parent_id} />
-          <select name="article[reply_type]" value={article.reply_type}>
+          <select name="article[reply_type]" value={article.reply_type} onChange={this.updateArticle("reply_type")}>
             <option value="list">List only</option>
             <option value="sender">Sender only</option>
             <option value="both">Both</option>
