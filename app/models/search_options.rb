@@ -19,7 +19,7 @@ class SearchOptions
   end
 
   def _run(searcher)
-    @articles = searcher.search(query, search_options)
+    @articles = searcher.search(sort_order.q, search_options)
     @total_count = @articles.total_count
   rescue
     search_error
@@ -43,7 +43,7 @@ class SearchOptions
     end
 
     def q
-      params[:q]
+      params[:q].gsub("@", "\\@")
     end
 
     def search_options
