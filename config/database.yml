@@ -1,4 +1,3 @@
-# SQLite version 3.x
 development:
   adapter: mysql2
   database: bcmets
@@ -8,3 +7,6 @@ test:
   adapter: mysql2
   database: bcmets_test
   username: root
+
+production:
+  url: <%= ENV['DATABASE_URL'] %>

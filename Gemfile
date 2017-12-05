@@ -20,11 +20,12 @@ gem 'momentjs-rails'
 gem 'will_paginate', '~> 3.0.0'
 gem 'faker'
 gem 'haml-rails'
-gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails', ref: "b6538ae1b1"
+gem 'react-rails', '~> 1.0.0.pre', git: 'https://github.com/reactjs/react-rails', ref: "b6538ae1b1"
 gem 'authlogic'
 gem 'scrypt'
 gem 'feedjira', '~> 1.4.0'
 gem 'mysql2'
+gem 'sqlite3'
 gem 'thinking-sphinx', '~> 3.1.1'
 gem 'nokogiri'
 gem 'rails_autolink'
@@ -32,6 +33,12 @@ gem 'dynamic_form'
 gem 'paperclip', '~> 4.1.1'
 gem 'exception_notification'
 gem "bunny", ">= 1.6.2"
+gem "lograge"
+
+group :production do
+  gem 'tzinfo-data'
+  gem 'rails_12factor'
+end
 
 group :development do
   gem 'capistrano-rails', require: false
