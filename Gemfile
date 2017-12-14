@@ -40,9 +40,6 @@ group :production do
 end
 
 group :development do
-  gem 'capistrano-rails', require: false
-  gem 'capistrano-bundler', require: false
-  gem 'capistrano-rvm', require: false
   gem 'quiet_assets'
   gem 'spring'
   gem "pry"
