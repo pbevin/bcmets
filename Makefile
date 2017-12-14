@@ -6,3 +6,6 @@ build:
 
 push: build
 	docker push pbevin/bcmets
+
+live: push
+	ssh docker "cd docker/bcmets && docker-compose pull && docker-compose up -d"
