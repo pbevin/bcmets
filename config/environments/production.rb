@@ -69,9 +69,9 @@ Bcmets::Application.configure do
   config.action_mailer.default_url_options = { host: 'bcmets.org' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "localhost",
-    port: 25,
-    domain: "bcmets.org"
+    address: ENV["SMTP_HOST"],
+    port: ENV.fetch("SMTP_PORT") { 25 },
+    domain: ENV.fetch("SMTP_DOMAIN") { "bcmets.org" }
   }
   config.action_mailer.raise_delivery_errors = true
 

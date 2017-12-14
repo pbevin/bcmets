@@ -38,20 +38,15 @@ Bcmets::Application.configure do
   config.action_mailer.default_url_options = { host: "localhost:3000" }
   config.action_mailer.delivery_method = :smtp
 
+  # Run `sudo python -m smtpd -n -c DebuggingServer localhost:25`
+  # on the appropriate server.
   password = nil
-  if File.exist?(".passwd-gmail")
-    password = File.read(".passwd-gmail").strip
-  end
-
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :domain               => 'bcmets.org',
-    :user_name            => 'pbevin@gmail.com',
-    :password             => password,
-    :authentication       => 'plain',
-    enable_starttls_auto: true
+    address: ENV["SMTP_HOST"],
+    port: ENV.fetch("SMTP_PORT") { 25 },
+    domain: ENV.fetch("SMTP_DOMAIN") { "bcmets.org" }
   }
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
 end
