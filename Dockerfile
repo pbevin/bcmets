@@ -10,9 +10,11 @@ RUN bundle --deployment
 
 USER root
 RUN rm -f /etc/nginx/sites-enabled/default
-RUN rm -f /etc/service/nginx/down
-ADD docker/nginx-bcmets.conf /etc/nginx/sites-enabled/bcmets.conf
-ADD docker/nginx-env.conf /etc/nginx/main.d/env.conf
+COPY docker/80-enable-web.sh /etc/my_init.d
+COPY docker/80-enable-cron.sh /etc/my_init.d
+COPY docker/crontab /bcmets/crontab
+COPY docker/nginx-bcmets.conf /etc/nginx/sites-enabled/bcmets.conf
+COPY docker/nginx-env.conf /etc/nginx/main.d/env.conf
 
 COPY config.ru config.ru
 COPY Rakefile Rakefile
