@@ -12,6 +12,7 @@ USER root
 RUN rm -f /etc/nginx/sites-enabled/default
 COPY docker/80-enable-web.sh /etc/my_init.d
 COPY docker/80-enable-cron.sh /etc/my_init.d
+COPY docker/85-enable-sphinx.sh /etc/my_init.d
 COPY docker/crontab /bcmets/crontab
 COPY docker/nginx-bcmets.conf /etc/nginx/sites-enabled/bcmets.conf
 COPY docker/nginx-env.conf /etc/nginx/main.d/env.conf

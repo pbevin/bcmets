@@ -11,8 +11,11 @@ services:
       MAIL_IMPORT_DIR: "arch"
       MQ_HOST: "localhost"
       RUN_WEB_SERVER: "yes"
+      RUN_SPHINX: "yes"
+      RAILS_ENV: "production"
     volumes:
-      - avatars:/webapp/public/system
+      - avatars:/bcmets/public/system
+      - sphinx:/bcmets/db/sphinx
 
   cron:
     build: .
@@ -22,8 +25,11 @@ services:
       MAIL_IMPORT_DIR: "arch"
       MQ_HOST: "localhost"
       RUN_CRON: "yes"
+      RAILS_ENV: "production"
     volumes:
-      - avatars:/webapp/public/system
+      - avatars:/bcmets/public/system
+      - sphinx:/bcmets/db/sphinx
 
 volumes:
   avatars:
+  sphinx:
