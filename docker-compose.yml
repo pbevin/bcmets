@@ -8,6 +8,8 @@ services:
     environment:
       DATABASE_URL: "mysql2://pbevin@docker.for.mac.localhost/bcmets"
       SECRET_KEY_BASE: "43bbf39ee86a2d022635a01d2946be10e1ff0e29a42602fc3d7604e64066deda50536d07b547b205f2279063159e4e8bb53d2547424dcaa11384c47370b41f37"
+      MAIL_IMPORT_DIR: "arch"
+
     volumes:
       - avatars:/webapp/public/system
 

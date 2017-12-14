@@ -1,5 +1,5 @@
 FROM phusion/passenger-ruby23:0.9.27
-RUN apt-get update -qq && apt-get install -y build-essential libmysqlclient-dev nodejs
+RUN apt-get update -qq && apt-get install -y sphinxsearch tzdata
 RUN mkdir /bcmets && chown app /bcmets
 WORKDIR /bcmets
 

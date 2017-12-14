@@ -83,5 +83,5 @@ Bcmets::Application.configure do
       exception_recipients: %w{pete@petebevin.com}
     }
 
-    SubscriberEvent.queue = SubscriberEvent::BunnyQueue.new(hostname: "mq.local")
+  SubscriberEvent.queue = SubscriberEvent::BunnyQueue.new(hostname: "mq.local")
 end

@@ -26,7 +26,7 @@ gem 'scrypt'
 gem 'feedjira', '~> 1.4.0'
 gem 'mysql2'
 gem 'sqlite3'
-gem 'thinking-sphinx', '~> 3.1.1'
+gem 'thinking-sphinx', '~> 3.4'
 gem 'nokogiri'
 gem 'rails_autolink'
 gem 'dynamic_form'
@@ -36,7 +36,6 @@ gem "bunny", ">= 1.6.2"
 gem "lograge"
 
 group :production do
-  gem 'tzinfo-data'
   gem 'rails_12factor'
 end
 
