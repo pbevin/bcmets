@@ -9,6 +9,12 @@ Bcmets::Application.routes.draw do
     end
   end
 
+  namespace "api" do
+    post "import_emails"
+    post "import_feeds"
+    post "index_articles"
+  end
+
   get 'login' => 'user_sessions#new', as: :login
   post 'login' => 'user_sessions#create'
   match 'logout' => 'user_sessions#destroy', as: :logout, via: [:get, :post]

@@ -34,6 +34,8 @@ gem 'paperclip', '~> 4.1.1'
 gem 'exception_notification'
 gem "bunny", ">= 1.6.2"
 gem "lograge"
+gem "snitcher"
+gem "interactor-rails"
 
 group :production do
   gem 'rails_12factor'

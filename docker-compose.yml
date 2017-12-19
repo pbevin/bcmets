@@ -13,6 +13,7 @@ services:
       RUN_WEB_SERVER: "yes"
       RUN_SPHINX: "yes"
       RAILS_ENV: "production"
+      SMTP_HOST: loki
     volumes:
       - avatars:/bcmets/public/system
       - sphinx:/bcmets/db/sphinx
@@ -26,6 +27,7 @@ services:
       MQ_HOST: "localhost"
       RUN_CRON: "yes"
       RAILS_ENV: "production"
+      SMTP_HOST: loki
     volumes:
       - avatars:/bcmets/public/system
       - sphinx:/bcmets/db/sphinx
