@@ -1,3 +1,3 @@
-*/5 * * * *  curl -s -d "" localhost/api/import_emails &>/dev/null && curl https://nosnch.in/add9e12c99 &>/dev/null
-*/11 * * * *  curl -s -d "" localhost/api/import_feeds &>/dev/null
-*/19 * * * * curl -s -d "" localhost/api/index_articles &>/dev/null && curl https://nosnch.in/5b2d95aa47 &>/dev/null
+*/5 * * * *   curl -s -d "" http://web/api/import_emails &>/dev/null && curl https://nosnch.in/add9e12c99 &>/dev/null
+*/11 * * * *  curl -s -d "" http://web/api/import_feeds &>/dev/null
+*/19 * * * *  curl -s -d "" http://web/api/index_articles &>/dev/null && curl https://nosnch.in/5b2d95aa47 &>/dev/null

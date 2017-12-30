@@ -67,11 +67,10 @@ Bcmets::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   config.action_mailer.default_url_options = { host: 'bcmets.org' }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: ENV["SMTP_HOST"],
-    port: ENV.fetch("SMTP_PORT") { 25 },
-    domain: ENV.fetch("SMTP_DOMAIN") { "bcmets.org" }
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.sendmail_settings = {
+    location: "/usr/sbin/ssmtp",
+    arguments: ""
   }
   config.action_mailer.raise_delivery_errors = true
 

@@ -1,5 +1,5 @@
 FROM phusion/passenger-ruby23:0.9.27
-RUN apt-get update -qq && apt-get install -y sphinxsearch tzdata
+RUN apt-get update -qq && apt-get install -y sphinxsearch tzdata ssmtp
 RUN mkdir /bcmets && chown app /bcmets
 WORKDIR /bcmets
 
@@ -9,6 +9,7 @@ COPY --chown=app Gemfile.lock Gemfile.lock
 RUN bundle --deployment
 
 USER root
+COPY docker/ssmtp.conf /etc/ssmtp/ssmtp.conf
 RUN rm -f /etc/nginx/sites-enabled/default
 COPY docker/80-enable-web.sh /etc/my_init.d
 COPY docker/80-enable-cron.sh /etc/my_init.d

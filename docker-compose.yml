@@ -19,7 +19,6 @@ services:
       - sphinx:/bcmets/db/sphinx
 
   cron:
-    build: .
     image: pbevin/bcmets
     environment:
       DATABASE_URL: "mysql2://pbevin@docker.for.mac.localhost/bcmets"
