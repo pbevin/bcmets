@@ -255,6 +255,26 @@ body
         expect(reply.conversation.articles).to contain_exactly(reply)
       end
     end
+
+    specify "body has non-UTF8 characters" do
+      # The mail gem's parser chokes on messages where
+      # the body has, for example, \xa0 characters, so
+      # we revert to ArticleParser in those cases.
+      text = [
+        "From name@example.com Thu 10 Dec 2015 13:45:20 +0000",
+        "From: Test <test@example.com>",
+        "Date: Thu 10 Dec 2015 13:25:06 +0000",
+        "Message-ID: <1234@example.com>",
+        "Subject: test",
+        "",
+        "body\xa0with latin-1 characters"
+      ]
+      article = Article.parse(text.join("\n"))
+      expect(article).to have_attributes(
+        subject: "test",
+        body: "body\u{a0}with latin-1 characters\n"
+      )
+    end
   end
 
   describe '#sent_at_human' do

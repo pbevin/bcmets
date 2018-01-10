@@ -153,6 +153,8 @@ class Article < ActiveRecord::Base
   end
 
   def self.parse(text)
+    MessageParser.new.parse(text)
+  rescue
     article = Article.new
     parser = ArticleParser.new(article)
     text.lines.each do |line|

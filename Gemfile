@@ -36,6 +36,7 @@ gem "bunny", ">= 1.6.2"
 gem "lograge"
 gem "snitcher"
 gem "interactor-rails"
+gem "anima"
 
 group :production do
   gem 'rails_12factor'

@@ -13,6 +13,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    abstract_type (0.0.7)
     actionmailer (4.2.10)
       actionpack (= 4.2.10)
       actionview (= 4.2.10)
@@ -47,8 +48,15 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    adamantium (0.2.0)
+      ice_nine (~> 0.11.0)
+      memoizable (~> 0.4.0)
     addressable (2.3.6)
     amq-protocol (1.9.2)
+    anima (0.3.0)
+      abstract_type (~> 0.0.7)
+      adamantium (~> 0.2)
+      equalizer (~> 0.0.11)
     arel (6.0.4)
     authlogic (3.4.2)
       activerecord (>= 3.2)
@@ -96,6 +104,7 @@ GEM
       dotenv (= 2.2.1)
       railties (>= 3.2, < 5.2)
     dynamic_form (1.1.4)
+    equalizer (0.0.11)
     erubis (2.7.0)
     exception_notification (4.0.1)
       actionmailer (>= 3.0.4)
@@ -137,6 +146,7 @@ GEM
     hitimes (1.2.2)
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
+    ice_nine (0.11.2)
     innertube (1.1.0)
     interactor (3.1.0)
     interactor-rails (2.1.1)
@@ -170,6 +180,8 @@ GEM
     machinist (2.0)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
+    memoizable (0.4.2)
+      thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.8.2)
     middleware (0.1.0)
     mime-types (2.99.3)
@@ -325,6 +337,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  anima
   authlogic
   bunny (>= 1.6.2)
   cucumber-rails
