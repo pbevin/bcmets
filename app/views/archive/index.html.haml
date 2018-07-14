@@ -1,6 +1,24 @@
 %h1 Archives
 %p
   = link_to "Post a message to the list", post_path
+.pinned
+  %h4 Hi there! Can you help?
+  %p
+    Carol Tucker is a researcher looking into how breast cancer
+    patients get information online.
+    %a{href: "https://www.bcmets.org/articles/180601"}
+      You can help by commenting on this thread
+    and saying what kind of BC-related information you needed, where
+    you went to get it, and what you experience was.
+
+  %p
+    Please help with this! Getting accurate information about breast
+    cancer is harder than it should be, and this is one way we can help
+    make it better.
+
+  %div
+    %a.btn{href: "https://www.bcmets.org/articles/180601"} Please click here to help!
+
 - @year.downto(2000).each do |year|
   .year{class: year == @year ? "current" : "old"}
     %h2
