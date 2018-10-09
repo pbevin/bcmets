@@ -3,21 +3,25 @@
   = link_to "Post a message to the list", post_path
 .pinned
   %h4 Hi there! Can you help?
-  %p
-    Carol Tucker is a researcher looking into how breast cancer
-    patients get information online.
-    %a{href: "https://www.bcmets.org/articles/180601"}
-      You can help by commenting on this thread
-    and saying what kind of BC-related information you needed, where
-    you went to get it, and what you experience was.
 
   %p
-    Please help with this! Getting accurate information about breast
-    cancer is harder than it should be, and this is one way we can help
-    make it better.
+    We are asking you to participate in a research study to find
+    out what women with metastatic breast cancer want to know about
+    your disease, how you get this information, and what you think
+    about the information you have gotten.
 
-  %div
-    %a.btn{href: "https://www.bcmets.org/articles/180601"} Please click here to help!
+  %p
+    The link to the Consent Form and survey questionnaire is:
+    = link_to "https://www.surveymonkey.com/r/Z5DS6TT", "https://www.surveymonkey.com/r/Z5DS6TT"
+
+  %p
+    Thanks for your help.
+    %br
+    Carol Tucker
+    %br
+    M. Pilar Martin
+    %br
+    Ray Jones
 
 - @year.downto(2000).each do |year|
   .year{class: year == @year ? "current" : "old"}
