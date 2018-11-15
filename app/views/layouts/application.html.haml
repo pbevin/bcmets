@@ -97,20 +97,6 @@
                   = "(from #{link_to entry.feed.name, entry.feed.url})".html_safe
             = link_to "More »", feed_entries_path
 
-          %h3 Donations
-          %ul
-            %li
-              = last_donation
-            %li
-              = donations_this_month
-            %li
-              = donations_this_year
-            %li
-              Please
-              %a{ :href => "/donate" }
-                donate
-              to help keep this service running.
-
       #footer
         %p
           This archive is owned and operated by
